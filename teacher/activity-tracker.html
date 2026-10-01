@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity Tracker · Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📡 Activity Tracker</h1>
+        <span class="version">Physical Science · Teacher</span>
+      </div>
+      <div class="header-actions">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Hub</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1100px;">
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Action</label>
+        <select id="filter-action">
+          <option value="">— All —</option>
+          <option value="student_login">Student Login</option>
+          <option value="lesson_view">Lesson View</option>
+          <option value="day_complete">Day Complete</option>
+          <option value="assessment_start">Assessment Start</option>
+          <option value="assessment_submit">Assessment Submit</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>LRN</label>
+        <input type="text" id="filter-lrn" placeholder="Filter by LRN…" />
+      </div>
+      <div class="filter-actions">
+        <button id="btn-refresh" class="btn btn-primary">🔄 Refresh</button>
+        <button id="btn-clear" class="btn btn-danger">🗑 Clear Log</button>
+      </div>
+    </div>
+
+    <div class="cr-stats-grid" id="stats"></div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Recent Events</div>
+        <span id="event-count" class="text-muted text-small">—</span>
+      </div>
+      <div id="events-table"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer"><p>Activity Tracker · v1.0.0</p></footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/activity-tracker.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.requireTeacher();
+
+      function render() {
+        const actionFilter = document.getElementById('filter-action').value;
+        const lrnFilter = document.getElementById('filter-lrn').value.trim();
+
+        let events = ActivityTracker.getEvents();
+        if (actionFilter) events = events.filter(e => e.action === actionFilter);
+        if (lrnFilter) events = events.filter(e => String(e.lrn || '').includes(lrnFilter));
+
+        events = events.slice().reverse(); // newest first
+
+        // Stats
+        const total = ActivityTracker.getEvents().length;
+        const logins = ActivityTracker.countByAction('student_login');
+        const submissions = ActivityTracker.countByAction('assessment_submit');
+        const uniqueLrns = new Set(ActivityTracker.getEvents().map(e => e.lrn).filter(Boolean)).size;
+
+        document.getElementById('stats').innerHTML = `
+          <div class="cr-stat-card blue">
+            <div class="cs-icon">📊</div>
+            <div class="cs-value">${total}</div>
+            <div class="cs-label">Total Events</div>
+          </div>
+          <div class="cr-stat-card green">
+            <div class="cs-icon">👥</div>
+            <div class="cs-value">${uniqueLrns}</div>
+            <div class="cs-label">Unique Students</div>
+          </div>
+          <div class="cr-stat-card amber">
+            <div class="cs-icon">🔐</div>
+            <div class="cs-value">${logins}</div>
+            <div class="cs-label">Logins</div>
+          </div>
+          <div class="cr-stat-card">
+            <div class="cs-icon">📝</div>
+            <div class="cs-value">${submissions}</div>
+            <div class="cs-label">Submissions</div>
+          </div>
+        `;
+
+        document.getElementById('event-count').textContent = `${events.length} events`;
+
+        if (!events.length) {
+          document.getElementById('events-table').innerHTML =
+            `<div class="empty-state">No activity yet.</div>`;
+          return;
+        }
+
+        document.getElementById('events-table').innerHTML = `
+          <div class="modern-table-wrap">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Action</th>
+                  <th>LRN</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${events.slice(0, 100).map(e => `
+                  <tr>
+                    <td>${UI.formatDate(e.timestamp)}</td>
+                    <td>${UI.badge(e.action || '—', 'badge-info')}</td>
+                    <td>${UI.escapeHtml(e.lrn || '—')}</td>
+                    <td>${UI.escapeHtml(details(e))}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function details(e) {
+        if (e.action === 'day_complete') return `Week ${e.week} Day ${e.day} (${e.code || ''})`;
+        if (e.action === 'lesson_view') return `Week ${e.week} Day ${e.day}`;
+        if (e.action === 'assessment_start') return e.assessmentId;
+        if (e.action === 'assessment_submit') return `${e.assessmentId} · ${e.score}/${e.total} (${e.percent}%)`;
+        return '';
+      }
+
+      document.getElementById('filter-action').addEventListener('change', render);
+      document.getElementById('filter-lrn').addEventListener('input', render);
+      document.getElementById('btn-refresh').addEventListener('click', render);
+      document.getElementById('btn-clear').addEventListener('click', () => {
+        if (confirm('Clear all activity logs? This cannot be undone.')) {
+          ActivityTracker.clear();
+          render();
+        }
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>
