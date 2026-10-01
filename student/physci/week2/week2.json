@@ -1,0 +1,16 @@
+{
+  "week": 2,
+  "era": "Ancient Greece",
+  "title": "Greek Ideas on Matter & the Earth",
+  "period": "~600 BC – 300 BC",
+  "icon": "🏛️",
+  "contentStandard": "Ancient Greek to the present",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIa-b-5", "competency": "Describe the ideas of the Ancient Greeks on the atom", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIa-b-6", "competency": "Describe the ideas of the Ancient Greeks on the elements", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IVa-36",   "competency": "Explain what the Greeks considered to be the three types of terrestrial motion", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IVa-38",   "competency": "Explain how the Greeks knew that the Earth is spherical", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": ["Solar System Model", "Sun-Earth-Moon Model", "Multimedia on diurnal motion"]
+}
