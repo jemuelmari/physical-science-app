@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sync Center · Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔄 Sync Center</h1>
+        <span class="version">Physical Science · Teacher</span>
+      </div>
+      <div class="header-actions">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Hub</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1000px;">
+
+    <div class="cr-stats-grid" id="sync-stats"></div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🔌 Backend Status</div>
+        <button id="btn-ping" class="btn btn-outline">Ping Backend</button>
+      </div>
+      <div id="backend-status"><div class="empty-state">Click "Ping Backend" to check status.</div></div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-header">
+        <div class="card-title">⚡ Manual Sync</div>
+      </div>
+      <p class="text-muted text-small">
+        Push all local records to Google Sheets. New records are added; existing
+        ones are updated by (LRN, AssessmentId).
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+        <button id="btn-flush" class="btn btn-primary">📤 Flush Queue Now</button>
+        <button id="btn-push-all" class="btn btn-primary">⬆ Push All Local Records</button>
+        <button id="btn-clear-queue" class="btn btn-danger">🗑 Clear Queue</button>
+      </div>
+      <div id="sync-output" style="margin-top:16px;"></div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-header">
+        <div class="card-title">📦 Pending Queue</div>
+        <span id="queue-count" class="text-muted text-small">—</span>
+      </div>
+      <div id="queue-list"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer"><p>Sync Center · v1.0.0</p></footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      App.requireTeacher();
+      renderStats();
+      renderQueue();
+
+      function renderStats() {
+        const records = Store.getRecords();
+        const queue = Sync.readQueue();
+        const lastSync = Store.getLastSync();
+
+        document.getElementById('sync-stats').innerHTML = `
+          <div class="cr-stat-card blue">
+            <div class="cs-icon">📊</div>
+            <div class="cs-value">${records.length}</div>
+            <div class="cs-label">Local Records</div>
+          </div>
+          <div class="cr-stat-card ${queue.length ? 'amber' : 'green'}">
+            <div class="cs-icon">📦</div>
+            <div class="cs-value">${queue.length}</div>
+            <div class="cs-label">Pending Queue</div>
+          </div>
+          <div class="cr-stat-card">
+            <div class="cs-icon">🕒</div>
+            <div class="cs-value" style="font-size:1rem;">${lastSync ? UI.formatDate(lastSync) : 'Never'}</div>
+            <div class="cs-label">Last Sync</div>
+          </div>
+          <div class="cr-stat-card ${Sync.isEnabled() ? 'green' : 'red'}">
+            <div class="cs-icon">${Sync.isEnabled() ? '✅' : '⚠️'}</div>
+            <div class="cs-value" style="font-size:1rem;">${Sync.isEnabled() ? 'Enabled' : 'Disabled'}</div>
+            <div class="cs-label">Cloud Sync</div>
+          </div>
+        `;
+      }
+
+      function renderQueue() {
+        const queue = Sync.readQueue();
+        document.getElementById('queue-count').textContent = `${queue.length} item(s)`;
+
+        if (!queue.length) {
+          document.getElementById('queue-list').innerHTML =
+            `<div class="empty-state">No pending records. Everything is synced. ✨</div>`;
+          return;
+        }
+
+        document.getElementById('queue-list').innerHTML = `
+          <div class="modern-table-wrap">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>LRN</th>
+                  <th>Assessment</th>
+                  <th>Attempts</th>
+                  <th>Enqueued</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${queue.map(q => `
+                  <tr>
+                    <td>${UI.escapeHtml(q.record.lrn)}</td>
+                    <td>${UI.escapeHtml(q.record.assessmentId)}</td>
+                    <td>${q.attempts}</td>
+                    <td>${UI.formatDate(q.enqueuedAt)}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      document.getElementById('btn-ping').addEventListener('click', async () => {
+        const out = document.getElementById('backend-status');
+        out.innerHTML = `<div class="alert alert-info">Pinging…</div>`;
+        const res = await Sync.ping();
+        if (res && res.ok) {
+          out.innerHTML = `<div class="alert alert-success">
+            ✅ Backend online · <strong>${UI.escapeHtml(res.service || 'Unknown')}</strong> ·
+            v${UI.escapeHtml(res.version || '?')} ·
+            ${UI.formatDate(res.timestamp)}
+          </div>`;
+        } else {
+          out.innerHTML = `<div class="alert alert-danger">
+            ❌ Backend not reachable: ${UI.escapeHtml((res && res.error) || 'Unknown error')}
+          </div>`;
+        }
+      });
+
+      document.getElementById('btn-flush').addEventListener('click', async () => {
+        const out = document.getElementById('sync-output');
+        out.innerHTML = `<div class="alert alert-info">Flushing queue…</div>`;
+        const res = await Sync.flush();
+        out.innerHTML = `<div class="alert alert-success">
+          ✅ Sent ${res.sent} record(s). Remaining in queue: ${res.remaining || 0}.
+        </div>`;
+        renderStats();
+        renderQueue();
+      });
+
+      document.getElementById('btn-push-all').addEventListener('click', async () => {
+        const out = document.getElementById('sync-output');
+        const records = Store.getRecords();
+        if (!records.length) {
+          out.innerHTML = `<div class="alert alert-warning">No records to push.</div>`;
+          return;
+        }
+        if (!confirm(`Push ${records.length} record(s) to Google Sheets?`)) return;
+
+        out.innerHTML = `<div class="alert alert-info">Pushing ${records.length} records…</div>`;
+        let ok = 0, fail = 0;
+
+        for (const rec of records) {
+          const res = await Sync.push(rec);
+          if (res && res.ok) ok++; else fail++;
+        }
+
+        out.innerHTML = `<div class="alert ${fail ? 'warning' : 'success'}">
+          ✅ ${ok} succeeded · ${fail} queued for retry.
+        </div>`;
+        renderStats();
+        renderQueue();
+      });
+
+      document.getElementById('btn-clear-queue').addEventListener('click', () => {
+        if (!confirm('Clear the pending sync queue? Unsynced records will be lost.')) return;
+        Sync.clearQueue();
+        renderStats();
+        renderQueue();
+      });
+    });
+  </script>
+</body>
+</html>
