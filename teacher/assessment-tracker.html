@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessment Tracker · Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📋 Assessment Tracker</h1>
+        <span class="version">Physical Science · Teacher</span>
+      </div>
+      <div class="header-actions">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Hub</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1200px;">
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Section</label>
+        <select id="filter-section"><option value="">— All —</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Grade</label>
+        <select id="filter-grade">
+          <option value="">— All —</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button id="btn-refresh" class="btn btn-primary">🔄 Refresh</button>
+        <button id="btn-export" class="btn btn-outline">⬇ Export CSV</button>
+      </div>
+    </div>
+
+    <div class="cr-stats-grid" id="stats"></div>
+
+    <div class="gradebook-wrapper">
+      <div class="gradebook-scroll">
+        <div id="tracker-table"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer"><p>Assessment Tracker · v1.0.0</p></footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      App.requireTeacher();
+      await App.loadRegistry();
+
+      const assessments = App.getAssessments();
+
+      // Populate section filter
+      const sectionSel = document.getElementById('filter-section');
+      const sections = new Set();
+      Store.getRecords().forEach(r => { if (r.section) sections.add(r.section); });
+      [...sections].sort().forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s;
+        sectionSel.appendChild(opt);
+      });
+
+      function render() {
+        const secFilter = document.getElementById('filter-section').value;
+        const grdFilter = document.getElementById('filter-grade').value;
+
+        // Build student index from records
+        const studentsMap = new Map();
+        Store.getRecords().forEach(r => {
+          const key = r.lrn || 'unknown';
+          if (!studentsMap.has(key)) {
+            studentsMap.set(key, {
+              lrn: key,
+              lastName: r.lastName || '',
+              firstName: r.firstName || '',
+              gradeLevel: r.gradeLevel || '',
+              section: r.section || '',
+              scores: {}
+            });
+          }
+          studentsMap.get(key).scores[r.assessmentId] = r;
+        });
+
+        let students = Array.from(studentsMap.values());
+        if (secFilter) students = students.filter(s => s.section === secFilter);
+        if (grdFilter) students = students.filter(s => String(s.gradeLevel) === grdFilter);
+
+        students.sort((a, b) =>
+          (a.lastName || '').localeCompare(b.lastName || '') ||
+          (a.firstName || '').localeCompare(b.firstName || '')
+        );
+
+        // Stats
+        const total = students.length;
+        const allRecords = Store.getRecords();
+        const passed = allRecords.filter(r => r.passed).length;
+        const avgGrade = allRecords.length
+          ? Math.round(allRecords.reduce((s, r) => s + (Number(r.finalGrade) || 0), 0) / allRecords.length)
+          : 0;
+
+        document.getElementById('stats').innerHTML = `
+          <div class="cr-stat-card blue">
+            <div class="cs-icon">👥</div>
+            <div class="cs-value">${total}</div>
+            <div class="cs-label">Students</div>
+          </div>
+          <div class="cr-stat-card">
+            <div class="cs-icon">📝</div>
+            <div class="cs-value">${allRecords.length}</div>
+            <div class="cs-label">Total Records</div>
+          </div>
+          <div class="cr-stat-card green">
+            <div class="cs-icon">✅</div>
+            <div class="cs-value">${passed}</div>
+            <div class="cs-label">Passed</div>
+          </div>
+          <div class="cr-stat-card ${avgGrade >= 75 ? 'green' : 'red'}">
+            <div class="cs-icon">🎯</div>
+            <div class="cs-value">${allRecords.length ? avgGrade : '—'}</div>
+            <div class="cs-label">Avg Grade</div>
+          </div>
+        `;
+
+        if (!students.length) {
+          document.getElementById('tracker-table').innerHTML =
+            `<div class="empty-state">No student records yet.</div>`;
+          return;
+        }
+
+        document.getElementById('tracker-table').innerHTML = `
+          <table class="gradebook-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Grade</th>
+                <th>Section</th>
+                ${assessments.map(a => `<th>${shortTitle(a.id)}</th>`).join('')}
+                <th>Average</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${students.map(s => {
+                const grades = assessments.map(a => {
+                  const rec = s.scores[a.id];
+                  return rec ? Number(rec.finalGrade) : null;
+                });
+                const valid = grades.filter(g => g != null);
+                const avg = valid.length ? Math.round(valid.reduce((x, y) => x + y, 0) / valid.length) : null;
+
+                return `
+                  <tr>
+                    <td class="student-cell">
+                      <div class="student-info">
+                        <div class="name">${UI.escapeHtml(s.lastName)}, ${UI.escapeHtml(s.firstName)}</div>
+                        <div class="meta">${UI.escapeHtml(s.lrn)}</div>
+                      </div>
+                    </td>
+                    <td>${UI.escapeHtml(s.gradeLevel)}</td>
+                    <td>${UI.escapeHtml(s.section)}</td>
+                    ${assessments.map((a, i) => {
+                      const g = grades[i];
+                      return g != null
+                        ? `<td class="grade-cell">${g}</td>`
+                        : `<td class="empty-cell">—</td>`;
+                    }).join('')}
+                    <td class="final-grade ${avg != null && avg >= 75 ? 'passing' : 'failing'}">
+                      ${avg != null ? avg : '—'}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      function shortTitle(id) {
+        const a = App.getAssessment(id);
+        if (!a) return id;
+        if (a.type === 'quiz') return id.replace('physci-', '').toUpperCase();
+        if (a.type === 'summative') return id.replace('physci-', '').toUpperCase();
+        if (a.type === 'term') return 'TE';
+        if (a.type === 'performance') return 'PT1';
+        return id;
+      }
+
+      document.getElementById('filter-section').addEventListener('change', render);
+      document.getElementById('filter-grade').addEventListener('change', render);
+      document.getElementById('btn-refresh').addEventListener('click', render);
+
+      document.getElementById('btn-export').addEventListener('click', () => {
+        const rows = [['LRN', 'LastName', 'FirstName', 'GradeLevel', 'Section', 'AssessmentId', 'Score', 'Total', 'Percent', 'FinalGrade', 'Passed', 'Timestamp']];
+        Store.getRecords().forEach(r => {
+          rows.push([
+            r.lrn, r.lastName, r.firstName, r.gradeLevel, r.section,
+            r.assessmentId, r.score, r.total, r.percent, r.finalGrade,
+            r.passed ? 'TRUE' : 'FALSE', r.timestamp || ''
+          ]);
+        });
+        const csv = rows.map(row => row.map(cell => `"${String(cell == null ? '' : cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `physci-assessment-tracker-${Date.now()}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>
