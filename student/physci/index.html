@@ -1,22 +1,68 @@
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const weeks = [
-    { n: 1,  title: 'Formation of Elements in the Universe' },
-    { n: 2,  title: 'Ancient Greeks & Alchemy' },
-    { n: 3,  title: 'Atomic Structure & Nuclear Reactions' },
-    { n: 4,  title: "Dalton's Theory & Polarity" },
-    { n: 5,  title: 'Intermolecular Forces & Materials' },
-    { n: 6,  title: 'Reaction Rates & Stoichiometry' },
-    { n: 7,  title: 'Limiting Reactants, Energy & Cleaning Products' },
-    { n: 8,  title: 'Cosmetics & Greek Astronomy' },
-    { n: 9,  title: 'Models of the Universe' },
-    { n: 10, title: 'Kepler, Galileo, Newton & Motion' }
-  ];
-  document.getElementById('weeks-grid').innerHTML = weeks.map(w => `
-    <a class="week-card" href="week${w.n}/index.html">
-      <div class="week-num">Week ${w.n}</div>
-      <div class="week-title">${w.title}</div>
-    </a>
-  `).join('');
-});
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physical Science · A Journey Through Time</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/student.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📘 Physical Science</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
+
+    <div class="hero-card" style="margin-bottom:32px;">
+      <h2>A Journey Through Time</h2>
+      <p class="text-muted">
+        From the birth of the universe to the laws of motion — trace how humanity
+        came to understand matter, energy, and the cosmos.
+      </p>
+    </div>
+
+    <div id="timeline" class="timeline"></div>
+
+  </main>
+
+  <footer class="app-footer"><p>Physical Science · v1.0.0</p></footer>
+
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const timeline = [
+        { n: 1,  era: 'Cosmic Origins',       title: 'Formation of Elements in the Universe',       icon: '🌌', span: '~13.8 Billion years ago' },
+        { n: 2,  era: 'Ancient Greece',       title: 'Greek Ideas on Matter & the Earth',           icon: '🏛️', span: '~600 BC – 300 BC' },
+        { n: 3,  era: 'Alchemy → Chemistry',  title: 'Alchemists & the Birth of Chemistry',         icon: '⚗️', span: '~300 AD – 1600s' },
+        { n: 4,  era: 'Atomic Theory',        title: "Dalton's Atomic Theory",                      icon: '⚛️', span: '1803' },
+        { n: 5,  era: 'Subatomic Revolution', title: 'Thomson, Rutherford, Moseley, Bohr',          icon: '🔬', span: '1897 – 1913' },
+        { n: 6,  era: 'Nuclear Age',          title: 'Atomic Number & Nuclear Transmutation',       icon: '☢️', span: '1919 – 1940s' },
+        { n: 7,  era: 'Chemical Bonding Era', title: 'Polarity & Intermolecular Forces',            icon: '🧪', span: '20th century' },
+        { n: 8,  era: 'Industrial Chemistry', title: 'Reaction Rates, Stoichiometry & Energy',      icon: '🏭', span: '19th – 20th century' },
+        { n: 9,  era: 'Consumer Chemistry',   title: 'Household & Personal Care Products',          icon: '🧴', span: 'Modern era' },
+        { n: 10, era: 'Cosmos & Motion',      title: 'Models of the Universe, Kepler, Galileo, Newton', icon: '🔭', span: '1500s – 1700s' }
+      ];
+
+      document.getElementById('timeline').innerHTML = timeline.map(w => `
+        <a class="timeline-item" href="week${w.n}/index.html">
+          <div class="timeline-icon">${w.icon}</div>
+          <div class="timeline-body">
+            <div class="timeline-era">${w.era}</div>
+            <div class="timeline-title">Week ${w.n}: ${w.title}</div>
+            <div class="timeline-span">${w.span}</div>
+          </div>
+        </a>
+      `).join('');
+    });
+  </script>
+</body>
+</html>
