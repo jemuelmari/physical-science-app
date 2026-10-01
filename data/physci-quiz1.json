@@ -1,0 +1,190 @@
+{
+  "assessmentId": "physci-quiz1",
+  "subject": "physci",
+  "type": "quiz",
+  "title": "Quiz 1 — Cosmic Origins & Ancient Greece",
+  "timeLimit": 15,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIa-1",
+      "question": "Which piece of evidence BEST supports the Big Bang theory's explanation for the formation of light elements?",
+      "options": [
+        "The observed abundance of hydrogen and helium in the universe",
+        "The presence of heavy elements in the Earth's crust",
+        "The discovery of exoplanets around distant stars",
+        "The formation of black holes in the centers of galaxies"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIa-1",
+      "question": "What does the cosmic microwave background (CMB) radiation represent?",
+      "options": [
+        "The light from the first stars",
+        "The leftover heat from the Big Bang",
+        "The glow of distant galaxies",
+        "The radiation from black holes"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIa-2",
+      "question": "Which process is primarily responsible for the formation of heavier elements like carbon and oxygen during stellar evolution?",
+      "options": [
+        "Nuclear fission",
+        "Nuclear fusion",
+        "Radioactive decay",
+        "Chemical bonding"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IIIa-3",
+      "question": "Which of the following is a correct nuclear fusion reaction that takes place in stars?",
+      "options": [
+        "¹H + ¹H → ²H + e⁺ + ν",
+        "²³⁸U → ²³⁴Th + ⁴He",
+        "¹⁴C → ¹⁴N + e⁻",
+        "²³⁵U + n → ¹⁴¹Ba + ⁹²Kr + 3n"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IIIa-b-4",
+      "question": "Why are elements heavier than iron formed ONLY in extreme events like supernovae?",
+      "options": [
+        "Iron is the heaviest element that exists",
+        "Fusion beyond iron absorbs energy instead of releasing it",
+        "Iron cannot undergo any nuclear reactions",
+        "Heavier elements are unstable in stars"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIa-b-4",
+      "question": "The r-process (rapid neutron capture) that forms elements heavier than iron occurs mainly during:",
+      "options": [
+        "The main sequence phase of a star",
+        "The formation of planetary nebulae",
+        "Supernova explosions and neutron star mergers",
+        "The cooling of white dwarfs"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIa-b-5",
+      "question": "Which Ancient Greek philosopher first proposed that all matter is made of tiny, indivisible particles called 'atomos'?",
+      "options": [
+        "Aristotle",
+        "Plato",
+        "Democritus",
+        "Socrates"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IIIa-b-5",
+      "question": "Aristotle rejected Democritus' atomic theory because he believed that:",
+      "options": [
+        "Atoms were too small to see",
+        "Matter was continuous and made of four elements",
+        "Atoms moved too slowly to be observed",
+        "Atoms were made of fire"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IIIa-b-6",
+      "question": "Which of the following was NOT one of the four classical Greek elements?",
+      "options": [
+        "Earth",
+        "Water",
+        "Metal",
+        "Fire"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIIa-b-6",
+      "question": "According to Ancient Greek cosmology, what was the fifth element that filled the heavens?",
+      "options": [
+        "Aether",
+        "Plasma",
+        "Void",
+        "Quintessence"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 11,
+      "code": "S11/12PS-IVa-36",
+      "question": "Which type of motion did the Ancient Greeks consider 'violent'?",
+      "options": [
+        "The natural fall of a stone to the ground",
+        "The circular orbit of the Moon",
+        "The forced motion of an object pushed by a hand",
+        "The rising of smoke"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 12,
+      "code": "S11/12PS-IVa-36",
+      "question": "According to Aristotle, natural motion of an object:",
+      "options": [
+        "Continues only while a force acts on it",
+        "Depends on the object's tendency to return to its natural place",
+        "Only occurs in a vacuum",
+        "Always follows a straight line"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 13,
+      "code": "S11/12PS-IVa-38",
+      "question": "Which observation led Ancient Greeks to conclude that the Earth is spherical?",
+      "options": [
+        "The rising and setting of the Sun",
+        "The circular shadow of the Earth on the Moon during a lunar eclipse",
+        "The movement of clouds in the sky",
+        "The change of seasons"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 14,
+      "code": "S11/12PS-IVa-38",
+      "question": "Eratosthenes estimated the circumference of the Earth by comparing:",
+      "options": [
+        "The heights of two mountains",
+        "The angles of shadows in two cities at noon",
+        "The positions of stars at midnight",
+        "The speed of ships at sea"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 15,
+      "code": "S11/12PS-IVa-38",
+      "question": "Ships disappearing hull-first over the horizon is evidence that:",
+      "options": [
+        "The Earth is flat",
+        "The Earth is spherical",
+        "The ocean is curved",
+        "Light bends over water"
+      ],
+      "answer": 1
+    }
+  ]
+}
