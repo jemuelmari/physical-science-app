@@ -1,0 +1,16 @@
+{
+  "week": 6,
+  "era": "Nuclear Age",
+  "title": "Atomic Number & Nuclear Transmutation",
+  "period": "1919 – 1940s",
+  "icon": "☢️",
+  "contentStandard": "How the elements found in the universe were formed",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIb-11", "competency": "Explain how the concept of atomic number led to the synthesis of new elements in the laboratory", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIb-12", "competency": "Write the nuclear reactions involved in the synthesis of new elements", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIIb-12", "competency": "Balance nuclear equations involving alpha, beta, and gamma decay", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIIb-11", "competency": "Research on synthetic elements and their applications", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": ["Periodic Table Chart"]
+}
