@@ -1,0 +1,16 @@
+{
+  "week": 5,
+  "era": "Subatomic Revolution",
+  "title": "Thomson, Rutherford, Moseley, Bohr",
+  "period": "1897 – 1913",
+  "icon": "🔬",
+  "contentStandard": "Ancient Greek to the present",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIb-8",  "competency": "Point out the main ideas in the discovery of the structure of the atom and its subatomic particles", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIb-9",  "competency": "Cite the contributions of J.J. Thomson, Ernest Rutherford, Henry Moseley, and Niels Bohr to the understanding of the structure of the atom", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIIb-10", "competency": "Describe the nuclear model of the atom and the location of its major components (protons, neutrons, and electrons)", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIIb-8",  "competency": "Culminating activity: Timeline of the atomic model", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": ["Cathode Ray Tube (video)", "Gold Foil Experiment Simulation", "Bohr Model Kit"]
+}
