@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Analysis · Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔍 Item Analysis</h1>
+        <span class="version">Physical Science · Teacher</span>
+      </div>
+      <div class="header-actions">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Hub</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1100px;">
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Assessment</label>
+        <select id="filter-assessment"><option value="">— Select —</option></select>
+      </div>
+      <div class="filter-actions">
+        <button id="btn-run" class="btn btn-primary">▶ Run Analysis</button>
+      </div>
+    </div>
+
+    <div id="analysis-output"></div>
+
+  </main>
+
+  <footer class="app-footer"><p>Item Analysis · v1.0.0</p></footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      App.requireTeacher();
+      await App.loadRegistry();
+
+      const assessments = App.getAssessments();
+      const sel = document.getElementById('filter-assessment');
+      assessments.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.id;
+        opt.textContent = a.title;
+        sel.appendChild(opt);
+      });
+
+      document.getElementById('btn-run').addEventListener('click', async () => {
+        const id = sel.value;
+        if (!id) { alert('Please select an assessment.'); return; }
+        await runAnalysis(id);
+      });
+
+      async function runAnalysis(assessmentId) {
+        const out = document.getElementById('analysis-output');
+        out.innerHTML = `<div class="alert alert-info">Loading items…</div>`;
+
+        // Load the assessment JSON to get item list
+        let data;
+        try {
+          const res = await fetch(`../data/${assessmentId}.json`);
+          data = await res.json();
+        } catch (e) {
+          out.innerHTML = `<div class="alert alert-danger">Failed to load ${assessmentId}.json</div>`;
+          return;
+        }
+
+        const records = Store.getRecords().filter(r => r.assessmentId === assessmentId);
+
+        if (!records.length) {
+          out.innerHTML = `<div class="empty-state">No records for this assessment yet.</div>`;
+          return;
+        }
+
+        // Compute per-item correct rate
+        const itemStats = data.items.map(item => {
+          let correct = 0, attempted = 0;
+          records.forEach(r => {
+            const studentAns = r.answers ? r.answers[item.id] : null;
+            if (studentAns != null) {
+              attempted++;
+              if (Number(studentAns) === item.answer) correct++;
+            }
+          });
+          return {
+            id: item.id,
+            code: item.code || '',
+            question: item.question,
+            correct,
+            attempted,
+            rate: attempted ? Math.round((correct / attempted) * 100) : 0
+          };
+        });
+
+        // Sort
+        const sorted = itemStats.slice().sort((a, b) => a.rate - b.rate);
+        const mostLearned = sorted.slice(-5).reverse();
+        const leastLearned = sorted.slice(0, 5);
+
+        // Overall stats
+        const avgRate = itemStats.length
+          ? Math.round(itemStats.reduce((s, x) => s + x.rate, 0) / itemStats.length)
+          : 0;
+
+        out.innerHTML = `
+          <div class="cr-stats-grid" style="margin-bottom:24px;">
+            <div class="cr-stat-card blue">
+              <div class="cs-icon">👥</div>
+              <div class="cs-value">${records.length}</div>
+              <div class="cs-label">Students</div>
+            </div>
+            <div class="cr-stat-card">
+              <div class="cs-icon">📋</div>
+              <div class="cs-value">${itemStats.length}</div>
+              <div class="cs-label">Items</div>
+            </div>
+            <div class="cr-stat-card ${avgRate >= 75 ? 'green' : 'red'}">
+              <div class="cs-icon">📊</div>
+              <div class="cs-value">${avgRate}%</div>
+              <div class="cs-label">Avg Correct Rate</div>
+            </div>
+          </div>
+
+          <div class="report-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">⭐ Most Learned</div>
+              </div>
+              <ul class="mll-list">
+                ${mostLearned.map(x => `
+                  <li>
+                    <div>
+                      <div class="mll-desc">${UI.escapeHtml(x.question.substring(0, 80))}…</div>
+                      <span class="mll-code">${UI.escapeHtml(x.code)}</span>
+                    </div>
+                    <span class="mll-mps" style="color:#2e7d32;">${x.rate}%</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">⚠️ Least Learned</div>
+              </div>
+              <ul class="mll-list">
+                ${leastLearned.map(x => `
+                  <li>
+                    <div>
+                      <div class="mll-desc">${UI.escapeHtml(x.question.substring(0, 80))}…</div>
+                      <span class="mll-code">${UI.escapeHtml(x.code)}</span>
+                    </div>
+                    <span class="mll-mps" style="color:#c62828;">${x.rate}%</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">📊 Full Item Breakdown</div>
+            </div>
+            <div class="modern-table-wrap">
+              <table class="modern-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Code</th>
+                    <th>Question</th>
+                    <th>Correct</th>
+                    <th>Attempted</th>
+                    <th>Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${itemStats.map((x, i) => `
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td><span class="mll-code">${UI.escapeHtml(x.code)}</span></td>
+                      <td>${UI.escapeHtml(x.question.substring(0, 90))}${x.question.length > 90 ? '…' : ''}</td>
+                      <td>${x.correct}</td>
+                      <td>${x.attempted}</td>
+                      <td><span class="pl-indicator ${plClass(x.rate)}">${x.rate}%</span></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      function plClass(rate) {
+        if (rate >= 90) return 'pl-mastered';
+        if (rate >= 80) return 'pl-closely';
+        if (rate >= 70) return 'pl-moving';
+        if (rate >= 50) return 'pl-average';
+        if (rate >= 30) return 'pl-low';
+        if (rate >= 10) return 'pl-verylow';
+        return 'pl-nomastery';
+      }
+    });
+  </script>
+</body>
+</html>
