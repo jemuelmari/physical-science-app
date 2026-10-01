@@ -1,0 +1,16 @@
+{
+  "week": 9,
+  "era": "Consumer Chemistry",
+  "title": "Household & Personal Care Products",
+  "period": "Modern era",
+  "icon": "🧴",
+  "contentStandard": "How chemistry contributes to the understanding of household and personal care products",
+  "performanceStandard": "Make a poster, flyer, or brochure on a product indicating its uses, properties, mode of action, and precautions",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIi-j-30", "competency": "Give common examples of cleaning materials for the house and for personal care", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIi-j-31", "competency": "From product labels, identify the active ingredient(s) of cleaning products used at home", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIIi-j-32", "competency": "Give common examples of personal care products used to enhance the appearance of the human body", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIIi-j-33", "competency": "Identify the major ingredients of cosmetics such as body lotion, skin whitener, deodorants, shaving cream, and perfume", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": ["Product labels (real samples)"]
+}
