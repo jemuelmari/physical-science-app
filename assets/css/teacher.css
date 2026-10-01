@@ -1,0 +1,93 @@
+/* ============================================================
+   teacher.css — Physical Science · Teacher styles
+   Version: 1.0.0
+   Depends on: main.css
+   ============================================================ */
+
+.teacher-header {
+  background: linear-gradient(135deg, #4a148c, #6a1b9a);
+  box-shadow: 0 2px 12px rgba(74, 20, 140, 0.2);
+}
+.teacher-header h1 { color: #fff; }
+.teacher-header .version { color: rgba(255, 255, 255, 0.85); }
+
+/* ---------- Teacher Tools Grid ---------- */
+.teacher-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px;
+}
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #eceff1;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4a148c, #ab47bc);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.tool-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: #6a1b9a;
+  text-decoration: none;
+}
+.tool-card:hover::before { opacity: 1; }
+
+.tool-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 4px; }
+.tool-title { font-size: 1rem; font-weight: 700; color: var(--color-primary-dark); }
+.tool-desc { font-size: 0.82rem; color: var(--color-text-muted); line-height: 1.55; }
+
+/* ---------- Data Summary ---------- */
+.data-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.data-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #f5f7fa;
+  border-radius: var(--radius-md);
+  border-left: 4px solid #6a1b9a;
+}
+.dsi-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+.dsi-body { flex: 1; min-width: 0; }
+.dsi-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+.dsi-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .teacher-tools-grid { grid-template-columns: 1fr; }
+  .data-summary-grid { grid-template-columns: 1fr; }
+}
