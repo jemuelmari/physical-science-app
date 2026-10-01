@@ -1,0 +1,16 @@
+{
+  "week": 1,
+  "era": "Cosmic Origins",
+  "title": "Formation of Elements in the Universe",
+  "period": "~13.8 Billion years ago",
+  "icon": "🌌",
+  "contentStandard": "How the elements found in the universe were formed",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIa-1",   "competency": "Give evidence for and explain the formation of the light elements in the Big Bang theory", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIa-2",   "competency": "Give evidence for and describe formation of heavier elements during star formation and evolution", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIIa-3",   "competency": "Write nuclear fusion reactions that take place in stars leading to formation of new elements", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIIa-b-4", "competency": "Describe how elements heavier than iron are formed", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": []
+}
