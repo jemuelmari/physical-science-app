@@ -1,0 +1,22 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const weeks = [
+    { n: 1,  title: 'Formation of Elements in the Universe' },
+    { n: 2,  title: 'Ancient Greeks & Alchemy' },
+    { n: 3,  title: 'Atomic Structure & Nuclear Reactions' },
+    { n: 4,  title: "Dalton's Theory & Polarity" },
+    { n: 5,  title: 'Intermolecular Forces & Materials' },
+    { n: 6,  title: 'Reaction Rates & Stoichiometry' },
+    { n: 7,  title: 'Limiting Reactants, Energy & Cleaning Products' },
+    { n: 8,  title: 'Cosmetics & Greek Astronomy' },
+    { n: 9,  title: 'Models of the Universe' },
+    { n: 10, title: 'Kepler, Galileo, Newton & Motion' }
+  ];
+  document.getElementById('weeks-grid').innerHTML = weeks.map(w => `
+    <a class="week-card" href="week${w.n}/index.html">
+      <div class="week-num">Week ${w.n}</div>
+      <div class="week-title">${w.title}</div>
+    </a>
+  `).join('');
+});
+</script>
