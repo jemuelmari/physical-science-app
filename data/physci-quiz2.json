@@ -1,0 +1,190 @@
+{
+  "assessmentId": "physci-quiz2",
+  "subject": "physci",
+  "type": "quiz",
+  "title": "Quiz 2 — Alchemy, Dalton & the Subatomic Revolution",
+  "timeLimit": 15,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIb-7",
+      "question": "What was the primary goal of alchemists?",
+      "options": [
+        "To discover the structure of the atom",
+        "To transform base metals into gold",
+        "To build telescopes for astronomy",
+        "To classify living organisms"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIb-7",
+      "question": "Which laboratory technique was developed by alchemists and is still used today?",
+      "options": [
+        "Spectroscopy",
+        "Distillation",
+        "Chromatography",
+        "Electrophoresis"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIb-7",
+      "question": "Which element was discovered by alchemists through the distillation of urine?",
+      "options": [
+        "Phosphorus",
+        "Sulfur",
+        "Mercury",
+        "Gold"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IVa-37",
+      "question": "Diurnal motion refers to the:",
+      "options": [
+        "Yearly movement of the Sun through the zodiac",
+        "Daily apparent east-to-west motion of celestial objects",
+        "26,000-year wobble of Earth's axis",
+        "Motion of the Moon around the Earth"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IVa-37",
+      "question": "The precession of the equinoxes is caused by:",
+      "options": [
+        "Earth's revolution around the Sun",
+        "Earth's rotation on its axis",
+        "The gravitational pull of the Moon and Sun on Earth's equatorial bulge",
+        "The movement of the Milky Way"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIc-13",
+      "question": "Which of the following is a postulate of Dalton's atomic theory?",
+      "options": [
+        "Atoms can be divided into smaller particles",
+        "Atoms of different elements have identical masses",
+        "Atoms combine in whole-number ratios to form compounds",
+        "Atoms are created during chemical reactions"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIc-13",
+      "question": "Dalton's theory explained the Law of Definite Proportions because:",
+      "options": [
+        "Atoms can change identity in reactions",
+        "Compounds always have fixed ratios of atoms of each element",
+        "Atoms can combine in any ratio",
+        "Molecules are made of a single atom"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IIIc-14",
+      "question": "How did Dalton's atomic theory help in the discovery of new elements?",
+      "options": [
+        "It provided a way to weigh atoms and identify elements by mass",
+        "It showed that elements could be created artificially",
+        "It proved that atoms were indivisible",
+        "It introduced the concept of isotopes"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IIIc-14",
+      "question": "Who arranged the first widely accepted periodic table and predicted undiscovered elements?",
+      "options": [
+        "John Dalton",
+        "Dmitri Mendeleev",
+        "Antoine Lavoisier",
+        "Robert Boyle"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIIb-8",
+      "question": "Which scientist discovered the electron using cathode ray tubes?",
+      "options": [
+        "Ernest Rutherford",
+        "Niels Bohr",
+        "J.J. Thomson",
+        "Henry Moseley"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 11,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Rutherford's gold foil experiment demonstrated that:",
+      "options": [
+        "Electrons orbit the nucleus in fixed paths",
+        "The atom has a small, dense, positively charged nucleus",
+        "Atoms are indivisible",
+        "Protons and electrons have equal masses"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 12,
+      "code": "S11/12PS-IIIb-9",
+      "question": "What did Henry Moseley contribute to atomic theory?",
+      "options": [
+        "He discovered the neutron",
+        "He showed that the atomic number equals the number of protons",
+        "He proposed the plum pudding model",
+        "He discovered radioactivity"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 13,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Niels Bohr's model of the atom proposed that:",
+      "options": [
+        "Electrons can have any energy",
+        "Electrons orbit the nucleus in quantized energy levels",
+        "The nucleus contains only protons",
+        "Atoms are made of a continuous positive charge"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 14,
+      "code": "S11/12PS-IIIb-10",
+      "question": "In the nuclear model of the atom, where are protons and neutrons located?",
+      "options": [
+        "In the electron cloud",
+        "In the nucleus at the center",
+        "Orbiting the nucleus",
+        "Throughout the entire atom"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 15,
+      "code": "S11/12PS-IIIb-10",
+      "question": "Which subatomic particle was discovered last?",
+      "options": [
+        "Electron",
+        "Proton",
+        "Neutron",
+        "Positron"
+      ],
+      "answer": 2
+    }
+  ]
+}
