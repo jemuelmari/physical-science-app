@@ -26,4 +26,90 @@ window.UI = (function () {
     return `${m}:${r}`;
   }
 
-  function formatDate(iso
+  function formatDate(iso) {
+    if (!iso) return '—';
+    try {
+      const d = new Date(iso);
+      return d.toLocaleString(undefined, {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      });
+    } catch (e) { return '—'; }
+  }
+
+  function plClass(grade) {
+    const g = Number(grade);
+    if (g >= 90) return 'pl-mastered';
+    if (g >= 85) return 'pl-closely';
+    if (g >= 80) return 'pl-moving';
+    if (g >= 75) return 'pl-average';
+    if (g >= 70) return 'pl-low';
+    if (g >= 60) return 'pl-verylow';
+    return 'pl-nomastery';
+  }
+
+  function plLabel(grade) {
+    const g = Number(grade);
+    if (g >= 90) return 'Mastered';
+    if (g >= 85) return 'Closely Approximating Mastery';
+    if (g >= 80) return 'Moving Towards Mastery';
+    if (g >= 75) return 'Average';
+    if (g >= 70) return 'Low';
+    if (g >= 60) return 'Very Low';
+    return 'No Mastery';
+  }
+
+  // ---- Avatar ----
+  function avatarClass(seed) {
+    const s = String(seed || '').split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    return 'av-' + ((s % 6) + 1);
+  }
+
+  function initials(first, last) {
+    const f = (first || '').trim().charAt(0).toUpperCase();
+    const l = (last || '').trim().charAt(0).toUpperCase();
+    return (f || '?') + (l || '');
+  }
+
+  // ---- Toast ----
+  function toast(message, type, timeoutMs) {
+    const t = document.createElement('div');
+    t.className = 'ui-toast ' + (type || 'info');
+    t.textContent = message;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 250);
+    }, timeoutMs || 2500);
+  }
+
+  // ---- Confirm ----
+  function confirmDialog(message) {
+    return window.confirm(message);
+  }
+
+  // ---- Badge HTML ----
+  function badge(text, cls) {
+    return `<span class="badge ${cls || ''}">${escapeHtml(text)}</span>`;
+  }
+
+  function gradeBadge(grade) {
+    return badge(grade, plClass(grade));
+  }
+
+  return {
+    $, $$,
+    escapeHtml,
+    formatTime,
+    formatDate,
+    plClass,
+    plLabel,
+    avatarClass,
+    initials,
+    toast,
+    confirm: confirmDialog,
+    badge,
+    gradeBadge
+  };
+})();
