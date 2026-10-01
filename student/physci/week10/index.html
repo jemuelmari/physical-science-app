@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physical Science · Week 10</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📘 Physical Science · Week 10</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Timeline</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
+    <div id="week-header"></div>
+    <div id="days-list" class="days-list"></div>
+  </main>
+
+  <footer class="app-footer"><p>Week 10 · v1.0.0</p></footer>
+
+  <script src="../../../config.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/store.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await fetch('week10.json');
+      const data = await res.json();
+
+      document.title = `Physical Science · Week ${data.week} · ${data.era}`;
+
+      document.getElementById('week-header').innerHTML = `
+        <div class="week-hero" data-era="${data.era}">
+          <div class="week-hero-icon">${data.icon}</div>
+          <div class="week-hero-body">
+            <div class="week-hero-era">${data.era} · ${data.period}</div>
+            <h2>Week ${data.week}: ${data.title}</h2>
+            <p class="text-muted">${data.contentStandard}</p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('days-list').innerHTML = data.days.map(d => `
+        <a class="day-card" href="${d.file}">
+          <div class="day-num">Day ${d.day}</div>
+          <div class="day-body">
+            <div class="day-comp">${d.competency}</div>
+            <div class="day-code">${d.code} · ${d.duration}</div>
+          </div>
+        </a>
+      `).join('');
+    });
+  </script>
+</body>
+</html>
