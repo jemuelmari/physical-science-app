@@ -1,0 +1,250 @@
+{
+  "assessmentId": "physci-st1",
+  "subject": "physci",
+  "type": "summative",
+  "title": "Summative Test 1 — Weeks 1–5",
+  "timeLimit": 45,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIa-1",
+      "question": "Which observation provides the STRONGEST evidence for the Big Bang theory?",
+      "options": [
+        "The cosmic microwave background radiation",
+        "The existence of the Moon",
+        "The presence of volcanoes on Earth",
+        "The color of the Sun"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIa-1",
+      "question": "The universe is approximately how old?",
+      "options": [
+        "4.6 billion years",
+        "13.8 billion years",
+        "100 million years",
+        "1 trillion years"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIa-2",
+      "question": "During stellar evolution, the sequence of fusion in a massive star is:",
+      "options": [
+        "H → He → C → O → Si → Fe",
+        "Fe → Si → O → C → He → H",
+        "H → Fe → O → C → He",
+        "He → H → C → Fe"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IIIa-3",
+      "question": "Which reaction is the FIRST step of the proton–proton chain in the Sun?",
+      "options": [
+        "¹H + ¹H → ²H + e⁺ + ν",
+        "⁴He + ⁴He → ⁸Be",
+        "³He + ³He → ⁴He + 2¹H",
+        "²H + ¹H → ³He + γ"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IIIa-b-4",
+      "question": "Elements heavier than iron are primarily formed through:",
+      "options": [
+        "Nuclear fusion in main-sequence stars",
+        "The s-process in AGB stars and r-process in supernovae",
+        "Chemical reactions in the Earth's core",
+        "Radioactive decay in the mantle"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIa-b-5",
+      "question": "The Greek philosopher who proposed the concept of 'atomos' was:",
+      "options": [
+        "Aristotle",
+        "Plato",
+        "Democritus",
+        "Ptolemy"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIa-b-6",
+      "question": "The four classical Greek elements were:",
+      "options": [
+        "Gold, silver, copper, iron",
+        "Earth, water, air, fire",
+        "Carbon, hydrogen, oxygen, nitrogen",
+        "Solid, liquid, gas, plasma"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IVa-36",
+      "question": "Which of the following is an example of 'violent' motion according to Aristotle?",
+      "options": [
+        "A stone falling to the ground",
+        "Smoke rising",
+        "A ball pushed across a table",
+        "The Moon orbiting the Earth"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IVa-38",
+      "question": "The curved shadow of the Earth on the Moon during a lunar eclipse was used by the Greeks to argue that:",
+      "options": [
+        "The Moon is larger than the Earth",
+        "The Earth is spherical",
+        "The Sun revolves around the Earth",
+        "The Earth is flat"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIIb-7",
+      "question": "Which of the following is a major contribution of alchemists to modern chemistry?",
+      "options": [
+        "Discovery of the electron",
+        "Development of laboratory techniques like distillation",
+        "Discovery of the periodic table",
+        "Invention of the telescope"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 11,
+      "code": "S11/12PS-IVa-37",
+      "question": "Annual motion refers to:",
+      "options": [
+        "The daily movement of the Sun",
+        "The yearly motion of the Sun and stars due to Earth's revolution",
+        "The 26,000-year wobble of Earth's axis",
+        "The rotation of the Milky Way"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 12,
+      "code": "S11/12PS-IIIc-13",
+      "question": "Which of the following is NOT a postulate of Dalton's atomic theory?",
+      "options": [
+        "All matter is made of atoms",
+        "Atoms of the same element are identical",
+        "Atoms can be subdivided into protons, neutrons, and electrons",
+        "Atoms combine in whole-number ratios"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 13,
+      "code": "S11/12PS-IIIc-14",
+      "question": "Mendeleev arranged the periodic table based on:",
+      "options": [
+        "Atomic number",
+        "Atomic mass",
+        "Electron configuration",
+        "Number of neutrons"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 14,
+      "code": "S11/12PS-IIIb-8",
+      "question": "The cathode ray tube experiment led to the discovery of:",
+      "options": [
+        "The proton",
+        "The neutron",
+        "The electron",
+        "The nucleus"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 15,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Which scientist proposed the 'plum pudding' model of the atom?",
+      "options": [
+        "Rutherford",
+        "Bohr",
+        "Thomson",
+        "Moseley"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 16,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Rutherford's gold foil experiment showed that:",
+      "options": [
+        "Electrons orbit the nucleus in fixed paths",
+        "Most alpha particles pass straight through the gold foil",
+        "Atoms are indivisible",
+        "Protons have no charge"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 17,
+      "code": "S11/12PS-IIIb-10",
+      "question": "In the modern nuclear model, the atom is mostly:",
+      "options": [
+        "Solid matter",
+        "Empty space",
+        "Made of electrons",
+        "Made of protons"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 18,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Niels Bohr's model introduced the idea that:",
+      "options": [
+        "Electrons orbit in fixed, quantized energy levels",
+        "Electrons are randomly scattered in the atom",
+        "The nucleus contains electrons",
+        "Atoms cannot be split"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 19,
+      "code": "S11/12PS-IIIb-10",
+      "question": "Which subatomic particle has no charge?",
+      "options": [
+        "Proton",
+        "Electron",
+        "Neutron",
+        "Positron"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 20,
+      "code": "S11/12PS-IIIb-10",
+      "question": "The nucleus of an atom contains:",
+      "options": [
+        "Only protons",
+        "Protons and neutrons",
+        "Protons and electrons",
+        "Electrons and neutrons"
+      ],
+      "answer": 1
+    }
+  ]
+}
