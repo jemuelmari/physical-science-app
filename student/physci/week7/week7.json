@@ -1,0 +1,16 @@
+{
+  "week": 7,
+  "era": "Chemical Bonding Era",
+  "title": "Polarity & Intermolecular Forces",
+  "period": "20th century",
+  "icon": "🧪",
+  "contentStandard": "How the properties of matter relate to their chemical structure",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIc-15",   "competency": "Determine if a molecule is polar or non-polar given its structure", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIc-16",   "competency": "Relate the polarity of a molecule to its properties", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIIc-d-17", "competency": "Describe the general types of intermolecular forces", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIId-e-18", "competency": "Give the type of intermolecular forces in the properties of substances", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": []
+}
