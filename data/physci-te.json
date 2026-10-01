@@ -1,0 +1,370 @@
+{
+  "assessmentId": "physci-te",
+  "subject": "physci",
+  "type": "term",
+  "title": "Term Exam — Physical Science (Weeks 1–10)",
+  "timeLimit": 60,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIa-1",
+      "question": "The Big Bang theory is supported by which key evidence?",
+      "options": [
+        "Cosmic microwave background radiation",
+        "Fossils of ancient stars",
+        "The discovery of atoms",
+        "The shape of the Moon"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIa-2",
+      "question": "Which element is the FINAL product of nuclear fusion in a massive star before it explodes?",
+      "options": [
+        "Helium",
+        "Carbon",
+        "Iron",
+        "Uranium"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIa-b-4",
+      "question": "Elements heavier than iron form primarily through:",
+      "options": [
+        "Nuclear fusion in the Sun",
+        "Supernova explosions and neutron star mergers",
+        "Volcanic activity",
+        "Photosynthesis"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IIIa-b-5",
+      "question": "Which philosopher coined the term 'atomos'?",
+      "options": [
+        "Aristotle",
+        "Democritus",
+        "Plato",
+        "Socrates"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IIIb-7",
+      "question": "Alchemists contributed to modern chemistry by:",
+      "options": [
+        "Discovering the periodic table",
+        "Developing laboratory techniques like distillation",
+        "Discovering subatomic particles",
+        "Building the first telescope"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIc-13",
+      "question": "Dalton's atomic theory states that atoms:",
+      "options": [
+        "Can be divided into smaller particles",
+        "Are identical within the same element",
+        "Can be created in chemical reactions",
+        "Have no mass"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIb-9",
+      "question": "The gold foil experiment was performed by:",
+      "options": [
+        "Thomson",
+        "Rutherford",
+        "Bohr",
+        "Dalton"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IIIb-10",
+      "question": "Which subatomic particle is uncharged?",
+      "options": [
+        "Proton",
+        "Electron",
+        "Neutron",
+        "Ion"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IIIb-11",
+      "question": "The atomic number of an element corresponds to:",
+      "options": [
+        "The number of protons",
+        "The number of neutrons",
+        "The atomic mass",
+        "The number of isotopes"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIIb-12",
+      "question": "Which type of decay increases the atomic number by 1?",
+      "options": [
+        "Alpha decay",
+        "Beta decay",
+        "Gamma emission",
+        "Electron capture"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 11,
+      "code": "S11/12PS-IIIc-15",
+      "question": "Which molecule is polar?",
+      "options": [
+        "CO₂",
+        "CH₄",
+        "H₂O",
+        "CCl₄"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 12,
+      "code": "S11/12PS-IIIc-d-17",
+      "question": "Which intermolecular force is responsible for water's high boiling point?",
+      "options": [
+        "London dispersion",
+        "Dipole–dipole",
+        "Hydrogen bonding",
+        "Ion–dipole"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 13,
+      "code": "S11/12PS-IIId-e-19",
+      "question": "As intermolecular forces INCREASE, the boiling point of a substance:",
+      "options": [
+        "Increases",
+        "Decreases",
+        "Remains the same",
+        "Becomes zero"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 14,
+      "code": "S11/12PS-IIId-e-21",
+      "question": "Which factor does NOT affect the rate of a chemical reaction?",
+      "options": [
+        "Temperature",
+        "Concentration of reactants",
+        "Surface area",
+        "Color of the container"
+      ],
+      "answer": 3
+    },
+    {
+      "id": 15,
+      "code": "S11/12PS-IIId-e-24",
+      "question": "A catalyst is a substance that:",
+      "options": [
+        "Increases the activation energy",
+        "Decreases reaction rate",
+        "Speeds up a reaction without being consumed",
+        "Is always a solid"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 16,
+      "code": "S11/12PS-IIId-h-25",
+      "question": "In the reaction 2H₂ + O₂ → 2H₂O, how many moles of H₂O form from 4 moles of H₂?",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 17,
+      "code": "S11/12PS-IIIh-27",
+      "question": "In a reaction, the limiting reactant is:",
+      "options": [
+        "The reactant in excess",
+        "The reactant that runs out first",
+        "Always the first reactant listed",
+        "The product of the reaction"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 18,
+      "code": "S11/12PS-IIIi-28",
+      "question": "A reaction that absorbs heat is called:",
+      "options": [
+        "Exothermic",
+        "Endothermic",
+        "Isothermal",
+        "Adiabatic"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 19,
+      "code": "S11/12PS-IIIi-29",
+      "question": "Which of the following is a renewable energy source?",
+      "options": [
+        "Coal",
+        "Petroleum",
+        "Geothermal",
+        "Natural gas"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 20,
+      "code": "S11/12PS-IIIi-j-31",
+      "question": "The active ingredient in most household bleach is:",
+      "options": [
+        "Sodium chloride",
+        "Sodium hypochlorite",
+        "Ammonia",
+        "Vinegar"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 21,
+      "code": "S11/12PS-IVa-36",
+      "question": "Which of the following is an example of natural motion in Aristotelian physics?",
+      "options": [
+        "A ball thrown upward",
+        "A stone falling to the ground",
+        "A cart pushed by a horse",
+        "A bird flying"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 22,
+      "code": "S11/12PS-IVa-37",
+      "question": "The daily east-to-west motion of the Sun across the sky is called:",
+      "options": [
+        "Annual motion",
+        "Diurnal motion",
+        "Precession",
+        "Retrograde motion"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 23,
+      "code": "S11/12PS-IVa-40",
+      "question": "The Ptolemaic model explained retrograde motion using:",
+      "options": [
+        "Elliptical orbits",
+        "Epicycles and deferents",
+        "Heliocentric orbits",
+        "Gravitational lensing"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 24,
+      "code": "S11/12PS-IVb-45",
+      "question": "Kepler's 3rd law states that:",
+      "options": [
+        "T² ∝ a³",
+        "F = ma",
+        "E = mc²",
+        "PV = nRT"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 25,
+      "code": "S11/12PS-IVc-46",
+      "question": "According to Galileo, if friction were removed, a moving object would:",
+      "options": [
+        "Stop immediately",
+        "Continue moving forever",
+        "Curve upward",
+        "Reverse direction"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 26,
+      "code": "S11/12PS-IVd-50",
+      "question": "Newton's 1st Law of Motion is also known as the Law of:",
+      "options": [
+        "Acceleration",
+        "Inertia",
+        "Action-Reaction",
+        "Gravitation"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 27,
+      "code": "S11/12PS-IVd-50",
+      "question": "Newton's 3rd Law states that:",
+      "options": [
+        "F = ma",
+        "For every action, there is an equal and opposite reaction",
+        "Objects in motion stay in motion",
+        "Energy is conserved"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 28,
+      "code": "S11/12PS-IVd-52",
+      "question": "The acceleration due to gravity on Earth is approximately:",
+      "options": [
+        "9.8 m/s²",
+        "1.6 m/s²",
+        "3.0 × 10⁸ m/s",
+        "6.67 × 10⁻¹¹ N·m²/kg²"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 29,
+      "code": "S11/12PS-IVd-52",
+      "question": "Which factor determines the gravitational force between two objects?",
+      "options": [
+        "Their color and shape",
+        "Their masses and distance between them",
+        "Their temperature",
+        "Their electric charge"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 30,
+      "code": "S11/12PS-IVd-51",
+      "question": "Newton's 1st Law differs from Galileo's assertion because Newton:",
+      "options": [
+        "Rejected the concept of inertia",
+        "Formalized inertia as a fundamental property of matter",
+        "Believed force is needed to sustain motion",
+        "Denied the existence of gravity"
+      ],
+      "answer": 1
+    }
+  ]
+}
