@@ -1,0 +1,96 @@
+Physical Science Online Modular App
+Version: 1.0.0
+Release Date: 2026-01-15
+Grade Level: 11/12
+Subject Code: physci
+Term: 1 Term (10 Weeks)
+
+────────────────────────────────────────
+CHANGELOG
+────────────────────────────────────────
+
+[1.0.0] — 2026-01-15
+Initial release.
+
+✨ Features
+• 10-week chronological curriculum (Cosmic Origins → Cosmos & Motion)
+• 40 lessons (4 days/week × 10 weeks × 1 hour/day)
+• Full assessment suite:
+
+3 quizzes (physci-quiz1, quiz2, quiz3)
+
+2 summative tests (physci-st1, physci-st2)
+
+1 term exam (physci-te)
+
+1 performance task (physci-pt1)
+• 130 total assessment items, all competency-tagged
+• Offline-first storage (localStorage)
+• Optional Google Apps Script cloud sync
+• Teacher dashboard (class record, item analysis, intervention)
+• Transmutation table (DepEd-compliant)
+• Activity gating (lessons unlock assessments)
+• Mobile-responsive design
+• GitHub Pages ready
+
+📚 Curriculum Alignment
+• DepEd K to 12 Physical Science CG (August 2016)
+• All 44 competencies mapped (S11/12PS-… codes)
+• Content standards:
+
+Formation of elements in the universe
+
+Ancient Greek to the present (atomic theory)
+
+Properties of matter and chemical structure
+
+Chemical changes
+
+Household & personal care products
+
+Earth's place in the universe
+
+Universality of physics laws
+
+🎨 Chronological Flow
+
+Cosmic Origins
+
+Ancient Greece
+
+Alchemy → Chemistry
+
+Atomic Theory
+
+Subatomic Revolution
+
+Nuclear Age
+
+Chemical Bonding Era
+
+Industrial Chemistry
+
+Consumer Chemistry
+
+Cosmos & Motion
+
+────────────────────────────────────────
+PLANNED
+────────────────────────────────────────
+
+[1.1.0] — TBD
+• Remediation module content
+• Printable worksheets per week
+• Teacher analytics charts
+• QR-code login for students
+
+[2.0.0] — TBD
+• Multi-section support
+• Real-time sync across devices
+• Offline PWA installation
+• Teacher-to-teacher record sharing
+
+────────────────────────────────────────
+Author: Jemuel Mari
+Repo: https://github.com/jemuelmari/physical-science-app
+────────────────────────────────────────
