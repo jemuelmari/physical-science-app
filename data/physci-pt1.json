@@ -1,0 +1,130 @@
+{
+  "assessmentId": "physci-pt1",
+  "subject": "physci",
+  "type": "performance",
+  "title": "Performance Task 1 — Timeline of the Atom",
+  "timeLimit": 0,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIa-b-5",
+      "question": "Which Ancient Greek philosopher is credited with the first atomic idea?",
+      "options": [
+        "Aristotle",
+        "Democritus",
+        "Plato",
+        "Pythagoras"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIa-b-6",
+      "question": "Which of the following was NOT one of the four classical elements?",
+      "options": [
+        "Fire",
+        "Air",
+        "Water",
+        "Metal"
+      ],
+      "answer": 3
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIb-7",
+      "question": "Alchemists are considered forerunners of:",
+      "options": [
+        "Astronomy",
+        "Modern chemistry",
+        "Biology",
+        "Physics"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IIIc-13",
+      "question": "John Dalton is best known for:",
+      "options": [
+        "Discovering the electron",
+        "Proposing the atomic theory",
+        "Inventing the periodic table",
+        "Discovering radioactivity"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IIIb-8",
+      "question": "The discovery of the electron is attributed to:",
+      "options": [
+        "Rutherford",
+        "Thomson",
+        "Bohr",
+        "Moseley"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Rutherford's nuclear model was based on:",
+      "options": [
+        "The gold foil experiment",
+        "The cathode ray tube",
+        "Spectroscopy of hydrogen",
+        "The photoelectric effect"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Moseley's contribution to atomic theory was:",
+      "options": [
+        "He showed the atomic number = proton count",
+        "He discovered the neutron",
+        "He proposed the plum pudding model",
+        "He discovered gamma rays"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IIIb-9",
+      "question": "Bohr's model introduced the concept of:",
+      "options": [
+        "Electron clouds",
+        "Quantized electron orbits",
+        "Nuclear fission",
+        "Isotopes"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IIIb-10",
+      "question": "In the modern atomic model, electrons are found in:",
+      "options": [
+        "Fixed circular orbits only",
+        "Probability clouds around the nucleus",
+        "The nucleus",
+        "The atomic center"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIIb-10",
+      "question": "Which subatomic particle was discovered LAST?",
+      "options": [
+        "Electron",
+        "Proton",
+        "Neutron",
+        "Photon"
+      ],
+      "answer": 2
+    }
+  ]
+}
