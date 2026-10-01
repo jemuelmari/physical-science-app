@@ -1,0 +1,16 @@
+{
+  "week": 10,
+  "era": "Cosmos & Motion",
+  "title": "Models of the Universe, Kepler, Galileo, Newton",
+  "period": "1500s – 1700s",
+  "icon": "🔭",
+  "contentStandard": "Why we believe that the laws of physics are universal",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IVa-39", "competency": "Explain how Plato's problem of 'Saving the Appearances' constrained Greek models of the Universe", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IVa-40", "competency": "Compare and contrast the models/descriptions of the universe by Eudoxus, Aristotle, Aristarchus, Ptolemy, and Copernicus", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IVb-45", "competency": "Apply Kepler's 3rd law of planetary motion to objects in the solar system", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IVd-52", "competency": "Use algebra, Newton's 2nd Law of Motion, and Newton's Law of Universal Gravitation to show that objects fall with identical accelerations independent of their mass", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": ["Strobe Light", "NSTIC Cart-Rail System", "Prism", "Diffraction Slits"]
+}
