@@ -1,0 +1,16 @@
+{
+  "week": 8,
+  "era": "Industrial Chemistry",
+  "title": "Reaction Rates, Stoichiometry & Energy",
+  "period": "19th – 20th century",
+  "icon": "🏭",
+  "contentStandard": "How chemical changes take place",
+  "performanceStandard": "Make a poster, flyer, or brochure on a product indicating its uses, properties, mode of action, and precautions",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIId-e-21", "competency": "Use simple collision theory to explain the effects of concentration, temperature, and particle size on the rate of reaction", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIId-e-24", "competency": "Define catalyst and describe how it affects reaction rate", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIId-h-25", "competency": "Calculate the amount of substances used or produced in a chemical reaction", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIId-h-26", "competency": "Calculate percent yield of a reaction", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": ["Manganese Dioxide (MnO₂)", "Alcohol Thermometer", "Hydrochloric Acid (HCl)"]
+}
