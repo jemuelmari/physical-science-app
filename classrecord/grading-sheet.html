@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grading Sheet · Physical Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+  <style>
+    @media print {
+      .app-header, .filter-bar, .no-print, .app-footer { display: none !important; }
+      body { background: #fff !important; }
+      .grading-sheet { box-shadow: none !important; border: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header teacher-header no-print">
+    <div class="container flex-between">
+      <div>
+        <h1>📄 Grading Sheet</h1>
+        <span class="version">Physical Science · Teacher</span>
+      </div>
+      <div class="header-actions">
+        <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
+
+    <div class="filter-bar no-print">
+      <div class="filter-group">
+        <label>Student</label>
+        <select id="student-select"><option value="">— Select Student —</option></select>
+      </div>
+      <div class="filter-actions">
+        <button id="btn-generate" class="btn btn-primary">▶ Generate Sheet</button>
+        <button id="btn-print" class="btn btn-outline">🖨 Print</button>
+      </div>
+    </div>
+
+    <div id="sheet-output"></div>
+
+  </main>
+
+  <footer class="app-footer no-print"><p>Grading Sheet · v1.0.0</p></footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      App.requireTeacher();
+      await App.loadRegistry();
+
+      // Populate student dropdown
+      const studentsMap = new Map();
+      Store.getRecords().forEach(r => {
+        if (!studentsMap.has(r.lrn)) {
+          studentsMap.set(r.lrn, {
+            lrn: r.lrn,
+            lastName: r.lastName || '',
+            firstName: r.firstName || '',
+            gradeLevel: r.gradeLevel || '',
+            section: r.section || ''
+          });
+        }
+      });
+
+      const sel = document.getElementById('student-select');
+      [...studentsMap.values()]
+        .sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''))
+        .forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.lrn;
+          opt.textContent = `${s.lastName}, ${s.firstName} (${s.lrn})`;
+          sel.appendChild(opt);
+        });
+
+      document.getElementById('btn-generate').addEventListener('click', () => {
+        const lrn = sel.value;
+        if (!lrn) { alert('Please select a student.'); return; }
+        generateSheet(lrn);
+      });
+
+      document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+      function generateSheet(lrn) {
+        const student = studentsMap.get(lrn);
+        const records = Store.getRecordsByStudent(lrn);
+        const assessments = App.getAssessments();
+
+        if (!student || !records.length) {
+          document.getElementById('sheet-output').innerHTML =
+            `<div class="empty-state">No records found.</div>`;
+          return;
+        }
+
+        const byAssessment = {};
+        records.forEach(r => { byAssessment[r.assessmentId] = r; });
+
+        const rows = assessments.map(a => {
+          const rec = byAssessment[a.id];
+          return {
+            title: a.title,
+            type: a.type,
+            weeks: a.weeks,
+            items: a.items,
+            score: rec ? rec.score : null,
+            total: rec ? rec.total : a.items,
+            percent: rec ? rec.percent : null,
+            grade: rec ? rec.finalGrade : null,
+            timestamp: rec ? rec.timestamp : null,
+            passed: rec ? rec.passed : null
+          };
+        });
+
+        const completed = rows.filter(r => r.grade != null);
+        const avg = completed.length
+          ? Math.round(completed.reduce((s, r) => s + r.grade, 0) / completed.length)
+          : null;
+        const transmuted = avg != null ? Transmutation.apply(avg) : null;
+        const passed = transmuted != null && transmuted >= 75;
+        const descriptor = transmuted != null ? Transmutation.getDescriptor(transmuted) : null;
+
+        document.getElementById('sheet-output').innerHTML = `
+          <div class="grading-sheet card" style="padding:32px;">
+
+            <div style="text-align:center;border-bottom:2px solid #1b7a3d;padding-bottom:16px;margin-bottom:24px;">
+              <div style="font-size:0.85rem;letter-spacing:1px;color:#5f6368;text-transform:uppercase;">Republic of the Philippines</div>
+              <div style="font-size:0.85rem;color:#5f6368;">Department of Education</div>
+              <div style="font-size:1.3rem;font-weight:800;color:#1b7a3d;margin-top:6px;">PHYSICAL SCIENCE</div>
+              <div style="font-size:0.85rem;color:#5f6368;">Senior High School · Grade 11/12</div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+              <div>
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Student Name</div>
+                <div style="font-size:1.1rem;font-weight:700;">${UI.escapeHtml(student.lastName)}, ${UI.escapeHtml(student.firstName)}</div>
+              </div>
+              <div>
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">LRN</div>
+                <div style="font-size:1.1rem;font-weight:700;font-family:monospace;">${UI.escapeHtml(student.lrn)}</div>
+              </div>
+              <div>
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Grade Level</div>
+                <div style="font-size:1rem;font-weight:600;">${UI.escapeHtml(student.gradeLevel)}</div>
+              </div>
+              <div>
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Section</div>
+                <div style="font-size:1rem;font-weight:600;">${UI.escapeHtml(student.section)}</div>
+              </div>
+            </div>
+
+            <table class="modern-table" style="margin-bottom:24px;">
+              <thead>
+                <tr>
+                  <th>Assessment</th>
+                  <th>Weeks</th>
+                  <th>Items</th>
+                  <th>Score</th>
+                  <th>%</th>
+                  <th>Grade</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(r => `
+                  <tr>
+                    <td>${UI.escapeHtml(r.title)}</td>
+                    <td>${UI.escapeHtml(r.weeks)}</td>
+                    <td>${r.total}</td>
+                    <td>${r.score != null ? r.score : '—'}</td>
+                    <td>${r.percent != null ? r.percent + '%' : '—'}</td>
+                    <td>${r.grade != null ? r.grade : '—'}</td>
+                    <td>${r.passed == null ? '—' : (r.passed ? '✓ Passed' : '✗ Failed')}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px;background:#f5f7fa;border-radius:12px;">
+              <div>
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Average Grade</div>
+                <div style="font-size:2rem;font-weight:800;color:${passed ? '#2e7d32' : '#c62828'};">${avg != null ? avg : '—'}</div>
+              </div>
+              <div>
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Transmuted Grade</div>
+                <div style="font-size:2rem;font-weight:800;color:${passed ? '#2e7d32' : '#c62828'};">${transmuted != null ? transmuted : '—'}</div>
+              </div>
+              <div style="grid-column:1 / -1;">
+                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Descriptor</div>
+                <div style="font-size:1.1rem;font-weight:700;color:${descriptor ? descriptor.color : '#5f6368'};">
+                  ${descriptor ? descriptor.label + ' (' + descriptor.code + ')' : '—'}
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:32px;padding-top:24px;border-top:1px dashed #cfd8dc;display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+              <div>
+                <div style="border-top:1px solid #37474f;margin-top:32px;padding-top:4px;font-size:0.8rem;text-align:center;">Subject Teacher</div>
+              </div>
+              <div>
+                <div style="border-top:1px solid #37474f;margin-top:32px;padding-top:4px;font-size:0.8rem;text-align:center;">Parent / Guardian</div>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;font-size:0.72rem;color:#90a4ae;text-align:center;">
+              Generated on ${UI.formatDate(new Date().toISOString())} · Physical Science Online Modular App v1.0.0
+            </div>
+
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
