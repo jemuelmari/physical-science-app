@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intervention · Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🚨 Intervention</h1>
+        <span class="version">Physical Science · Teacher</span>
+      </div>
+      <div class="header-actions">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Hub</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1100px;">
+
+    <div class="hero-card" style="margin-bottom:24px;">
+      <h2>🎯 Students Needing Support</h2>
+      <p class="text-muted">
+        Grouped by severity based on their average transmuted grade across all assessments.
+      </p>
+    </div>
+
+    <div id="intervention-groups"></div>
+
+  </main>
+
+  <footer class="app-footer"><p>Intervention · v1.0.0</p></footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      App.requireTeacher();
+      await App.loadRegistry();
+
+      const records = Store.getRecords();
+      if (!records.length) {
+        document.getElementById('intervention-groups').innerHTML =
+          `<div class="empty-state">No records yet.</div>`;
+        return;
+      }
+
+      // Group records by student
+      const studentsMap = new Map();
+      records.forEach(r => {
+        const key = r.lrn || 'unknown';
+        if (!studentsMap.has(key)) {
+          studentsMap.set(key, {
+            lrn: key,
+            lastName: r.lastName || '',
+            firstName: r.firstName || '',
+            gradeLevel: r.gradeLevel || '',
+            section: r.section || '',
+            grades: []
+          });
+        }
+        studentsMap.get(key).grades.push(Number(r.finalGrade) || 0);
+      });
+
+      const students = Array.from(studentsMap.values()).map(s => {
+        const avg = s.grades.length
+          ? Math.round(s.grades.reduce((x, y) => x + y, 0) / s.grades.length)
+          : 0;
+        return Object.assign({}, s, { avg });
+      });
+
+      const groups = {
+        urgent:      students.filter(s => s.avg < 70),
+        remediation: students.filter(s => s.avg >= 70 && s.avg < 75),
+        onTrack:     students.filter(s => s.avg >= 75 && s.avg < 85),
+        enrichment:  students.filter(s => s.avg >= 85)
+      };
+
+      const groupMeta = [
+        { key: 'urgent',      icon: '🚨', title: 'Urgent Intervention',     cls: 'urgent',     desc: 'Average below 70 — needs immediate support' },
+        { key: 'remediation', icon: '⚠️', title: 'For Remediation',         cls: 'remediation',desc: 'Average 70–74 — needs focused review' },
+        { key: 'onTrack',     icon: '✅', title: 'On Track',                cls: 'on-track',   desc: 'Average 75–84 — performing as expected' },
+        { key: 'enrichment',  icon: '⭐', title: 'For Enrichment',          cls: 'enrichment', desc: 'Average 85+ — ready for advanced work' }
+      ];
+
+      document.getElementById('intervention-groups').innerHTML = groupMeta.map(g => {
+        const list = groups[g.key];
+        if (!list.length) return '';
+        return `
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-header">
+              <div class="card-title">${g.icon} ${g.title} <span class="badge badge-${g.cls}">${list.length}</span></div>
+              <span class="text-muted text-small">${g.desc}</span>
+            </div>
+            <div class="modern-table-wrap">
+              <table class="modern-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>LRN</th>
+                    <th>Grade · Section</th>
+                    <th>Average</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${list.sort((a, b) => a.avg - b.avg).map(s => `
+                    <tr>
+                      <td>${UI.escapeHtml(s.lastName)}, ${UI.escapeHtml(s.firstName)}</td>
+                      <td>${UI.escapeHtml(s.lrn)}</td>
+                      <td>${UI.escapeHtml(s.gradeLevel)} · ${UI.escapeHtml(s.section)}</td>
+                      <td>${UI.gradeBadge(s.avg)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }).join('') || `<div class="empty-state">No students to display.</div>`;
+    });
+  </script>
+</body>
+</html>
