@@ -1,0 +1,63 @@
+{
+  "subject": "physci",
+  "subjectTitle": "Physical Science",
+  "gradeLevel": "11/12",
+  "term": "1 Term (10 Weeks)",
+  "chronologicalFlow": "Cosmic Origins → Ancient Greece → Alchemy → Atomic Theory → Subatomic Revolution → Nuclear Age → Chemical Bonding → Industrial Chemistry → Consumer Chemistry → Cosmos & Motion",
+  "competencies": [
+    { "code": "S11/12PS-IIIa-1",   "week": 1,  "era": "Cosmic Origins",        "desc": "Give evidence for and explain the formation of the light elements in the Big Bang theory" },
+    { "code": "S11/12PS-IIIa-2",   "week": 1,  "era": "Cosmic Origins",        "desc": "Give evidence for and describe formation of heavier elements during star formation and evolution" },
+    { "code": "S11/12PS-IIIa-3",   "week": 1,  "era": "Cosmic Origins",        "desc": "Write nuclear fusion reactions that take place in stars leading to formation of new elements" },
+    { "code": "S11/12PS-IIIa-b-4", "week": 1,  "era": "Cosmic Origins",        "desc": "Describe how elements heavier than iron are formed" },
+
+    { "code": "S11/12PS-IIIa-b-5", "week": 2,  "era": "Ancient Greece",        "desc": "Describe the ideas of the Ancient Greeks on the atom" },
+    { "code": "S11/12PS-IIIa-b-6", "week": 2,  "era": "Ancient Greece",        "desc": "Describe the ideas of the Ancient Greeks on the elements" },
+    { "code": "S11/12PS-IVa-36",   "week": 2,  "era": "Ancient Greece",        "desc": "Explain what the Greeks considered to be the three types of terrestrial motion" },
+    { "code": "S11/12PS-IVa-38",   "week": 2,  "era": "Ancient Greece",        "desc": "Explain how the Greeks knew that the Earth is spherical" },
+
+    { "code": "S11/12PS-IIIb-7",   "week": 3,  "era": "Alchemy → Chemistry",   "desc": "Describe the contributions of the alchemists to the science of chemistry" },
+    { "code": "S11/12PS-IVa-37",   "week": 3,  "era": "Alchemy → Astronomy",   "desc": "Explain what is meant by diurnal motion, annual motion, precession of the equinoxes" },
+
+    { "code": "S11/12PS-IIIc-13",  "week": 4,  "era": "Birth of Atomic Theory","desc": "Cite the contribution of John Dalton toward the understanding of the concept of the chemical elements" },
+    { "code": "S11/12PS-IIIc-14",  "week": 4,  "era": "Birth of Atomic Theory","desc": "Explain how Dalton's theory contributed to the discovery of other elements" },
+
+    { "code": "S11/12PS-IIIb-8",   "week": 5,  "era": "Subatomic Revolution",  "desc": "Point out the main ideas in the discovery of the structure of the atom and its subatomic particles" },
+    { "code": "S11/12PS-IIIb-9",   "week": 5,  "era": "Subatomic Revolution",  "desc": "Cite the contributions of J.J. Thomson, Ernest Rutherford, Henry Moseley, and Niels Bohr to the understanding of the structure of the atom" },
+    { "code": "S11/12PS-IIIb-10",  "week": 5,  "era": "Subatomic Revolution",  "desc": "Describe the nuclear model of the atom and the location of its major components (protons, neutrons, and electrons)" },
+
+    { "code": "S11/12PS-IIIb-11",  "week": 6,  "era": "Nuclear Age",           "desc": "Explain how the concept of atomic number led to the synthesis of new elements in the laboratory" },
+    { "code": "S11/12PS-IIIb-12",  "week": 6,  "era": "Nuclear Age",           "desc": "Write the nuclear reactions involved in the synthesis of new elements" },
+
+    { "code": "S11/12PS-IIIc-15",  "week": 7,  "era": "Chemical Bonding Era",  "desc": "Determine if a molecule is polar or non-polar given its structure" },
+    { "code": "S11/12PS-IIIc-16",  "week": 7,  "era": "Chemical Bonding Era",  "desc": "Relate the polarity of a molecule to its properties" },
+    { "code": "S11/12PS-IIIc-d-17","week": 7,  "era": "Chemical Bonding Era",  "desc": "Describe the general types of intermolecular forces" },
+    { "code": "S11/12PS-IIId-e-18","week": 7,  "era": "Chemical Bonding Era",  "desc": "Give the type of intermolecular forces in the properties of substances" },
+    { "code": "S11/12PS-IIId-e-19","week": 7,  "era": "Chemical Bonding Era",  "desc": "Explain the effect of intermolecular forces on the properties of substances" },
+    { "code": "S11/12PS-IIId-e-20","week": 7,  "era": "Chemical Bonding Era",  "desc": "Explain how the uses of materials depend on their properties (implants, sports equipment, electronics, construction, household gadgets)" },
+
+    { "code": "S11/12PS-IIId-e-21","week": 8,  "era": "Industrial Chemistry",  "desc": "Use simple collision theory to explain the effects of concentration, temperature, and particle size on the rate of reaction" },
+    { "code": "S11/12PS-IIId-e-24","week": 8,  "era": "Industrial Chemistry",  "desc": "Define catalyst and describe how it affects reaction rate" },
+    { "code": "S11/12PS-IIId-h-25","week": 8,  "era": "Industrial Chemistry",  "desc": "Calculate the amount of substances used or produced in a chemical reaction" },
+    { "code": "S11/12PS-IIId-h-26","week": 8,  "era": "Industrial Chemistry",  "desc": "Calculate percent yield of a reaction" },
+    { "code": "S11/12PS-IIIh-27",  "week": 8,  "era": "Industrial Chemistry",  "desc": "Determine the limiting reactant in a reaction and calculate the amount of product formed" },
+    { "code": "S11/12PS-IIIi-28",  "week": 8,  "era": "Industrial Chemistry",  "desc": "Recognize that energy is released or absorbed during a chemical reaction" },
+    { "code": "S11/12PS-IIIi-29",  "week": 8,  "era": "Industrial Chemistry",  "desc": "Describe how energy is harnessed from different sources (fossil fuels, biogas, geothermal, hydrothermal, batteries, solar cells, biomass)" },
+
+    { "code": "S11/12PS-IIIi-j-30","week": 9,  "era": "Consumer Chemistry",    "desc": "Give common examples of cleaning materials for the house and for personal care" },
+    { "code": "S11/12PS-IIIi-j-31","week": 9,  "era": "Consumer Chemistry",    "desc": "From product labels, identify the active ingredient(s) of cleaning products used at home" },
+    { "code": "S11/12PS-IIIi-j-32","week": 9,  "era": "Consumer Chemistry",    "desc": "Give common examples of personal care products used to enhance the appearance of the human body" },
+    { "code": "S11/12PS-IIIi-j-33","week": 9,  "era": "Consumer Chemistry",    "desc": "Identify the major ingredients of cosmetics (body lotion, skin whitener, deodorants, shaving cream, perfume)" },
+    { "code": "S11/12PS-IIIi-j-34","week": 9,  "era": "Consumer Chemistry",    "desc": "Explain the precautionary measures indicated in various cleaning products and cosmetics" },
+    { "code": "S11/12PS-IIIi-j-35","week": 9,  "era": "Consumer Chemistry",    "desc": "Give the use of the other ingredients in cleaning agents" },
+
+    { "code": "S11/12PS-IVa-39",   "week": 10, "era": "Cosmos & Motion",       "desc": "Explain how Plato's problem of 'Saving the Appearances' constrained Greek models of the Universe" },
+    { "code": "S11/12PS-IVa-40",   "week": 10, "era": "Cosmos & Motion",       "desc": "Compare and contrast the models/descriptions of the universe by Eudoxus, Aristotle, Aristarchus, Ptolemy, and Copernicus" },
+    { "code": "S11/12PS-IVa-41",   "week": 10, "era": "Cosmos & Motion",       "desc": "Cite examples of astronomical phenomena known to astronomers before the advent of telescopes" },
+    { "code": "S11/12PS-IVa-42",   "week": 10, "era": "Cosmos & Motion",       "desc": "Compare and contrast explanations and models of astronomical phenomena (Copernican, Ptolemaic, and Tychonic)" },
+    { "code": "S11/12PS-IVb-45",   "week": 10, "era": "Cosmos & Motion",       "desc": "Apply Kepler's 3rd law of planetary motion to objects in the solar system" },
+    { "code": "S11/12PS-IVc-46",   "week": 10, "era": "Cosmos & Motion",       "desc": "Compare and contrast the Aristotelian and Galilean conceptions of vertical motion, horizontal motion, and projectile motion" },
+    { "code": "S11/12PS-IVd-50",   "week": 10, "era": "Cosmos & Motion",       "desc": "Explain each of Newton's three laws of motion" },
+    { "code": "S11/12PS-IVd-51",   "week": 10, "era": "Cosmos & Motion",       "desc": "Explain the subtle distinction between Newton's 1st Law of Motion and Galileo's assertion that force is not necessary to sustain horizontal motion" },
+    { "code": "S11/12PS-IVd-52",   "week": 10, "era": "Cosmos & Motion",       "desc": "Use algebra, Newton's 2nd Law and Universal Gravitation to show objects fall with identical accelerations independent of mass" }
+  ]
+}
