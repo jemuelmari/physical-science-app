@@ -1,0 +1,310 @@
+{
+  "assessmentId": "physci-st2",
+  "subject": "physci",
+  "type": "summative",
+  "title": "Summative Test 2 — Weeks 6–10",
+  "timeLimit": 45,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIb-11",
+      "question": "The atomic number of an element is equal to the number of:",
+      "options": [
+        "Neutrons",
+        "Protons",
+        "Electrons + neutrons",
+        "Nucleons"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIb-11",
+      "question": "Which element was the first to be synthesized in a laboratory?",
+      "options": [
+        "Plutonium",
+        "Technetium",
+        "Americium",
+        "Francium"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIb-12",
+      "question": "When a beta particle is emitted, the atomic number:",
+      "options": [
+        "Increases by 1",
+        "Decreases by 1",
+        "Stays the same",
+        "Decreases by 4"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IIIb-12",
+      "question": "Which of the following nuclear reactions is balanced?",
+      "options": [
+        "²³⁸U + n → ²³⁹Pu + γ",
+        "¹H → ²H + e⁻",
+        "⁴He → ²H + ²H",
+        "¹⁴C → ¹⁴N + e⁻ + ν"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IIIc-15",
+      "question": "Which molecule is NONPOLAR?",
+      "options": [
+        "H₂O",
+        "NH₃",
+        "CO₂",
+        "HCl"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIc-16",
+      "question": "Polarity of molecules affects:",
+      "options": [
+        "Atomic number",
+        "Solubility and boiling point",
+        "Number of neutrons",
+        "Nuclear stability"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIc-d-17",
+      "question": "Which intermolecular force is strongest?",
+      "options": [
+        "London dispersion",
+        "Dipole–dipole",
+        "Hydrogen bonding",
+        "Ion–dipole"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IIId-e-18",
+      "question": "Hydrogen bonding can occur when hydrogen is bonded to:",
+      "options": [
+        "Carbon",
+        "Oxygen, nitrogen, or fluorine",
+        "Any halogen",
+        "Any metal"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IIId-e-19",
+      "question": "Water's unusually high boiling point is due to:",
+      "options": [
+        "Its small molecular size",
+        "Hydrogen bonding between water molecules",
+        "Its nonpolar nature",
+        "Its high atomic mass"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIId-e-20",
+      "question": "Why is diamond used in cutting tools?",
+      "options": [
+        "It is soft and flexible",
+        "It has a very high melting point and strong covalent bonds",
+        "It is a good conductor of electricity",
+        "It is lightweight"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 11,
+      "code": "S11/12PS-IIId-e-21",
+      "question": "Which factor INCREASES the rate of a chemical reaction?",
+      "options": [
+        "Decreasing temperature",
+        "Increasing concentration of reactants",
+        "Decreasing surface area",
+        "Adding an inhibitor"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 12,
+      "code": "S11/12PS-IIId-e-24",
+      "question": "A catalyst speeds up a reaction by:",
+      "options": [
+        "Increasing the temperature",
+        "Lowering the activation energy",
+        "Being consumed in the reaction",
+        "Increasing the concentration"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 13,
+      "code": "S11/12PS-IIId-h-25",
+      "question": "How many grams of water are produced when 4 g of H₂ reacts completely with O₂? (2H₂ + O₂ → 2H₂O)",
+      "options": [
+        "18 g",
+        "36 g",
+        "4 g",
+        "32 g"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 14,
+      "code": "S11/12PS-IIId-h-26",
+      "question": "If the theoretical yield is 50 g and the actual yield is 40 g, the percent yield is:",
+      "options": [
+        "40%",
+        "50%",
+        "80%",
+        "90%"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 15,
+      "code": "S11/12PS-IIIh-27",
+      "question": "The limiting reactant in a chemical reaction is the one that:",
+      "options": [
+        "Is present in the largest amount",
+        "Is completely consumed first, limiting product formation",
+        "Has the highest molar mass",
+        "Reacts the slowest"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 16,
+      "code": "S11/12PS-IIIi-28",
+      "question": "A reaction that releases heat to its surroundings is called:",
+      "options": [
+        "Endothermic",
+        "Exothermic",
+        "Isothermal",
+        "Reversible"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 17,
+      "code": "S11/12PS-IIIi-29",
+      "question": "Which of the following is a renewable energy source?",
+      "options": [
+        "Coal",
+        "Natural gas",
+        "Solar",
+        "Petroleum"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 18,
+      "code": "S11/12PS-IIIi-j-31",
+      "question": "The active ingredient in bleach that kills germs is:",
+      "options": [
+        "Sodium chloride",
+        "Sodium hypochlorite",
+        "Sodium bicarbonate",
+        "Citric acid"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 19,
+      "code": "S11/12PS-IIIi-j-33",
+      "question": "Which is a common humectant in cosmetics?",
+      "options": [
+        "Glycerin",
+        "Petroleum jelly",
+        "Sodium chloride",
+        "Ethanol"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 20,
+      "code": "S11/12PS-IVa-40",
+      "question": "Who proposed the heliocentric model of the universe?",
+      "options": [
+        "Ptolemy",
+        "Aristotle",
+        "Copernicus",
+        "Eudoxus"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 21,
+      "code": "S11/12PS-IVa-40",
+      "question": "The Ptolemaic model of the universe was:",
+      "options": [
+        "Heliocentric",
+        "Geocentric with epicycles",
+        "Sun-centered with circular orbits",
+        "Based on elliptical orbits"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 22,
+      "code": "S11/12PS-IVb-45",
+      "question": "Kepler's 3rd law states that:",
+      "options": [
+        "T² ∝ a³",
+        "T ∝ a",
+        "F = ma",
+        "E = mc²"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 23,
+      "code": "S11/12PS-IVc-46",
+      "question": "According to Galileo, an object in motion on a frictionless surface will:",
+      "options": [
+        "Stop immediately",
+        "Continue moving at constant velocity",
+        "Slow down gradually",
+        "Speed up"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 24,
+      "code": "S11/12PS-IVd-50",
+      "question": "Newton's 2nd Law of Motion is expressed as:",
+      "options": [
+        "F = ma",
+        "E = mc²",
+        "F = G m₁m₂ / r²",
+        "T² = a³"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 25,
+      "code": "S11/12PS-IVd-52",
+      "question": "In the absence of air resistance, a feather and a hammer dropped from the same height will:",
+      "options": [
+        "Fall at different rates",
+        "Fall at the same rate",
+        "Float in midair",
+        "Not move at all"
+      ],
+      "answer": 1
+    }
+  ]
+}
