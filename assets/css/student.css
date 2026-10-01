@@ -1,0 +1,271 @@
+/* ============================================================
+   student.css — Physical Science · Student-facing styles
+   Version: 1.0.0
+   ============================================================ */
+
+/* ---------- Timeline (student/physci/index.html) ---------- */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 32px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #1b7a3d, #42a5f5, #6a1b9a);
+  border-radius: 999px;
+  opacity: 0.25;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px 18px 76px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: #1b7a3d;
+  text-decoration: none;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: 12px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 3px solid #1b7a3d;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+}
+
+.timeline-body { flex: 1; min-width: 0; }
+
+.timeline-era {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #1b7a3d;
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.timeline-span {
+  font-size: 0.78rem;
+  color: #90a4ae;
+  font-family: 'Consolas', monospace;
+}
+
+/* ---------- Week Hero (weekN/index.html) ---------- */
+.week-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background: linear-gradient(135deg, #1b7a3d, #4caf50);
+  color: #fff;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(27, 122, 61, 0.2);
+}
+
+.week-hero[data-era="Cosmic Origins"]       { background: linear-gradient(135deg, #0d47a1, #1e88e5); }
+.week-hero[data-era="Ancient Greece"]       { background: linear-gradient(135deg, #5d4037, #8d6e63); }
+.week-hero[data-era="Alchemy → Chemistry"]  { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
+.week-hero[data-era="Atomic Theory"]        { background: linear-gradient(135deg, #00695c, #26a69a); }
+.week-hero[data-era="Subatomic Revolution"] { background: linear-gradient(135deg, #283593, #5c6bc0); }
+.week-hero[data-era="Nuclear Age"]          { background: linear-gradient(135deg, #b71c1c, #ef5350); }
+.week-hero[data-era="Chemical Bonding Era"] { background: linear-gradient(135deg, #004d40, #00897b); }
+.week-hero[data-era="Industrial Chemistry"] { background: linear-gradient(135deg, #e65100, #ff9800); }
+.week-hero[data-era="Consumer Chemistry"]   { background: linear-gradient(135deg, #ad1457, #ec407a); }
+.week-hero[data-era="Cosmos & Motion"]      { background: linear-gradient(135deg, #1a237e, #3949ab); }
+
+.week-hero-icon { font-size: 2.5rem; flex-shrink: 0; }
+
+.week-hero-body h2 {
+  color: #fff;
+  margin: 4px 0 6px;
+  font-size: 1.3rem;
+}
+
+.week-hero-body .text-muted {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.week-hero-era {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ---------- Days List (weekN/index.html) ---------- */
+.days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.day-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.day-card:hover {
+  border-color: #1b7a3d;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+}
+
+.day-num {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6f4ea;
+  color: #1b7a3d;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.day-body { flex: 1; min-width: 0; }
+
+.day-comp {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.day-code {
+  font-size: 0.75rem;
+  color: #90a4ae;
+  font-family: 'Consolas', monospace;
+}
+
+/* ---------- Lesson Page (day.html) ---------- */
+.lesson-hero {
+  padding: 22px;
+  background: linear-gradient(135deg, #f5f7fa, #eceff1);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  border-left: 5px solid #1b7a3d;
+}
+
+.lesson-hero .lesson-era {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1b7a3d;
+  margin-bottom: 4px;
+}
+
+.lesson-hero h2 {
+  font-size: 1.25rem;
+  margin: 0 0 6px;
+}
+
+.lesson-hero .lesson-code {
+  font-family: 'Consolas', monospace;
+  font-size: 0.8rem;
+  color: #90a4ae;
+}
+
+.lesson-section {
+  margin-bottom: 24px;
+}
+
+.lesson-section h3 {
+  font-size: 1rem;
+  color: #1b7a3d;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e6f4ea;
+}
+
+.lesson-section p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #37474f;
+  margin-bottom: 12px;
+}
+
+.lesson-section ul {
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.lesson-section li {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #37474f;
+  margin-bottom: 6px;
+}
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .timeline::before { left: 20px; }
+  .timeline-item { padding: 14px 14px 14px 60px; }
+  .timeline-icon { left: 4px; width: 36px; height: 36px; font-size: 1rem; }
+  .week-hero { flex-direction: column; text-align: center; }
+  .day-card { padding: 12px; gap: 12px; }
+  .day-num { width: 50px; height: 50px; font-size: 0.75rem; }
+}
