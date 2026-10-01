@@ -1,0 +1,59 @@
+{
+  "name": "Physical Science Online Modular App",
+  "short_name": "Physical Science",
+  "description": "DepEd Senior High School Physical Science — 10-week chronological curriculum with lessons, assessments, and teacher tools.",
+  "version": "1.0.0",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8f9fa",
+  "theme_color": "#1b7a3d",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "education",
+    "science",
+    "learning"
+  ],
+  "icons": [
+    {
+      "src": "assets/img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Student Dashboard",
+      "short_name": "Dashboard",
+      "url": "./student/dashboard.html",
+      "description": "Go to your student dashboard"
+    },
+    {
+      "name": "Timeline",
+      "short_name": "Timeline",
+      "url": "./student/physci/index.html",
+      "description": "View the 10-week chronological journey"
+    },
+    {
+      "name": "Assessments",
+      "short_name": "Assessments",
+      "url": "./student/assessments/index.html",
+      "description": "View available assessments"
+    },
+    {
+      "name": "Class Record",
+      "short_name": "Class Record",
+      "url": "./classrecord.html",
+      "description": "Teacher class record (login required)"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ]
+}
