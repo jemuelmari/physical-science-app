@@ -1,25 +1,170 @@
 {
+  "subject": "physci",
+  "subjectTitle": "Physical Science",
+  "gradeLevel": "11/12",
+  "term": "1 Term (10 Weeks)",
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-15",
+
   "weeks": [
-    { "n": 1,  "era": "Cosmic Origins",       "icon": "🌌", "title": "Formation of Elements in the Universe" },
-    { "n": 2,  "era": "Ancient Greece",       "icon": "🏛️", "title": "Greek Ideas on Matter & the Earth" },
-    { "n": 3,  "era": "Alchemy → Chemistry",  "icon": "⚗️", "title": "Alchemists & the Birth of Chemistry" },
-    { "n": 4,  "era": "Atomic Theory",        "icon": "⚛️", "title": "Dalton's Atomic Theory" },
-    { "n": 5,  "era": "Subatomic Revolution", "icon": "🔬", "title": "Thomson, Rutherford, Moseley, Bohr" },
-    { "n": 6,  "era": "Nuclear Age",          "icon": "☢️", "title": "Atomic Number & Nuclear Transmutation" },
-    { "n": 7,  "era": "Chemical Bonding Era", "icon": "🧪", "title": "Polarity & Intermolecular Forces" },
-    { "n": 8,  "era": "Industrial Chemistry", "icon": "🏭", "title": "Reaction Rates, Stoichiometry & Energy" },
-    { "n": 9,  "era": "Consumer Chemistry",   "icon": "🧴", "title": "Household & Personal Care Products" },
-    { "n": 10, "era": "Cosmos & Motion",      "icon": "🔭", "title": "Models of the Universe, Kepler, Galileo, Newton" }
+    {
+      "n": 1,
+      "era": "Cosmic Origins",
+      "icon": "🌌",
+      "title": "Formation of Elements in the Universe",
+      "period": "~13.8 Billion years ago",
+      "contentStandard": "How the elements found in the universe were formed",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 2,
+      "era": "Ancient Greece",
+      "icon": "🏛️",
+      "title": "Greek Ideas on Matter & the Earth",
+      "period": "~600 BC – 300 BC",
+      "contentStandard": "Ancient Greek to the present",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 3,
+      "era": "Alchemy → Chemistry",
+      "icon": "⚗️",
+      "title": "Alchemists & the Birth of Chemistry",
+      "period": "~300 AD – 1600s",
+      "contentStandard": "Ancient Greek to the present",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 4,
+      "era": "Atomic Theory",
+      "icon": "⚛️",
+      "title": "Dalton's Atomic Theory",
+      "period": "1803",
+      "contentStandard": "How the properties of matter relate to their chemical structure",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 5,
+      "era": "Subatomic Revolution",
+      "icon": "🔬",
+      "title": "Thomson, Rutherford, Moseley, Bohr",
+      "period": "1897 – 1913",
+      "contentStandard": "Ancient Greek to the present",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 6,
+      "era": "Nuclear Age",
+      "icon": "☢️",
+      "title": "Atomic Number & Nuclear Transmutation",
+      "period": "1919 – 1940s",
+      "contentStandard": "How the elements found in the universe were formed",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 7,
+      "era": "Chemical Bonding Era",
+      "icon": "🧪",
+      "title": "Polarity & Intermolecular Forces",
+      "period": "20th century",
+      "contentStandard": "How the properties of matter relate to their chemical structure",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    },
+    {
+      "n": 8,
+      "era": "Industrial Chemistry",
+      "icon": "🏭",
+      "title": "Reaction Rates, Stoichiometry & Energy",
+      "period": "19th – 20th century",
+      "contentStandard": "How chemical changes take place",
+      "performanceStandard": "Make a poster, flyer, or brochure on a product indicating its uses, properties, mode of action, and precautions"
+    },
+    {
+      "n": 9,
+      "era": "Consumer Chemistry",
+      "icon": "🧴",
+      "title": "Household & Personal Care Products",
+      "period": "Modern era",
+      "contentStandard": "How chemistry contributes to the understanding of household and personal care products",
+      "performanceStandard": "Make a poster, flyer, or brochure on a product indicating its uses, properties, mode of action, and precautions"
+    },
+    {
+      "n": 10,
+      "era": "Cosmos & Motion",
+      "icon": "🔭",
+      "title": "Models of the Universe, Kepler, Galileo, Newton",
+      "period": "1500s – 1700s",
+      "contentStandard": "Why we believe that the laws of physics are universal",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline"
+    }
   ],
+
   "assessments": [
-    { "id": "physci-quiz1", "type": "quiz",        "title": "Quiz 1 — Cosmic Origins & Ancient Greece", "items": 15, "time": 15, "weeks": "1–2",  "file": "quiz1.html" },
-    { "id": "physci-quiz2", "type": "quiz",        "title": "Quiz 2 — Alchemy, Dalton & Subatomic",     "items": 15, "time": 15, "weeks": "3–5",  "file": "quiz2.html" },
-    { "id": "physci-quiz3", "type": "quiz",        "title": "Quiz 3 — Nuclear Age & Bonding",           "items": 15, "time": 15, "weeks": "6–7",  "file": "quiz3.html" },
-    { "id": "physci-st1",   "type": "summative",   "title": "Summative Test 1 — Weeks 1–5",             "items": 20, "time": 45, "weeks": "1–5",  "file": "st1.html" },
-    { "id": "physci-st2",   "type": "summative",   "title": "Summative Test 2 — Weeks 6–10",            "items": 25, "time": 45, "weeks": "6–10", "file": "st2.html" },
-    { "id": "physci-te",    "type": "term",        "title": "Term Exam — Physical Science",             "items": 30, "time": 60, "weeks": "1–10", "file": "te.html" },
-    { "id": "physci-pt1",   "type": "performance", "title": "Performance Task 1 — Timeline of the Atom","items": 10, "time": 0,  "weeks": "1–5",  "file": "pt1.html" }
+    {
+      "id": "physci-quiz1",
+      "type": "quiz",
+      "title": "Quiz 1 — Cosmic Origins & Ancient Greece",
+      "items": 15,
+      "time": 15,
+      "weeks": "1–2",
+      "file": "quiz1.html"
+    },
+    {
+      "id": "physci-quiz2",
+      "type": "quiz",
+      "title": "Quiz 2 — Alchemy, Dalton & Subatomic",
+      "items": 15,
+      "time": 15,
+      "weeks": "3–5",
+      "file": "quiz2.html"
+    },
+    {
+      "id": "physci-quiz3",
+      "type": "quiz",
+      "title": "Quiz 3 — Nuclear Age & Bonding",
+      "items": 15,
+      "time": 15,
+      "weeks": "6–7",
+      "file": "quiz3.html"
+    },
+    {
+      "id": "physci-st1",
+      "type": "summative",
+      "title": "Summative Test 1 — Weeks 1–5",
+      "items": 20,
+      "time": 45,
+      "weeks": "1–5",
+      "file": "st1.html"
+    },
+    {
+      "id": "physci-st2",
+      "type": "summative",
+      "title": "Summative Test 2 — Weeks 6–10",
+      "items": 25,
+      "time": 45,
+      "weeks": "6–10",
+      "file": "st2.html"
+    },
+    {
+      "id": "physci-te",
+      "type": "term",
+      "title": "Term Exam — Physical Science",
+      "items": 30,
+      "time": 60,
+      "weeks": "1–10",
+      "file": "te.html"
+    },
+    {
+      "id": "physci-pt1",
+      "type": "performance",
+      "title": "Performance Task 1 — Timeline of the Atom",
+      "items": 10,
+      "time": 0,
+      "weeks": "1–5",
+      "file": "pt1.html"
+    }
   ],
+
   "gating": {
     "physci-quiz1": { "requiresWeek": 2 },
     "physci-quiz2": { "requiresWeek": 5 },
@@ -29,6 +174,7 @@
     "physci-te":    { "requiresWeek": 10 },
     "physci-pt1":   { "requiresWeek": 5 }
   },
+
   "features": {
     "enablePrint": false,
     "enableOffline": true,
@@ -42,6 +188,7 @@
     "enableAutoSubmit": true,
     "enableAnswersLock": true
   },
+
   "storageKeys": {
     "student":  "physci_student",
     "records":  "physci_records",
@@ -49,5 +196,31 @@
     "teacher":  "physci_teacher",
     "lastSync": "physci_last_sync",
     "codes":    "physci_codes"
-  }
+  },
+
+  "eras": [
+    "Cosmic Origins",
+    "Ancient Greece",
+    "Alchemy → Chemistry",
+    "Atomic Theory",
+    "Subatomic Revolution",
+    "Nuclear Age",
+    "Chemical Bonding Era",
+    "Industrial Chemistry",
+    "Consumer Chemistry",
+    "Cosmos & Motion"
+  ],
+
+  "periods": [
+    "~13.8 Billion years ago",
+    "~600 BC – 300 BC",
+    "~300 AD – 1600s",
+    "1803",
+    "1897 – 1913",
+    "1919 – 1940s",
+    "20th century",
+    "19th – 20th century",
+    "Modern era",
+    "1500s – 1700s"
+  ]
 }
