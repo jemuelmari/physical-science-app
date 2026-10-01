@@ -1,0 +1,16 @@
+{
+  "week": 4,
+  "era": "Atomic Theory",
+  "title": "Dalton's Atomic Theory",
+  "period": "1803",
+  "icon": "⚛️",
+  "contentStandard": "How the properties of matter relate to their chemical structure",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIc-13", "competency": "Cite the contribution of John Dalton toward the understanding of the concept of the chemical elements", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIc-13", "competency": "Examine the postulates of Dalton's atomic theory", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IIIc-14", "competency": "Explain how Dalton's theory contributed to the discovery of other elements", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIIc-14", "competency": "Trace the development of the periodic table from Dalton to Mendeleev", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": []
+}
