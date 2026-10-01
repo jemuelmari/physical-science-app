@@ -1,0 +1,335 @@
+/* ============================================================
+   classrecord.css — Physical Science · Gradebook styles
+   Version: 1.0.0
+   Depends on: main.css
+   ============================================================ */
+
+.classrecord-header {
+  background: linear-gradient(135deg, #4a148c, #6a1b9a, #8e24aa);
+  box-shadow: 0 2px 12px rgba(74, 20, 140, 0.2);
+}
+
+.classrecord-hero {
+  position: relative;
+  background: linear-gradient(135deg, #4a148c, #6a1b9a);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(74, 20, 140, 0.2);
+}
+.classrecord-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+.classrecord-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.classrecord-hero h1 { color: #fff; font-size: 1.5rem; font-weight: 800; margin: 0 0 4px; }
+.classrecord-hero .subtitle { opacity: 0.9; font-size: 0.85rem; }
+
+/* ---------- Gradebook ---------- */
+.gradebook-wrapper {
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border: 1px solid #eceff1;
+}
+.gradebook-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  max-height: 74vh;
+}
+.gradebook-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.82rem;
+  min-width: 900px;
+}
+.gradebook-table thead th {
+  background: linear-gradient(180deg, #f5f7fa, #eceff1);
+  color: #37474f;
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 2px solid #b0bec5;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  white-space: nowrap;
+}
+.gradebook-table thead th:first-child {
+  text-align: left;
+  padding-left: 16px;
+  z-index: 15;
+}
+.gradebook-table tbody td {
+  padding: 10px 8px;
+  text-align: center;
+  border-bottom: 1px solid #eceff1;
+  color: #37474f;
+  vertical-align: middle;
+}
+.gradebook-table tbody tr { transition: background 0.15s; }
+.gradebook-table tbody tr:hover { background: #fafbfc; }
+
+.gradebook-table td.student-cell {
+  text-align: left;
+  padding-left: 16px;
+  font-weight: 600;
+  background: #fff;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  min-width: 200px;
+  border-right: 1px solid #cfd8dc;
+}
+.gradebook-table tbody tr:hover td.student-cell { background: #fafbfc; }
+
+.student-info .name { font-weight: 700; color: var(--color-text); font-size: 0.88rem; }
+.student-info .meta { font-size: 0.7rem; color: var(--color-text-muted); font-family: var(--font-mono); }
+
+.grade-cell { font-weight: 600; font-variant-numeric: tabular-nums; }
+.empty-cell { color: #cfd8dc; }
+.final-grade {
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: -0.2px;
+  background: #f5f7fa;
+}
+.final-grade.passing { color: var(--color-success); }
+.final-grade.failing { color: var(--color-danger); }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.status-badge.pass { background: #e8f5e9; color: var(--color-success); }
+.status-badge.fail { background: #ffebee; color: var(--color-danger); }
+
+/* ---------- Tabs (optional) ---------- */
+.cr-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #eceff1;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+.cr-tab {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  margin-bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cr-tab:hover { color: var(--color-primary); background: #f5f7fa; }
+.cr-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+.cr-tab .tab-count {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.cr-tab:not(.active) .tab-count { background: #cfd8dc; color: #fff; }
+
+/* ---------- Report Grid ---------- */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.report-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #eceff1;
+  transition: all 0.2s;
+}
+.report-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.report-card h4 {
+  font-size: 0.92rem;
+  color: var(--color-primary-dark);
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- Distribution ---------- */
+.distribution-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.distribution-row:last-child { border-bottom: none; padding-bottom: 0; }
+.distribution-label {
+  min-width: 70px;
+  font-weight: 600;
+  color: #37474f;
+  font-size: 0.78rem;
+}
+.distribution-bar {
+  flex: 1;
+  height: 20px;
+  background: #f5f7fa;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #eceff1;
+}
+.distribution-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6a1b9a, #ab47bc);
+  border-radius: 6px;
+  transition: width 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.distribution-count {
+  min-width: 50px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ---------- PL Indicators ---------- */
+.pl-indicator {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.pl-mastered   { background: #e8f5e9; color: #1b5e20; }
+.pl-closely    { background: #e1f5fe; color: #01579b; }
+.pl-moving     { background: #fff3e0; color: #e65100; }
+.pl-average    { background: #fce4ec; color: #ad1457; }
+.pl-low        { background: #ffebee; color: #b71c1c; }
+.pl-verylow    { background: #f3e5f5; color: #4a148c; }
+.pl-nomastery  { background: #212121; color: #fff; }
+
+/* ---------- Most / Least Learned ---------- */
+.mll-list { list-style: none; padding: 0; margin: 0; }
+.mll-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 0.84rem;
+}
+.mll-list li:last-child { border-bottom: none; }
+.mll-list .mll-code {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-top: 2px;
+}
+.mll-list .mll-desc { flex: 1; color: #37474f; line-height: 1.4; }
+.mll-list .mll-mps {
+  font-weight: 800;
+  min-width: 50px;
+  text-align: right;
+  font-size: 0.88rem;
+  font-family: var(--font-mono);
+}
+
+/* ---------- Transmutation Table ---------- */
+.transmutation-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid #cfd8dc;
+}
+.transmutation-table td,
+.transmutation-table th {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eceff1;
+}
+.transmutation-table thead th {
+  background: #f5f7fa;
+  font-weight: 700;
+  color: #37474f;
+  text-align: left;
+  border-bottom: 2px solid #b0bec5;
+}
+.transmutation-table .raw   { background: #fafafa; font-weight: 600; color: #37474f; }
+.transmutation-table .final { background: #f3e5f5; font-weight: 700; color: #4a148c; }
+
+/* ---------- Grading Sheet ---------- */
+.grading-sheet {
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #eceff1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .classrecord-hero { padding: 20px 16px; }
+  .classrecord-hero h1 { font-size: 1.2rem; }
+  .report-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .app-header, .filter-bar, .no-print, .app-footer { display: none !important; }
+  body { background: #fff !important; }
+  .card, .grading-sheet { box-shadow: none !important; border: none !important; }
+  .grading-sheet { padding: 0 !important; }
+  .modern-table thead th { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; }
+  .final-grade.passing { color: #2e7d32 !important; -webkit-print-color-adjust: exact; }
+  .final-grade.failing { color: #c62828 !important; -webkit-print-color-adjust: exact; }
+}
