@@ -1,0 +1,107 @@
+{
+  "subject": "physci",
+  "subjectTitle": "Physical Science",
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-15",
+
+  "tasks": [
+    {
+      "id": "physci-pt1",
+      "type": "performance",
+      "title": "Timeline of the Atom",
+      "linkedAssessmentId": "physci-pt1",
+      "linkedFile": "pt1.html",
+      "weeks": "1–5",
+      "period": "Weeks 1–5",
+      "contentStandard": "Ancient Greek to the present",
+      "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+      "description": "Create a creative, historically accurate timeline of the development of atomic theory — from Democritus to Schrödinger — showing how each model built on or replaced the previous one.",
+      "deliverable": "A creative timeline (poster, digital infographic, or physical display) covering at least 6 atomic models.",
+      "assessmentMode": "Written (10-item quiz on pt1.html)",
+      "rubric": {
+        "criteria": [
+          {
+            "name": "Accuracy",
+            "weight": 30,
+            "description": "All historical dates, scientist names, and model names are correct.",
+            "levels": {
+              "excellent": "All information is factually accurate; dates and names correct.",
+              "satisfactory": "Minor inaccuracies do not affect overall understanding.",
+              "needsImprovement": "Multiple factual errors; scientists or dates are mixed up."
+            }
+          },
+          {
+            "name": "Completeness",
+            "weight": 25,
+            "description": "Includes at least 6 atomic models from Democritus to Schrödinger.",
+            "levels": {
+              "excellent": "Includes 6+ models with full descriptions of each.",
+              "satisfactory": "Includes 5 models with brief descriptions.",
+              "needsImprovement": "Fewer than 5 models or missing descriptions."
+            }
+          },
+          {
+            "name": "Creativity",
+            "weight": 20,
+            "description": "Original, visually engaging presentation.",
+            "levels": {
+              "excellent": "Highly original; visually striking; well-organized.",
+              "satisfactory": "Neat and organized; some creative elements.",
+              "needsImprovement": "Plain, disorganized, or copied from online sources."
+            }
+          },
+          {
+            "name": "Scientific Understanding",
+            "weight": 15,
+            "description": "Shows understanding of how each model improved upon the previous one.",
+            "levels": {
+              "excellent": "Clear narrative showing progression from each model to the next.",
+              "satisfactory": "Some connections between models shown.",
+              "needsImprovement": "Models listed without showing relationships."
+            }
+          },
+          {
+            "name": "Presentation",
+            "weight": 10,
+            "description": "Neat, legible, and appropriate for the audience.",
+            "levels": {
+              "excellent": "Professionally presented; all text legible.",
+              "satisfactory": "Mostly neat; some minor legibility issues.",
+              "needsImprovement": "Messy; difficult to read or follow."
+            }
+          }
+        ],
+        "scale": {
+          "90–100": "Outstanding",
+          "85–89": "Very Satisfactory",
+          "80–84": "Satisfactory",
+          "75–79": "Fairly Satisfactory",
+          "0–74": "Did Not Meet Expectations"
+        }
+      },
+      "resources": [
+        "Periodic table chart",
+        "Bohr model kit",
+        "Reference: DepEd Physical Science CG (August 2016)"
+      ]
+    }
+  ],
+
+  "submission": {
+    "mode": "in-class",
+    "duration": "2 weeks (Weeks 4–5)",
+    "formatOptions": [
+      "Physical poster (cartolina or manila paper)",
+      "Digital infographic (Canva, PowerPoint, Google Slides)",
+      "3D display (miniature models on a timeline)"
+    ],
+    "presentationRequired": true
+  },
+
+  "grading": {
+    "useTransmutation": true,
+    "passingScore": 75,
+    "weight": 20,
+    "note": "The Performance Task contributes 20% of the quarterly grade; the written quiz on pt1.html is a supplementary check."
+  }
+}
