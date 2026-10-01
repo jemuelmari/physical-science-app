@@ -1,0 +1,190 @@
+{
+  "assessmentId": "physci-quiz3",
+  "subject": "physci",
+  "type": "quiz",
+  "title": "Quiz 3 — Nuclear Age, Polarity & Intermolecular Forces",
+  "timeLimit": 15,
+  "passingScore": 75,
+  "items": [
+    {
+      "id": 1,
+      "code": "S11/12PS-IIIb-11",
+      "question": "The atomic number of an element is equal to the number of:",
+      "options": [
+        "Neutrons",
+        "Protons",
+        "Nucleons",
+        "Electrons in the outermost shell"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 2,
+      "code": "S11/12PS-IIIb-11",
+      "question": "Which scientist performed the first artificial transmutation by bombarding nitrogen with alpha particles?",
+      "options": [
+        "Marie Curie",
+        "Ernest Rutherford",
+        "James Chadwick",
+        "Enrico Fermi"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 3,
+      "code": "S11/12PS-IIIb-11",
+      "question": "Which of the following is the FIRST synthetic element to be produced in a laboratory?",
+      "options": [
+        "Plutonium",
+        "Technetium",
+        "Oganesson",
+        "Americium"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 4,
+      "code": "S11/12PS-IIIb-12",
+      "question": "Which of the following is a correctly balanced nuclear reaction?",
+      "options": [
+        "¹⁴N + ⁴He → ¹⁷O + ¹H",
+        "²³⁸U → ²³⁴Th + ⁴He + 2n",
+        "¹H + ¹H → ²H + e⁻",
+        "⁴He → ²H + ²H + γ"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 5,
+      "code": "S11/12PS-IIIb-12",
+      "question": "In a nuclear reaction, which quantities must be conserved?",
+      "options": [
+        "Only mass number",
+        "Only atomic number",
+        "Both mass number and atomic number",
+        "Neither; nuclear reactions violate conservation laws"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 6,
+      "code": "S11/12PS-IIIb-12",
+      "question": "When an alpha particle is emitted, the atomic number of the parent nucleus:",
+      "options": [
+        "Increases by 2",
+        "Decreases by 2",
+        "Stays the same",
+        "Decreases by 4"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 7,
+      "code": "S11/12PS-IIIc-15",
+      "question": "A molecule is considered polar when:",
+      "options": [
+        "It has a symmetrical shape",
+        "It has an asymmetrical distribution of charge",
+        "It contains only nonpolar bonds",
+        "It is a diatomic molecule"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 8,
+      "code": "S11/12PS-IIIc-15",
+      "question": "Which of the following molecules is NONPOLAR despite having polar bonds?",
+      "options": [
+        "H₂O",
+        "NH₃",
+        "CO₂",
+        "HCl"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 9,
+      "code": "S11/12PS-IIIc-16",
+      "question": "The rule 'like dissolves like' means that:",
+      "options": [
+        "All solutes dissolve in all solvents",
+        "Polar solvents dissolve polar solutes, and nonpolar solvents dissolve nonpolar solutes",
+        "Water dissolves everything",
+        "Only inorganic compounds dissolve in water"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 10,
+      "code": "S11/12PS-IIIc-16",
+      "question": "Polar molecules generally have _____ boiling points compared to nonpolar molecules of similar size.",
+      "options": [
+        "Lower",
+        "Higher",
+        "The same",
+        "Unpredictable"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 11,
+      "code": "S11/12PS-IIIc-d-17",
+      "question": "Which is the STRONGEST type of intermolecular force?",
+      "options": [
+        "London dispersion forces",
+        "Dipole–dipole interactions",
+        "Hydrogen bonding",
+        "Ionic bonding"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 12,
+      "code": "S11/12PS-IIIc-d-17",
+      "question": "London dispersion forces are present in:",
+      "options": [
+        "Only polar molecules",
+        "Only ionic compounds",
+        "All molecules, but are strongest in large nonpolar molecules",
+        "Only hydrogen-bonded molecules"
+      ],
+      "answer": 2
+    },
+    {
+      "id": 13,
+      "code": "S11/12PS-IIId-e-18",
+      "question": "Hydrogen bonding occurs when hydrogen is covalently bonded to:",
+      "options": [
+        "Carbon, silicon, or germanium",
+        "Nitrogen, oxygen, or fluorine",
+        "Any metal",
+        "Only another hydrogen atom"
+      ],
+      "answer": 1
+    },
+    {
+      "id": 14,
+      "code": "S11/12PS-IIId-e-19",
+      "question": "Water has a much higher boiling point than methane (CH₄) because:",
+      "options": [
+        "Water has stronger hydrogen bonds between its molecules",
+        "Methane has larger molecules",
+        "Water is a smaller molecule",
+        "Methane is polar"
+      ],
+      "answer": 0
+    },
+    {
+      "id": 15,
+      "code": "S11/12PS-IIId-e-19",
+      "question": "Which property is DIRECTLY affected by the strength of intermolecular forces?",
+      "options": [
+        "Number of protons",
+        "Boiling point",
+        "Atomic number",
+        "Nuclear stability"
+      ],
+      "answer": 1
+    }
+  ]
+}
