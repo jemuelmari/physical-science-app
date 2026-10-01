@@ -1,0 +1,16 @@
+{
+  "week": 3,
+  "era": "Alchemy → Chemistry",
+  "title": "Alchemists & the Birth of Chemistry",
+  "period": "~300 AD – 1600s",
+  "icon": "⚗️",
+  "contentStandard": "Ancient Greek to the present",
+  "performanceStandard": "Make a creative representation of the historical development of the atom or the chemical element in a timeline",
+  "days": [
+    { "day": 1, "code": "S11/12PS-IIIb-7", "competency": "Describe the contributions of the alchemists to the science of chemistry", "duration": "1 hour", "file": "day.html?d=1" },
+    { "day": 2, "code": "S11/12PS-IIIb-7", "competency": "Explore alchemical tools and processes (distillation, filtration, sublimation)", "duration": "1 hour", "file": "day.html?d=2" },
+    { "day": 3, "code": "S11/12PS-IVa-37", "competency": "Explain what is meant by diurnal motion, annual motion, and precession of the equinoxes", "duration": "1 hour", "file": "day.html?d=3" },
+    { "day": 4, "code": "S11/12PS-IIIb-7", "competency": "Reflect on how alchemy paved the way for modern chemistry", "duration": "1 hour", "file": "day.html?d=4" }
+  ],
+  "equipment": []
+}
