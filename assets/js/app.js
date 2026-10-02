@@ -1,26 +1,26 @@
 /* ============================================================
    app.js — Physical Science · App Bootstrap
-   Version: 1.0.0
-   Depends on: config.js, store.js
+   Version: 1.1.0
+   Depends on: config.js, store.js, ui-helpers.js
    ============================================================ */
 
 window.App = (function () {
   'use strict';
 
   const REGISTRY_URL = (function () {
-    // Resolve data path relative to the current page
     const path = window.location.pathname;
     if (path.includes('/student/physci/week')) return '../../data/physci-registry.json';
     if (path.includes('/student/physci/'))     return '../data/physci-registry.json';
     if (path.includes('/student/assessments/'))return '../../data/physci-registry.json';
     if (path.includes('/student/'))            return '../data/physci-registry.json';
     if (path.includes('/teacher/'))            return '../data/physci-registry.json';
+    if (path.includes('/classrecord/'))        return '../data/physci-registry.json';
     return 'data/physci-registry.json';
   })();
 
   let registry = null;
 
-  // ---- Load registry (weeks + assessments + gating) ----
+  // ---- Load registry ----
   async function loadRegistry() {
     if (registry) return registry;
     try {
@@ -82,6 +82,32 @@ window.App = (function () {
     return Number(percent) >= passingScore();
   }
 
+  // ---- Developer Info ----
+  function dev() {
+    return (window.PHYSCI_CONFIG && window.PHYSCI_CONFIG.DEVELOPER) || null;
+  }
+
+  function injectDevCredit() {
+    const devInfo = dev();
+    if (!devInfo || !devInfo.name) return;
+
+    const slots = document.querySelectorAll('#dev-credit, .dev-credit-slot');
+    if (!slots.length) return;
+
+    const html = (window.UI && UI.devCredit) ? UI.devCredit() : buildFallback(devInfo);
+    slots.forEach(slot => { slot.innerHTML = html; });
+  }
+
+  function buildFallback(d) {
+    return `
+      <div class="dev-credit">
+        <div class="dev-credit-name">${d.name}</div>
+        <div class="dev-credit-position">${d.position || ''}</div>
+        <div class="dev-credit-school">${d.school || ''}</div>
+      </div>
+    `;
+  }
+
   // ---- Logout ----
   function logoutStudent() {
     if (window.Store) Store.clearStudent();
@@ -127,7 +153,7 @@ window.App = (function () {
     }, 250);
   }
 
-  // ---- Redirect guard ----
+  // ---- Redirect guards ----
   function requireStudent() {
     const s = window.Store ? Store.getStudent() : null;
     if (!s) {
@@ -164,6 +190,7 @@ window.App = (function () {
   document.addEventListener('DOMContentLoaded', () => {
     loadRegistry();
     bindLogoutButtons();
+    injectDevCredit();
   });
 
   // ---- Public ----
@@ -174,6 +201,8 @@ window.App = (function () {
     featureEnabled,
     config, passingScore, isPassing,
     logout, logoutStudent, logoutTeacher,
-    requireStudent, requireTeacher
+    requireStudent, requireTeacher,
+    dev,
+    injectDevCredit
   };
 })();
