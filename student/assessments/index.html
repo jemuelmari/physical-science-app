@@ -39,16 +39,18 @@
 
   <footer class="app-footer">
     <p>Assessments · v1.0.0</p>
+    <div id="dev-credit"></div>
   </footer>
 
   <script src="../../config.js"></script>
   <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/ui-helpers.js"></script>
+  <script src="../../assets/js/auth.js"></script>
   <script src="../../assets/js/app.js"></script>
   <script src="../../assets/js/security.js"></script>
   <script src="../../assets/js/transmutation.js"></script>
   <script src="../../assets/js/activity-gate.js"></script>
   <script src="../../assets/js/activity-tracker.js"></script>
-  <script src="../../assets/js/ui-helpers.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const student = App.requireStudent();
@@ -58,11 +60,10 @@
 
       const assessments = App.getAssessments();
       const records = Store.getRecordsByStudent(student.lrn);
-
       const container = document.getElementById('assessments-list');
 
       if (!assessments.length) {
-        container.innerHTML = `<div class="empty-state">No assessments configured. Check back soon.</div>`;
+        container.innerHTML = `<div class="empty-state">No assessments configured.</div>`;
         return;
       }
 
@@ -82,11 +83,7 @@
         }
 
         const href = isLocked ? '#' : a.file;
-        const cls = [
-          'assessment-card',
-          isLocked ? 'locked' : '',
-          isDone ? 'completed' : ''
-        ].filter(Boolean).join(' ');
+        const cls = ['assessment-card', isLocked ? 'locked' : '', isDone ? 'completed' : ''].filter(Boolean).join(' ');
 
         return `
           <a class="${cls}" href="${href}" data-assessment-id="${a.id}">
@@ -102,14 +99,11 @@
               </div>
               ${isLocked && status.reason ? `<div class="assessment-lock-msg">${UI.escapeHtml(status.reason)}</div>` : ''}
             </div>
-            <div class="assessment-right">
-              ${stateBadge}
-            </div>
+            <div class="assessment-right">${stateBadge}</div>
           </a>
         `;
       }).join('');
 
-      // Lock clicks
       ActivityGate.applyLocks();
 
       function typeIcon(type) {
