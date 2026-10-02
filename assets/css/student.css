@@ -1,20 +1,31 @@
 /* ============================================================
    student.css — Physical Science · Student-facing styles
-   Version: 1.0.0
+   Version: 1.1.0
    Depends on: main.css
    ============================================================ */
 
-/* ---------- Timeline (student/physci/index.html) ---------- */
-.timeline { position: relative; display: flex; flex-direction: column; gap: 14px; }
+/* ============================================================
+   TIMELINE (student/physci/index.html)
+   ============================================================ */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .timeline::before {
   content: '';
   position: absolute;
-  left: 32px; top: 0; bottom: 0;
+  left: 32px;
+  top: 0;
+  bottom: 0;
   width: 3px;
   background: linear-gradient(180deg, #1b7a3d, #42a5f5, #6a1b9a);
   border-radius: 999px;
   opacity: 0.3;
 }
+
 .timeline-item {
   position: relative;
   display: flex;
@@ -29,16 +40,19 @@
   color: inherit;
   transition: all 0.2s;
 }
+
 .timeline-item:hover {
   transform: translateX(4px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-primary);
   text-decoration: none;
 }
+
 .timeline-icon {
   position: absolute;
   left: 12px;
-  width: 42px; height: 42px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +63,9 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   z-index: 1;
 }
+
 .timeline-body { flex: 1; min-width: 0; }
+
 .timeline-era {
   font-size: 0.68rem;
   font-weight: 700;
@@ -58,10 +74,23 @@
   color: var(--color-primary);
   margin-bottom: 4px;
 }
-.timeline-title { font-size: 0.98rem; font-weight: 700; color: var(--color-text); margin-bottom: 2px; }
-.timeline-span { font-size: 0.75rem; color: var(--color-text-muted); font-family: var(--font-mono); }
 
-/* ---------- Week Hero (weekN/index.html) ---------- */
+.timeline-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.timeline-span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   WEEK HERO (weekN/index.html)
+   ============================================================ */
 .week-hero {
   display: flex;
   align-items: center;
@@ -73,6 +102,7 @@
   margin-bottom: 22px;
   box-shadow: 0 8px 24px rgba(27, 122, 61, 0.2);
 }
+
 .week-hero[data-era="Cosmic Origins"]       { background: linear-gradient(135deg, #0d47a1, #1e88e5); }
 .week-hero[data-era="Ancient Greece"]       { background: linear-gradient(135deg, #5d4037, #8d6e63); }
 .week-hero[data-era="Alchemy → Chemistry"]  { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
@@ -85,8 +115,19 @@
 .week-hero[data-era="Cosmos & Motion"]      { background: linear-gradient(135deg, #1a237e, #3949ab); }
 
 .week-hero-icon { font-size: 2.4rem; flex-shrink: 0; line-height: 1; }
-.week-hero-body h2 { color: #fff; margin: 4px 0 6px; font-size: 1.25rem; }
-.week-hero-body .text-muted { color: rgba(255, 255, 255, 0.85) !important; font-size: 0.85rem; margin: 0; }
+
+.week-hero-body h2 {
+  color: #fff;
+  margin: 4px 0 6px;
+  font-size: 1.25rem;
+}
+
+.week-hero-body .text-muted {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
 .week-hero-era {
   font-size: 0.68rem;
   font-weight: 700;
@@ -95,8 +136,15 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
-/* ---------- Days List ---------- */
-.days-list { display: flex; flex-direction: column; gap: 12px; }
+/* ============================================================
+   DAYS LIST (weekN/index.html)
+   ============================================================ */
+.days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .day-card {
   display: flex;
   align-items: center;
@@ -109,15 +157,18 @@
   color: inherit;
   transition: all 0.15s;
 }
+
 .day-card:hover {
   border-color: var(--color-primary);
   transform: translateX(4px);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
 }
+
 .day-num {
   flex-shrink: 0;
-  width: 56px; height: 56px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,11 +180,25 @@
   text-align: center;
   line-height: 1.2;
 }
-.day-body { flex: 1; min-width: 0; }
-.day-comp { font-size: 0.9rem; font-weight: 600; color: var(--color-text); margin-bottom: 4px; }
-.day-code { font-size: 0.72rem; color: var(--color-text-muted); font-family: var(--font-mono); }
 
-/* ---------- Lesson Page ---------- */
+.day-body { flex: 1; min-width: 0; }
+
+.day-comp {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.day-code {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   LESSON PAGE (day.html)
+   ============================================================ */
 .lesson-hero {
   padding: 20px 22px;
   background: linear-gradient(135deg, #f5f7fa, #eceff1);
@@ -141,6 +206,7 @@
   margin-bottom: 24px;
   border-left: 5px solid var(--color-primary);
 }
+
 .lesson-hero .lesson-era {
   font-size: 0.68rem;
   font-weight: 700;
@@ -149,10 +215,21 @@
   color: var(--color-primary);
   margin-bottom: 4px;
 }
-.lesson-hero h2 { font-size: 1.2rem; margin: 0 0 6px; color: var(--color-text); }
-.lesson-hero .lesson-code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--color-text-muted); }
+
+.lesson-hero h2 {
+  font-size: 1.2rem;
+  margin: 0 0 6px;
+  color: var(--color-text);
+}
+
+.lesson-hero .lesson-code {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
 
 .lesson-section { margin-bottom: 24px; }
+
 .lesson-section h3 {
   font-size: 1rem;
   color: var(--color-primary-dark);
@@ -163,11 +240,38 @@
   padding-bottom: 8px;
   border-bottom: 2px solid var(--color-primary-light);
 }
-.lesson-section h4 { font-size: 0.95rem; color: #37474f; margin: 14px 0 6px; }
-.lesson-section p { font-size: 0.94rem; line-height: 1.7; color: #37474f; margin-bottom: 10px; }
-.lesson-section ul, .lesson-section ol { padding-left: 22px; margin-bottom: 12px; }
-.lesson-section li { font-size: 0.92rem; line-height: 1.7; color: #37474f; margin-bottom: 5px; }
-.lesson-section em { color: #6a1b9a; font-style: italic; }
+
+.lesson-section h4 {
+  font-size: 0.95rem;
+  color: #37474f;
+  margin: 14px 0 6px;
+}
+
+.lesson-section p {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: #37474f;
+  margin-bottom: 10px;
+}
+
+.lesson-section ul,
+.lesson-section ol {
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.lesson-section li {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #37474f;
+  margin-bottom: 5px;
+}
+
+.lesson-section em {
+  color: #6a1b9a;
+  font-style: italic;
+}
+
 .lesson-section strong { color: var(--color-text); }
 
 .lesson-nav {
@@ -179,8 +283,15 @@
   flex-wrap: wrap;
 }
 
-/* ---------- Assessments Hub ---------- */
-.assessments-list { display: flex; flex-direction: column; gap: 12px; }
+/* ============================================================
+   ASSESSMENTS HUB (student/assessments/index.html)
+   ============================================================ */
+.assessments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .assessment-card {
   display: flex;
   align-items: center;
@@ -194,23 +305,45 @@
   transition: all 0.15s;
   position: relative;
 }
+
 .assessment-card:hover {
   border-color: var(--color-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
   text-decoration: none;
 }
+
 .assessment-card.locked {
   opacity: 0.75;
   cursor: not-allowed;
   background: #fafbfc;
 }
-.assessment-card.locked:hover { transform: none; border-color: #eceff1; box-shadow: var(--shadow-sm); }
-.assessment-card.completed { border-left: 4px solid var(--color-success); }
 
-.assessment-icon { font-size: 1.7rem; flex-shrink: 0; line-height: 1; }
+.assessment-card.locked:hover {
+  transform: none;
+  border-color: #eceff1;
+  box-shadow: var(--shadow-sm);
+}
+
+.assessment-card.completed {
+  border-left: 4px solid var(--color-success);
+}
+
+.assessment-icon {
+  font-size: 1.7rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
 .assessment-body { flex: 1; min-width: 0; }
-.assessment-title { font-weight: 700; font-size: 0.98rem; color: var(--color-text); margin-bottom: 4px; }
+
+.assessment-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
 .assessment-meta {
   font-size: 0.76rem;
   color: var(--color-text-muted);
@@ -219,11 +352,21 @@
   gap: 6px;
   align-items: center;
 }
+
 .assessment-meta .dot { color: #cfd8dc; }
-.assessment-lock-msg { font-size: 0.78rem; color: #e65100; margin-top: 6px; font-weight: 600; }
+
+.assessment-lock-msg {
+  font-size: 0.78rem;
+  color: #e65100;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
 .assessment-right { flex-shrink: 0; }
 
-/* ---------- Avatar colors ---------- */
+/* ============================================================
+   AVATAR COLORS
+   ============================================================ */
 .student-avatar.av-1 { background: linear-gradient(135deg, #1b7a3d, #4caf50); }
 .student-avatar.av-2 { background: linear-gradient(135deg, #0d47a1, #42a5f5); }
 .student-avatar.av-3 { background: linear-gradient(135deg, #ed6c02, #ffb74d); }
@@ -231,7 +374,48 @@
 .student-avatar.av-5 { background: linear-gradient(135deg, #c62828, #ef5350); }
 .student-avatar.av-6 { background: linear-gradient(135deg, #00695c, #26a69a); }
 
-/* ---------- Responsive ---------- */
+/* ============================================================
+   LOGIN CONSENT ROW (student/login.html)
+   ============================================================ */
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #f5f7fa;
+  border: 1px solid #eceff1;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #37474f;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+}
+
+.consent-row:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.consent-row input[type="checkbox"] {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Required asterisk */
+.form-label .req {
+  color: #c62828;
+  font-weight: 700;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 640px) {
   .timeline::before { left: 20px; }
   .timeline-item { padding: 14px 14px 14px 60px; }
