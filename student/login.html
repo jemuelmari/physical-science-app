@@ -9,249 +9,442 @@
 </head>
 <body class="login-page">
 
-  <div class="login-wrapper">
-    <div class="login-card" style="max-width:520px;">
-
-      <div class="login-hero">
-        <div class="login-icon">🔬</div>
-        <h1>Student Login</h1>
-        <p class="login-subtitle">Physical Science · Create Your Profile</p>
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🎓 Student Login</h1>
+        <span class="version">v1.0.0</span>
       </div>
-
-      <form id="login-form" class="login-form" autocomplete="off" novalidate>
-
-        <!-- LAST NAME -->
-        <div class="form-group">
-          <label class="form-label" for="lastName">Last Name <span class="req">*</span></label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            class="form-control"
-            placeholder="DELA CRUZ"
-            style="text-transform:uppercase;"
-            required />
-          <div class="form-hint">Will be saved in ALL CAPS</div>
-        </div>
-
-        <!-- FIRST NAME -->
-        <div class="form-group">
-          <label class="form-label" for="firstName">First Name <span class="req">*</span></label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            class="form-control"
-            placeholder="Juan"
-            required />
-          <div class="form-hint">Will be saved in Title Case</div>
-        </div>
-
-        <!-- MIDDLE NAME -->
-        <div class="form-group">
-          <label class="form-label" for="middleName">Middle Name</label>
-          <input
-            type="text"
-            id="middleName"
-            name="middleName"
-            class="form-control"
-            placeholder="Santos" />
-          <div class="form-hint">Optional · Title Case</div>
-        </div>
-
-        <!-- SEX -->
-        <div class="form-group">
-          <label class="form-label" for="sex">Sex <span class="req">*</span></label>
-          <select id="sex" name="sex" class="form-control" required>
-            <option value="">— Select —</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
-
-        <!-- LRN (no pattern, no maxlength — handled in JS) -->
-        <div class="form-group">
-          <label class="form-label" for="lrn">LRN (12 digits) <span class="req">*</span></label>
-          <input
-            type="text"
-            id="lrn"
-            name="lrn"
-            class="form-control"
-            inputmode="numeric"
-            placeholder="1234-5678-9012"
-            autocomplete="off"
-            required />
-          <div class="form-hint">Exactly 12 digits, numeric only</div>
-        </div>
-
-        <!-- GRADE LEVEL -->
-        <div class="form-group">
-          <label class="form-label" for="gradeLevel">Grade Level <span class="req">*</span></label>
-          <select id="gradeLevel" name="gradeLevel" class="form-control" required>
-            <option value="">— Select —</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
-          </select>
-        </div>
-
-        <!-- SECTION -->
-        <div class="form-group">
-          <label class="form-label" for="section">Section <span class="req">*</span></label>
-          <select id="section" name="section" class="form-control" required>
-            <option value="">— Select —</option>
-            <option value="GAS">GAS</option>
-            <option value="HUMMS">HUMMS</option>
-            <option value="ACADEMIC A">ACADEMIC A</option>
-            <option value="ACADEMIC B">ACADEMIC B</option>
-          </select>
-        </div>
-
-        <!-- CONSENT -->
-        <div class="form-group">
-          <label class="consent-row" for="consent">
-            <input type="checkbox" id="consent" name="consent" />
-            <span>
-              I agree that my progress may be saved locally on this device and
-              shared with my teacher via sync code or backup file.
-            </span>
-          </label>
-        </div>
-
-        <div id="login-error" class="alert alert-danger hidden" role="alert"></div>
-
-        <button type="submit" class="btn btn-primary btn-full">
-          Create Profile →
-        </button>
-
-      </form>
-
-      <div class="login-footer">
-        <a href="../index.html">← Back to Home</a>
-        <span class="divider">·</span>
-        <a href="../teacher-login.html">Teacher Login →</a>
-      </div>
-
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
-  </div>
+  </header>
+
+  <main class="container" style="padding-top:32px;padding-bottom:64px;max-width:560px;">
+
+    <!-- HERO -->
+    <div class="login-hero-banner">
+      <div class="hero-icon">🎓</div>
+      <h2>Welcome Back!</h2>
+      <p>Log in with your LRN to continue learning</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">🔑 Log In</button>
+      <button class="tab-btn" data-tab="new">📝 New Student</button>
+      <button class="tab-btn" data-tab="saved">👥 Saved Users</button>
+    </div>
+
+    <!-- TAB: LOG IN -->
+    <section class="tab-panel active" data-panel="login">
+      <div class="card" style="margin:0;">
+        <div class="card-header">
+          <div class="card-title">🔑 Log In with LRN</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-lrn">LRN (12 digits) <span class="req">*</span></label>
+          <input type="text" id="login-lrn" class="form-control" placeholder="1234-5678-9012" inputmode="numeric" autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-pin">PIN</label>
+          <input type="password" id="login-pin" class="form-control" placeholder="Optional PIN (for returning students)" maxlength="6" autocomplete="off" />
+          <div class="form-hint">If you set a PIN when you created your profile, enter it here.</div>
+        </div>
+
+        <div id="login-tab-error" class="alert alert-danger hidden"></div>
+
+        <button id="btn-do-login" class="btn btn-primary btn-full">▶ Continue Learning</button>
+      </div>
+    </section>
+
+    <!-- TAB: NEW STUDENT -->
+    <section class="tab-panel" data-panel="new">
+      <div class="card" style="margin:0;">
+        <div class="card-header">
+          <div class="card-title">📝 Create Your Profile</div>
+        </div>
+
+        <form id="new-form" autocomplete="off" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="new-lastName">Last Name <span class="req">*</span></label>
+            <input type="text" id="new-lastName" class="form-control" placeholder="DELA CRUZ" style="text-transform:uppercase;" required />
+            <div class="form-hint">Will be saved in ALL CAPS</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-firstName">First Name <span class="req">*</span></label>
+            <input type="text" id="new-firstName" class="form-control" placeholder="Juan" required />
+            <div class="form-hint">Will be saved in Title Case</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-middleName">Middle Name</label>
+            <input type="text" id="new-middleName" class="form-control" placeholder="Santos" />
+            <div class="form-hint">Optional · Title Case</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-sex">Sex <span class="req">*</span></label>
+            <select id="new-sex" class="form-control" required>
+              <option value="">— Select —</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-lrn">LRN (12 digits) <span class="req">*</span></label>
+            <input type="text" id="new-lrn" class="form-control" placeholder="1234-5678-9012" inputmode="numeric" autocomplete="off" required />
+            <div class="form-hint">Exactly 12 digits, numeric only</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-gradeLevel">Grade Level <span class="req">*</span></label>
+            <select id="new-gradeLevel" class="form-control" required>
+              <option value="">— Select —</option>
+              <option value="11">Grade 11</option>
+              <option value="12">Grade 12</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-section">Section <span class="req">*</span></label>
+            <select id="new-section" class="form-control" required>
+              <option value="">— Select —</option>
+              <option value="GAS">GAS</option>
+              <option value="HUMMS">HUMMS</option>
+              <option value="ACADEMIC A">ACADEMIC A</option>
+              <option value="ACADEMIC B">ACADEMIC B</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-pin">Set PIN (optional)</label>
+            <input type="password" id="new-pin" class="form-control" placeholder="4–6 digits" maxlength="6" inputmode="numeric" />
+            <div class="form-hint">Add a PIN so only you can log in with your LRN on shared devices.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="consent-row" for="new-consent">
+              <input type="checkbox" id="new-consent" />
+              <span>
+                I agree that my progress may be saved locally on this device and
+                shared with my teacher via sync code or backup file.
+              </span>
+            </label>
+          </div>
+
+          <div id="new-tab-error" class="alert alert-danger hidden"></div>
+
+          <button type="submit" class="btn btn-primary btn-full">Create Profile →</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB: SAVED USERS -->
+    <section class="tab-panel" data-panel="saved">
+      <div class="card" style="margin:0;">
+        <div class="card-header">
+          <div class="card-title">👥 Saved on This Device</div>
+          <button id="btn-import" class="btn btn-outline" style="font-size:0.8rem;padding:6px 12px;">⬆ Import Backup</button>
+          <input type="file" id="file-import" accept="application/json" hidden />
+        </div>
+
+        <p class="text-muted text-small" style="margin-bottom:16px;">
+          These profiles are stored only in this browser. Clear your browser data and you'll lose them — export a backup to keep them safe.
+        </p>
+
+        <div id="saved-users-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Physical Science · v1.0.0</p>
+    <div id="dev-credit"></div>
+  </footer>
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/backup.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // If already logged in, go to dashboard
-      const existing = Store.getStudent();
-      if (existing && existing.lrn) {
-        window.location.href = 'dashboard.html';
-        return;
+      // ========================================================
+      // TAB SWITCHING
+      // ========================================================
+      const tabs = document.querySelectorAll('.tab-btn');
+      const panels = document.querySelectorAll('.tab-panel');
+
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
+          tabs.forEach(b => b.classList.toggle('active', b === btn));
+          panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+          if (target === 'saved') renderSavedUsers();
+        });
+      });
+
+      // ========================================================
+      // TAB 1 — LOG IN
+      // ========================================================
+      const loginLrn = document.getElementById('login-lrn');
+      const loginPin = document.getElementById('login-pin');
+      const loginErr = document.getElementById('login-tab-error');
+
+      attachLrnFormatter(loginLrn);
+
+      document.getElementById('btn-do-login').addEventListener('click', () => {
+        loginErr.classList.add('hidden');
+        const lrn = loginLrn.value.replace(/\D/g, '');
+        const pin = loginPin.value.trim();
+
+        if (!/^\d{12}$/.test(lrn)) {
+          return showLoginErr('⚠️ LRN must be exactly 12 digits.');
+        }
+
+        const profile = Auth.getProfileByLrn(lrn);
+        if (!profile) {
+          return showLoginErr('❌ No saved profile found for this LRN. Go to "New Student" to create one.');
+        }
+        if (profile.pin && profile.pin !== pin) {
+          return showLoginErr('🔒 Incorrect PIN.');
+        }
+
+        // Log in
+        Auth.loginWithProfile(profile);
+        if (window.UI) UI.toast(`Welcome back, ${profile.firstName}!`, 'success', 2500);
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 400);
+      });
+
+      function showLoginErr(msg) {
+        loginErr.textContent = msg;
+        loginErr.classList.remove('hidden');
       }
 
-      const form = document.getElementById('login-form');
-      const errEl = document.getElementById('login-error');
-      const lrnEl = document.getElementById('lrn');
+      // ========================================================
+      // TAB 2 — NEW STUDENT
+      // ========================================================
+      const newForm = document.getElementById('new-form');
+      const newLrn = document.getElementById('new-lrn');
+      const newErr = document.getElementById('new-tab-error');
 
-      // ---- LRN auto-format with dashes ----
-      lrnEl.addEventListener('input', () => {
-        const digits = lrnEl.value.replace(/\D/g, '').slice(0, 12);
-        let formatted = digits;
-        if (digits.length > 8) {
-          formatted = digits.slice(0, 4) + '-' + digits.slice(4, 8) + '-' + digits.slice(8);
-        } else if (digits.length > 4) {
-          formatted = digits.slice(0, 4) + '-' + digits.slice(4);
-        }
-        lrnEl.value = formatted;
-      });
+      attachLrnFormatter(newLrn);
 
-      // Also restrict keys so no letters get typed
-      lrnEl.addEventListener('keypress', (e) => {
-        const ch = String.fromCharCode(e.which);
-        if (!/[0-9]/.test(ch) && e.which !== 8 && e.which !== 0) {
-          e.preventDefault();
-        }
-      });
-
-      // Handle paste events — strip non-digits
-      lrnEl.addEventListener('paste', (e) => {
+      newForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const text = (e.clipboardData || window.clipboardData).getData('text') || '';
-        const digits = text.replace(/\D/g, '').slice(0, 12);
-        let formatted = digits;
-        if (digits.length > 8) {
-          formatted = digits.slice(0, 4) + '-' + digits.slice(4, 8) + '-' + digits.slice(8);
-        } else if (digits.length > 4) {
-          formatted = digits.slice(0, 4) + '-' + digits.slice(4);
-        }
-        lrnEl.value = formatted;
-      });
+        newErr.classList.add('hidden');
 
-      // ---- Title Case helper ----
-      function titleCase(str) {
-        return String(str || '')
-          .trim()
-          .replace(/\s+/g, ' ')
-          .toLowerCase()
-          .split(' ')
-          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(' ');
-      }
+        const rawLrn = newLrn.value.replace(/\D/g, '');
+        const pin = document.getElementById('new-pin').value.trim();
 
-      // ---- Submit ----
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        errEl.classList.add('hidden');
-
-        const rawLrn = document.getElementById('lrn').value.replace(/\D/g, '');
         const data = {
-          lastName:   document.getElementById('lastName').value.trim().toUpperCase(),
-          firstName:  titleCase(document.getElementById('firstName').value),
-          middleName: titleCase(document.getElementById('middleName').value),
-          sex:        document.getElementById('sex').value,
+          lastName:   document.getElementById('new-lastName').value.trim().toUpperCase(),
+          firstName:  titleCase(document.getElementById('new-firstName').value),
+          middleName: titleCase(document.getElementById('new-middleName').value),
+          sex:        document.getElementById('new-sex').value,
           lrn:        rawLrn,
-          gradeLevel: document.getElementById('gradeLevel').value,
-          section:    document.getElementById('section').value,
-          consent:    document.getElementById('consent').checked,
+          gradeLevel: document.getElementById('new-gradeLevel').value,
+          section:    document.getElementById('new-section').value,
+          pin:        pin || '',
+          consent:    document.getElementById('new-consent').checked,
           loggedInAt: new Date().toISOString()
         };
 
-        // ---- Manual validation (no HTML5 pattern) ----
-        if (!data.lastName || !data.firstName) {
-          return showError('⚠️ Please enter your full name.');
-        }
-        if (!data.sex) {
-          return showError('⚠️ Please select your sex.');
-        }
-        if (!/^\d{12}$/.test(data.lrn)) {
-          return showError('⚠️ LRN must be exactly 12 digits (currently ' + data.lrn.length + ').');
-        }
-        if (!data.gradeLevel) {
-          return showError('⚠️ Please select your grade level.');
-        }
-        if (!data.section) {
-          return showError('⚠️ Please select your section.');
-        }
-        if (!data.consent) {
-          return showError('⚠️ Please check the consent box to continue.');
+        // Validate
+        if (!data.lastName || !data.firstName) return showNewErr('⚠️ Please enter your full name.');
+        if (!data.sex) return showNewErr('⚠️ Please select your sex.');
+        if (!/^\d{12}$/.test(data.lrn)) return showNewErr('⚠️ LRN must be exactly 12 digits.');
+        if (!data.gradeLevel) return showNewErr('⚠️ Please select your grade level.');
+        if (!data.section) return showNewErr('⚠️ Please select your section.');
+        if (!data.consent) return showNewErr('⚠️ Please check the consent box to continue.');
+
+        // Duplicate check
+        if (Auth.getProfileByLrn(data.lrn)) {
+          return showNewErr('⚠️ A profile with this LRN already exists on this device. Use "Saved Users" to log in.');
         }
 
-        // ---- Save & redirect ----
-        Store.setStudent(data);
+        // Save profile + login
+        Auth.saveProfile(data);
+        Auth.loginWithProfile(data);
 
         if (window.ActivityTracker) {
-          ActivityTracker.log({
-            action: 'student_login',
-            lrn: data.lrn,
-            section: data.section,
-            gradeLevel: data.gradeLevel
-          });
+          ActivityTracker.log({ action: 'student_login', lrn: data.lrn, section: data.section, gradeLevel: data.gradeLevel });
         }
 
-        window.location.href = 'dashboard.html';
+        if (window.UI) UI.toast('✅ Profile created!', 'success', 2000);
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
       });
 
-      function showError(msg) {
-        errEl.textContent = msg;
-        errEl.classList.remove('hidden');
-        window.scrollTo({ top: errEl.offsetTop - 100, behavior: 'smooth' });
+      function showNewErr(msg) {
+        newErr.textContent = msg;
+        newErr.classList.remove('hidden');
+        window.scrollTo({ top: newErr.offsetTop - 120, behavior: 'smooth' });
+      }
+
+      // ========================================================
+      // TAB 3 — SAVED USERS
+      // ========================================================
+      const savedList = document.getElementById('saved-users-list');
+
+      function renderSavedUsers() {
+        const profiles = Auth.getProfiles();
+        if (!profiles.length) {
+          savedList.innerHTML = `
+            <div class="empty-state">
+              No saved profiles yet.<br>
+              Go to <strong>New Student</strong> to create one, or <strong>Import Backup</strong> to restore.
+            </div>
+          `;
+          return;
+        }
+
+        savedList.innerHTML = profiles.map(p => `
+          <div class="saved-user-card">
+            <div class="saved-user-avatar ${UI.avatarClass(p.lrn)}">
+              ${UI.initials(p.firstName, p.lastName)}
+            </div>
+            <div class="saved-user-body">
+              <div class="saved-user-name">${UI.escapeHtml(p.lastName)}, ${UI.escapeHtml(p.firstName)}</div>
+              <div class="saved-user-meta">${UI.escapeHtml(p.lrn)} · Grade ${UI.escapeHtml(p.gradeLevel)} · ${UI.escapeHtml(p.section)}</div>
+              <div class="saved-user-date">Last login: ${UI.formatDate(p.lastLogin || p.loggedInAt)}</div>
+            </div>
+            <div class="saved-user-actions">
+              <button class="btn btn-primary" style="font-size:0.8rem;padding:6px 12px;" data-resume="${UI.escapeHtml(p.lrn)}">▶ Resume</button>
+              <button class="btn btn-outline" style="font-size:0.8rem;padding:6px 12px;" data-export="${UI.escapeHtml(p.lrn)}">⬇</button>
+              <button class="btn btn-danger" style="font-size:0.8rem;padding:6px 12px;" data-delete="${UI.escapeHtml(p.lrn)}">✕</button>
+            </div>
+          </div>
+        `).join('');
+
+        // Wire actions
+        savedList.querySelectorAll('[data-resume]').forEach(b => {
+          b.addEventListener('click', () => {
+            const lrn = b.dataset.resume;
+            const p = Auth.getProfileByLrn(lrn);
+            if (!p) return;
+            if (p.pin) {
+              const entered = prompt('Enter PIN for ' + p.firstName + ':');
+              if (entered !== p.pin) return alert('❌ Incorrect PIN.');
+            }
+            Auth.loginWithProfile(p);
+            window.location.href = 'dashboard.html';
+          });
+        });
+
+        savedList.querySelectorAll('[data-export]').forEach(b => {
+          b.addEventListener('click', () => {
+            const lrn = b.dataset.export;
+            exportProfile(lrn);
+          });
+        });
+
+        savedList.querySelectorAll('[data-delete]').forEach(b => {
+          b.addEventListener('click', () => {
+            const lrn = b.dataset.delete;
+            if (!confirm('Delete this profile from this device? Any unsaved progress will be lost.')) return;
+            Auth.deleteProfile(lrn);
+            renderSavedUsers();
+          });
+        });
+      }
+
+      function exportProfile(lrn) {
+        const profile = Auth.getProfileByLrn(lrn);
+        if (!profile) return;
+        const records = (Store.getRecords() || []).filter(r => String(r.lrn) === String(lrn));
+        const snapshot = {
+          version: 1,
+          app: 'Physical Science Online Modular App',
+          appVersion: (window.PHYSCI_CONFIG && window.PHYSCI_CONFIG.version) || '1.0.0',
+          exportedAt: new Date().toISOString(),
+          student: profile,
+          records,
+          progress: Store.getProgress(),
+          codes: Store.getCodes()
+        };
+        const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `physci-backup-${lrn}-${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        if (window.UI) UI.toast('⬇ Backup downloaded', 'success', 2000);
+      }
+
+      // ---- Import backup ----
+      const fileImport = document.getElementById('file-import');
+      document.getElementById('btn-import').addEventListener('click', () => fileImport.click());
+
+      fileImport.addEventListener('change', async (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        try {
+          const snapshot = await Backup.readFile(file);
+          if (!snapshot.student || !snapshot.student.lrn) {
+            throw new Error('Backup file is missing student information.');
+          }
+
+          // Save profile
+          Auth.saveProfile(snapshot.student);
+
+          // Merge records (skip duplicates by LRN + assessmentId)
+          const existing = Store.getRecords() || [];
+          const seen = new Set(existing.map(r => `${r.lrn}|${r.assessmentId}`));
+          (snapshot.records || []).forEach(r => {
+            if (!seen.has(`${r.lrn}|${r.assessmentId}`)) existing.push(r);
+          });
+          localStorage.setItem('physci_records', JSON.stringify(existing));
+
+          // Merge progress
+          if (snapshot.progress) {
+            const current = Store.getProgress() || {};
+            localStorage.setItem('physci_progress', JSON.stringify(Object.assign(current, snapshot.progress)));
+          }
+
+          if (window.UI) UI.toast('✅ Backup imported!', 'success', 2500);
+          renderSavedUsers();
+        } catch (err) {
+          alert('❌ Import failed: ' + err.message);
+        } finally {
+          fileImport.value = '';
+        }
+      });
+
+      // ========================================================
+      // HELPERS
+      // ========================================================
+      function attachLrnFormatter(input) {
+        input.addEventListener('input', () => {
+          const digits = input.value.replace(/\D/g, '').slice(0, 12);
+          let formatted = digits;
+          if (digits.length > 8) formatted = digits.slice(0, 4) + '-' + digits.slice(4, 8) + '-' + digits.slice(8);
+          else if (digits.length > 4) formatted = digits.slice(0, 4) + '-' + digits.slice(4);
+          input.value = formatted;
+        });
+        input.addEventListener('keypress', (e) => {
+          const ch = String.fromCharCode(e.which);
+          if (!/[0-9]/.test(ch) && e.which !== 8 && e.which !== 0) e.preventDefault();
+        });
+      }
+
+      function titleCase(str) {
+        return String(str || '').trim().replace(/\s+/g, ' ').toLowerCase()
+          .split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+
+      // ---- First-time hint ----
+      if (!Auth.getProfiles().length) {
+        // Auto-switch to New Student if no profiles exist
+        document.querySelector('.tab-btn[data-tab="new"]').click();
       }
     });
   </script>
