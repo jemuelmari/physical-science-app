@@ -18,11 +18,11 @@
         <p class="login-subtitle">Physical Science · Create Your Profile</p>
       </div>
 
-      <form id="login-form" class="login-form" autocomplete="off">
+      <form id="login-form" class="login-form" autocomplete="off" novalidate>
 
         <!-- LAST NAME -->
         <div class="form-group">
-          <label class="form-label" for="lastName">Last Name <span style="color:#c62828;">*</span></label>
+          <label class="form-label" for="lastName">Last Name <span class="req">*</span></label>
           <input
             type="text"
             id="lastName"
@@ -36,7 +36,7 @@
 
         <!-- FIRST NAME -->
         <div class="form-group">
-          <label class="form-label" for="firstName">First Name <span style="color:#c62828;">*</span></label>
+          <label class="form-label" for="firstName">First Name <span class="req">*</span></label>
           <input
             type="text"
             id="firstName"
@@ -61,7 +61,7 @@
 
         <!-- SEX -->
         <div class="form-group">
-          <label class="form-label" for="sex">Sex <span style="color:#c62828;">*</span></label>
+          <label class="form-label" for="sex">Sex <span class="req">*</span></label>
           <select id="sex" name="sex" class="form-control" required>
             <option value="">— Select —</option>
             <option value="Male">Male</option>
@@ -69,25 +69,24 @@
           </select>
         </div>
 
-        <!-- LRN -->
+        <!-- LRN (no pattern, no maxlength — handled in JS) -->
         <div class="form-group">
-          <label class="form-label" for="lrn">LRN (12 digits) <span style="color:#c62828;">*</span></label>
+          <label class="form-label" for="lrn">LRN (12 digits) <span class="req">*</span></label>
           <input
             type="text"
             id="lrn"
             name="lrn"
             class="form-control"
             inputmode="numeric"
-            pattern="\d{12}"
-            maxlength="12"
             placeholder="1234-5678-9012"
+            autocomplete="off"
             required />
           <div class="form-hint">Exactly 12 digits, numeric only</div>
         </div>
 
         <!-- GRADE LEVEL -->
         <div class="form-group">
-          <label class="form-label" for="gradeLevel">Grade Level <span style="color:#c62828;">*</span></label>
+          <label class="form-label" for="gradeLevel">Grade Level <span class="req">*</span></label>
           <select id="gradeLevel" name="gradeLevel" class="form-control" required>
             <option value="">— Select —</option>
             <option value="11">Grade 11</option>
@@ -97,7 +96,7 @@
 
         <!-- SECTION -->
         <div class="form-group">
-          <label class="form-label" for="section">Section <span style="color:#c62828;">*</span></label>
+          <label class="form-label" for="section">Section <span class="req">*</span></label>
           <select id="section" name="section" class="form-control" required>
             <option value="">— Select —</option>
             <option value="GAS">GAS</option>
@@ -109,8 +108,8 @@
 
         <!-- CONSENT -->
         <div class="form-group">
-          <label class="consent-row">
-            <input type="checkbox" id="consent" name="consent" required />
+          <label class="consent-row" for="consent">
+            <input type="checkbox" id="consent" name="consent" />
             <span>
               I agree that my progress may be saved locally on this device and
               shared with my teacher via sync code or backup file.
@@ -151,7 +150,7 @@
       const errEl = document.getElementById('login-error');
       const lrnEl = document.getElementById('lrn');
 
-      // Auto-format LRN with dashes as the student types
+      // ---- LRN auto-format with dashes ----
       lrnEl.addEventListener('input', () => {
         const digits = lrnEl.value.replace(/\D/g, '').slice(0, 12);
         let formatted = digits;
@@ -163,7 +162,29 @@
         lrnEl.value = formatted;
       });
 
-      // Title Case helper
+      // Also restrict keys so no letters get typed
+      lrnEl.addEventListener('keypress', (e) => {
+        const ch = String.fromCharCode(e.which);
+        if (!/[0-9]/.test(ch) && e.which !== 8 && e.which !== 0) {
+          e.preventDefault();
+        }
+      });
+
+      // Handle paste events — strip non-digits
+      lrnEl.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+        const digits = text.replace(/\D/g, '').slice(0, 12);
+        let formatted = digits;
+        if (digits.length > 8) {
+          formatted = digits.slice(0, 4) + '-' + digits.slice(4, 8) + '-' + digits.slice(8);
+        } else if (digits.length > 4) {
+          formatted = digits.slice(0, 4) + '-' + digits.slice(4);
+        }
+        lrnEl.value = formatted;
+      });
+
+      // ---- Title Case helper ----
       function titleCase(str) {
         return String(str || '')
           .trim()
@@ -174,6 +195,7 @@
           .join(' ');
       }
 
+      // ---- Submit ----
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         errEl.classList.add('hidden');
@@ -191,7 +213,7 @@
           loggedInAt: new Date().toISOString()
         };
 
-        // ---- Validate ----
+        // ---- Manual validation (no HTML5 pattern) ----
         if (!data.lastName || !data.firstName) {
           return showError('⚠️ Please enter your full name.');
         }
@@ -199,7 +221,7 @@
           return showError('⚠️ Please select your sex.');
         }
         if (!/^\d{12}$/.test(data.lrn)) {
-          return showError('⚠️ LRN must be exactly 12 digits.');
+          return showError('⚠️ LRN must be exactly 12 digits (currently ' + data.lrn.length + ').');
         }
         if (!data.gradeLevel) {
           return showError('⚠️ Please select your grade level.');
