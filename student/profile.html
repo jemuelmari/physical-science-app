@@ -24,7 +24,6 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:820px;">
 
-    <!-- PROFILE CARD -->
     <div class="card">
       <div class="card-header">
         <div class="card-title">Student Information</div>
@@ -55,7 +54,12 @@
           </div>
           <div class="form-group">
             <label class="form-label">Section</label>
-            <input type="text" id="section" class="form-control" required />
+            <select id="section" class="form-control" required>
+              <option value="GAS">GAS</option>
+              <option value="HUMMS">HUMMS</option>
+              <option value="ACADEMIC A">ACADEMIC A</option>
+              <option value="ACADEMIC B">ACADEMIC B</option>
+            </select>
           </div>
         </div>
         <div id="profile-msg" class="alert hidden" role="alert"></div>
@@ -63,7 +67,6 @@
       </form>
     </div>
 
-    <!-- RECORDS -->
     <div class="card">
       <div class="card-header">
         <div class="card-title">📊 All My Scores</div>
@@ -71,7 +74,6 @@
       <div id="records-table"></div>
     </div>
 
-    <!-- BACKUP -->
     <div class="card">
       <div class="card-header">
         <div class="card-title">🔐 Backup & Restore</div>
@@ -90,12 +92,14 @@
 
   <footer class="app-footer">
     <p>Physical Science · Profile · v1.0.0</p>
+    <div id="dev-credit"></div>
   </footer>
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/app.js"></script>
   <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/app.js"></script>
   <script src="profile.js"></script>
 </body>
 </html>
