@@ -1,6 +1,6 @@
 /* ============================================================
    main.css — Physical Science · Global styles
-   Version: 1.0.0
+   Version: 1.1.0
    ============================================================ */
 
 /* ---------- Reset ---------- */
@@ -514,8 +514,26 @@ code, .mono { font-family: var(--font-mono); }
 .landing-about h3 { color: var(--color-primary-dark); margin-bottom: 12px; }
 .landing-about p { font-size: 0.92rem; line-height: 1.7; color: #37474f; }
 
+/* ---------- Developer card on landing ---------- */
+.landing-dev {
+  background: linear-gradient(135deg, #f5f7fa, #e6f4ea);
+  border-left: 5px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 32px;
+  box-shadow: var(--shadow-sm);
+}
+.landing-dev .dev-credit-name {
+  font-size: 1.05rem;
+  color: var(--color-primary-dark);
+}
+.landing-dev .dev-credit-position {
+  font-size: 0.85rem;
+  margin: 4px 0 6px;
+}
+
 /* ============================================================
-   LOGIN SHARED (student/login.html, teacher-login.html)
+   LOGIN SHARED
    ============================================================ */
 .login-page {
   background: linear-gradient(135deg, #1b7a3d, #4caf50);
@@ -553,7 +571,7 @@ code, .mono { font-family: var(--font-mono); }
 .login-footer .divider { margin: 0 8px; color: #cfd8dc; }
 
 /* ============================================================
-   DASHBOARD SHARED (student/dashboard.html, instructor.html)
+   DASHBOARD SHARED
    ============================================================ */
 .dashboard-welcome {
   background: linear-gradient(135deg, #1b7a3d, #4caf50);
@@ -565,11 +583,7 @@ code, .mono { font-family: var(--font-mono); }
 }
 .teacher-header + main .dashboard-welcome { background: linear-gradient(135deg, #4a148c, #6a1b9a); }
 
-.dashboard-welcome-inner {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+.dashboard-welcome-inner { display: flex; align-items: center; gap: 16px; }
 .welcome-avatar {
   width: 60px; height: 60px;
   border-radius: 50%;
@@ -613,12 +627,7 @@ code, .mono { font-family: var(--font-mono); }
 .stat-card.amber, .cr-stat-card.amber { border-left-color: var(--color-warning); }
 .stat-card.blue,  .cr-stat-card.blue  { border-left-color: var(--color-info); }
 
-.stat-icon, .cs-icon {
-  font-size: 1.4rem;
-  margin-bottom: 6px;
-  line-height: 1;
-  display: block;
-}
+.stat-icon, .cs-icon { font-size: 1.4rem; margin-bottom: 6px; line-height: 1; display: block; }
 .cs-icon { font-size: 1.2rem; }
 .stat-value, .cs-value {
   font-size: 1.7rem;
@@ -732,6 +741,52 @@ code, .mono { font-family: var(--font-mono); }
 .action-icon { font-size: 1.5rem; margin-bottom: 8px; line-height: 1; }
 .action-title { font-weight: 700; color: var(--color-primary-dark); font-size: 0.95rem; }
 .action-sub { font-size: 0.78rem; color: var(--color-text-muted); margin-top: 2px; }
+
+/* ============================================================
+   DEVELOPER CREDIT
+   ============================================================ */
+.dev-credit {
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  padding: 8px 12px;
+}
+.dev-credit-name {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--color-primary-dark);
+  letter-spacing: 0.2px;
+}
+.dev-credit-position {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.dev-credit-school {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+}
+.dev-credit-division,
+.dev-credit-region {
+  font-size: 0.7rem;
+  color: #90a4ae;
+  margin-top: 2px;
+}
+
+.dev-credit-compact {
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.dev-credit-compact > div:first-child {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+@media (max-width: 640px) {
+  .dev-credit { font-size: 0.7rem; }
+  .dev-credit-name { font-size: 0.76rem; }
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 640px) {
