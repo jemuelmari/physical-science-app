@@ -1,5 +1,419 @@
 /* ============================================================
-   GAMIFICATION STYLES (XP bar, quiz, streak, completion)
+   student.css — Physical Science · Student-facing styles
+   Version: 1.2.0
+   Depends on: main.css
+   ============================================================ */
+
+/* ============================================================
+   TIMELINE (student/physci/index.html)
+   ============================================================ */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 32px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #1b7a3d, #42a5f5, #6a1b9a);
+  border-radius: 999px;
+  opacity: 0.3;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px 16px 76px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #eceff1;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+}
+
+.timeline-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+  text-decoration: none;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: 12px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 3px solid var(--color-primary);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+}
+
+.timeline-body { flex: 1; min-width: 0; }
+
+.timeline-era {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.timeline-span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   WEEK HERO (weekN/index.html)
+   ============================================================ */
+.week-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  background: linear-gradient(135deg, #1b7a3d, #4caf50);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  margin-bottom: 22px;
+  box-shadow: 0 8px 24px rgba(27, 122, 61, 0.2);
+}
+
+.week-hero[data-era="Cosmic Origins"]       { background: linear-gradient(135deg, #0d47a1, #1e88e5); }
+.week-hero[data-era="Ancient Greece"]       { background: linear-gradient(135deg, #5d4037, #8d6e63); }
+.week-hero[data-era="Alchemy → Chemistry"]  { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
+.week-hero[data-era="Atomic Theory"]        { background: linear-gradient(135deg, #00695c, #26a69a); }
+.week-hero[data-era="Subatomic Revolution"] { background: linear-gradient(135deg, #283593, #5c6bc0); }
+.week-hero[data-era="Nuclear Age"]          { background: linear-gradient(135deg, #b71c1c, #ef5350); }
+.week-hero[data-era="Chemical Bonding Era"] { background: linear-gradient(135deg, #004d40, #00897b); }
+.week-hero[data-era="Industrial Chemistry"] { background: linear-gradient(135deg, #e65100, #ff9800); }
+.week-hero[data-era="Consumer Chemistry"]   { background: linear-gradient(135deg, #ad1457, #ec407a); }
+.week-hero[data-era="Cosmos & Motion"]      { background: linear-gradient(135deg, #1a237e, #3949ab); }
+
+.week-hero-icon { font-size: 2.4rem; flex-shrink: 0; line-height: 1; }
+
+.week-hero-body h2 {
+  color: #fff;
+  margin: 4px 0 6px;
+  font-size: 1.25rem;
+}
+
+.week-hero-body .text-muted {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.week-hero-era {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* ============================================================
+   DAYS LIST (weekN/index.html)
+   ============================================================ */
+.days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.day-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid #eceff1;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s;
+}
+
+.day-card:hover {
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+.day-num {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 800;
+  font-size: 0.82rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.day-body { flex: 1; min-width: 0; }
+
+.day-comp {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.day-code {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   LESSON PAGE (day.html)
+   ============================================================ */
+.lesson-hero {
+  padding: 20px 22px;
+  background: linear-gradient(135deg, #f5f7fa, #eceff1);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  border-left: 5px solid var(--color-primary);
+}
+
+.lesson-hero .lesson-era {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.lesson-hero h2 {
+  font-size: 1.2rem;
+  margin: 0 0 6px;
+  color: var(--color-text);
+}
+
+.lesson-hero .lesson-code {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.lesson-section { margin-bottom: 24px; }
+
+.lesson-section h3 {
+  font-size: 1rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--color-primary-light);
+}
+
+.lesson-section h4 {
+  font-size: 0.95rem;
+  color: #37474f;
+  margin: 14px 0 6px;
+}
+
+.lesson-section p {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: #37474f;
+  margin-bottom: 10px;
+}
+
+.lesson-section ul,
+.lesson-section ol {
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.lesson-section li {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #37474f;
+  margin-bottom: 5px;
+}
+
+.lesson-section em {
+  color: #6a1b9a;
+  font-style: italic;
+}
+
+.lesson-section strong { color: var(--color-text); }
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #eceff1;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   ASSESSMENTS HUB (student/assessments/index.html)
+   ============================================================ */
+.assessments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.assessment-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid #eceff1;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.assessment-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+.assessment-card.locked {
+  opacity: 0.75;
+  cursor: not-allowed;
+  background: #fafbfc;
+}
+
+.assessment-card.locked:hover {
+  transform: none;
+  border-color: #eceff1;
+  box-shadow: var(--shadow-sm);
+}
+
+.assessment-card.completed {
+  border-left: 4px solid var(--color-success);
+}
+
+.assessment-icon {
+  font-size: 1.7rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.assessment-body { flex: 1; min-width: 0; }
+
+.assessment-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.assessment-meta {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.assessment-meta .dot { color: #cfd8dc; }
+
+.assessment-lock-msg {
+  font-size: 0.78rem;
+  color: #e65100;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.assessment-right { flex-shrink: 0; }
+
+/* ============================================================
+   AVATAR COLORS
+   ============================================================ */
+.student-avatar.av-1 { background: linear-gradient(135deg, #1b7a3d, #4caf50); }
+.student-avatar.av-2 { background: linear-gradient(135deg, #0d47a1, #42a5f5); }
+.student-avatar.av-3 { background: linear-gradient(135deg, #ed6c02, #ffb74d); }
+.student-avatar.av-4 { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
+.student-avatar.av-5 { background: linear-gradient(135deg, #c62828, #ef5350); }
+.student-avatar.av-6 { background: linear-gradient(135deg, #00695c, #26a69a); }
+
+/* ============================================================
+   LOGIN CONSENT ROW
+   ============================================================ */
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #f5f7fa;
+  border: 1px solid #eceff1;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #37474f;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+}
+
+.consent-row:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.consent-row input[type="checkbox"] {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.form-label .req {
+  color: #c62828;
+  font-weight: 700;
+}
+
+/* ============================================================
+   GAMIFICATION (XP bar, quiz, streak, completion)
    ============================================================ */
 
 /* ---------- XP Bar ---------- */
@@ -186,8 +600,159 @@
   font-size: 0.9rem;
 }
 
-/* ---------- Mobile ---------- */
+/* ============================================================
+   LOGIN TABS + SAVED USERS
+   ============================================================ */
+
+/* ---------- Hero banner ---------- */
+.login-hero-banner {
+  text-align: center;
+  padding: 32px 20px;
+  background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+  box-shadow: 0 12px 32px rgba(13, 71, 161, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+.login-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+.login-hero-banner .hero-icon {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 8px;
+  position: relative;
+}
+.login-hero-banner h2 {
+  color: #fff;
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+  position: relative;
+}
+.login-hero-banner p {
+  font-size: 0.9rem;
+  opacity: 0.95;
+  margin: 0;
+  position: relative;
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #eceff1;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+.tab-btn {
+  padding: 12px 18px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #5f6368;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  margin-bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab-btn:hover { color: var(--color-primary); background: #f5f7fa; }
+.tab-btn.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: panelIn 0.2s ease; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Saved Users ---------- */
+.saved-user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid #eceff1;
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  transition: all 0.15s;
+}
+.saved-user-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.saved-user-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.saved-user-body { flex: 1; min-width: 0; }
+.saved-user-name {
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+.saved-user-meta {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+.saved-user-date {
+  font-size: 0.7rem;
+  color: #90a4ae;
+  margin-top: 3px;
+}
+
+.saved-user-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 640px) {
+  .timeline::before { left: 20px; }
+  .timeline-item { padding: 14px 14px 14px 60px; }
+  .timeline-icon { left: 4px; width: 36px; height: 36px; font-size: 1rem; }
+  .week-hero { flex-direction: column; text-align: center; padding: 18px; }
+  .week-hero-icon { font-size: 2rem; }
+  .day-card { padding: 12px; gap: 12px; }
+  .day-num { width: 48px; height: 48px; font-size: 0.72rem; }
+  .assessment-card { padding: 14px; gap: 12px; }
+  .assessment-icon { font-size: 1.4rem; }
+  .saved-user-card { flex-wrap: wrap; }
+  .saved-user-actions { width: 100%; justify-content: flex-end; }
+  .tab-btn { padding: 10px 14px; font-size: 0.82rem; }
   .xp-bar-row { gap: 6px; }
   .xp-chip { font-size: 0.7rem; padding: 3px 8px; }
   .lesson-quiz { padding: 14px; }
