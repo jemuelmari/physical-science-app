@@ -26,25 +26,19 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1000px;">
 
-    <!-- WELCOME -->
     <div id="welcome-card" class="dashboard-welcome"></div>
-
-    <!-- STATS -->
     <div id="stats-grid" class="dashboard-stats"></div>
 
-    <!-- PROGRESS -->
     <div class="dashboard-section">
       <h2 class="section-title">📅 Weekly Progress</h2>
       <div id="weeks-grid" class="weeks-grid"></div>
     </div>
 
-    <!-- RECENT RECORDS -->
     <div class="dashboard-section">
       <h2 class="section-title">📊 Recent Scores</h2>
       <div id="recent-records"></div>
     </div>
 
-    <!-- QUICK ACTIONS -->
     <div class="dashboard-section">
       <h2 class="section-title">⚡ Quick Actions</h2>
       <div class="quick-actions">
@@ -70,15 +64,16 @@
 
   <footer class="app-footer">
     <p>Physical Science · Student Portal · v1.0.0</p>
+    <div id="dev-credit"></div>
   </footer>
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/security.js"></script>
-  <script src="../assets/js/transmutation.js"></script>
-  <script src="../assets/js/activity-tracker.js"></script>
   <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/gamify.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/activity-tracker.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const student = App.requireStudent();
@@ -106,24 +101,22 @@
 
       // ---- STATS ----
       const weeks = App.getWeeks();
-      const progress = Store.getProgress();
       const records = Store.getRecordsByStudent(student.lrn);
 
-      const daysCompleted = (() => {
-        let n = 0;
-        weeks.forEach(w => {
-          for (let d = 1; d <= 4; d++) {
-            if (Store.isDayComplete(w.n, d)) n++;
-          }
-        });
-        return n;
-      })();
-
+      let daysCompleted = 0;
+      weeks.forEach(w => {
+        for (let d = 1; d <= 4; d++) {
+          if (Store.isDayComplete(w.n, d)) daysCompleted++;
+        }
+      });
       const totalDays = weeks.length * 4;
       const progressPct = totalDays > 0 ? Math.round((daysCompleted / totalDays) * 100) : 0;
       const avgGrade = records.length
         ? Math.round(records.reduce((s, r) => s + (Number(r.finalGrade) || 0), 0) / records.length)
         : 0;
+
+      const xp = (window.Gamify) ? Gamify.getXP() : 0;
+      const streak = (window.Gamify) ? Gamify.getStreak().count : 0;
 
       document.getElementById('stats-grid').innerHTML = `
         <div class="stat-card">
@@ -137,22 +130,21 @@
           <div class="stat-label">Overall Progress</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">📝</div>
-          <div class="stat-value">${records.length}</div>
-          <div class="stat-label">Assessments Taken</div>
+          <div class="stat-icon">⚡</div>
+          <div class="stat-value">${xp}</div>
+          <div class="stat-label">Total XP</div>
         </div>
-        <div class="stat-card ${avgGrade >= 75 ? 'green' : 'red'}">
-          <div class="stat-icon">🎯</div>
-          <div class="stat-value">${records.length ? avgGrade : '—'}</div>
-          <div class="stat-label">Average Grade</div>
+        <div class="stat-card ${streak >= 3 ? 'green' : ''}">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-value">${streak}</div>
+          <div class="stat-label">Day Streak</div>
         </div>
       `;
 
       // ---- WEEKS GRID ----
       document.getElementById('weeks-grid').innerHTML = weeks.map(w => {
         const p = Store.getWeekProgress(w.n, 4);
-        const pct = p.percent;
-        const color = pct >= 100 ? 'green' : pct > 0 ? 'amber' : '';
+        const color = p.percent >= 100 ? 'green' : p.percent > 0 ? 'amber' : '';
         return `
           <a class="week-progress-card" href="physci/week${w.n}/index.html">
             <div class="week-progress-icon">${w.icon}</div>
@@ -160,9 +152,9 @@
               <div class="week-progress-num">Week ${w.n}</div>
               <div class="week-progress-title">${UI.escapeHtml(w.title)}</div>
               <div class="week-progress-bar">
-                <div class="week-progress-fill ${color}" style="width:${pct}%;"></div>
+                <div class="week-progress-fill ${color}" style="width:${p.percent}%;"></div>
               </div>
-              <div class="week-progress-meta">${p.done} of ${p.total} days · ${pct}%</div>
+              <div class="week-progress-meta">${p.done} of ${p.total} days · ${p.percent}%</div>
             </div>
           </a>
         `;
@@ -170,7 +162,7 @@
 
       // ---- RECENT RECORDS ----
       const recent = records.slice().sort((a, b) =>
-        new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt)
+        new Date(b.timestamp || b.createdAt || 0) - new Date(a.timestamp || a.createdAt || 0)
       ).slice(0, 5);
 
       if (!recent.length) {
