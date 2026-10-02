@@ -140,17 +140,33 @@ window.App = (function () {
     el.style.display = 'flex';
   }
 
-  async function logout({ teacher = false } = {}) {
-    showLogoutOverlay();
+    async function logout({ teacher = false } = {}) {
+    // Teacher logout → simple
+    if (teacher) {
+      showLogoutOverlay();
+      try {
+        if (window.Sync && typeof Sync.flush === 'function') {
+          await Sync.flush().catch(() => {});
+        }
+      } catch (e) { /* noop */ }
+      setTimeout(() => logoutTeacher(), 250);
+      return;
+    }
+
+    // Student logout → prompt for backup via Auth.logout()
     try {
       if (window.Sync && typeof Sync.flush === 'function') {
         await Sync.flush().catch(() => {});
       }
     } catch (e) { /* noop */ }
-    setTimeout(() => {
-      if (teacher) logoutTeacher();
-      else logoutStudent();
-    }, 250);
+
+    if (window.Auth && typeof Auth.logout === 'function') {
+      await Auth.logout();
+    } else {
+      // Fallback if Auth not loaded
+      showLogoutOverlay();
+      setTimeout(() => logoutStudent(), 250);
+    }
   }
 
   // ---- Redirect guards ----
