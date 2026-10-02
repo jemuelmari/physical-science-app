@@ -1,6 +1,7 @@
 /* ============================================================
    ui-helpers.js — Physical Science · UI Utilities
-   Version: 1.0.0
+   Version: 1.1.0
+   Depends on: config.js
    ============================================================ */
 
 window.UI = (function () {
@@ -98,6 +99,34 @@ window.UI = (function () {
     return badge(grade, plClass(grade));
   }
 
+  // ---- Developer Credit (HTML) ----
+  function devCredit(options) {
+    const opts = options || {};
+    const dev = (window.PHYSCI_CONFIG && window.PHYSCI_CONFIG.DEVELOPER) || {};
+    if (!dev.name) return '';
+
+    const compact = !!opts.compact;
+
+    if (compact) {
+      return `
+        <div class="dev-credit dev-credit-compact">
+          <div><strong>${escapeHtml(dev.name)}</strong></div>
+          <div>${escapeHtml(dev.school)} · ${escapeHtml(dev.division)}</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="dev-credit">
+        <div class="dev-credit-name">${escapeHtml(dev.name)}</div>
+        <div class="dev-credit-position">${escapeHtml(dev.position)}</div>
+        <div class="dev-credit-school">${escapeHtml(dev.school)}</div>
+        <div class="dev-credit-division">${escapeHtml(dev.district)} · ${escapeHtml(dev.division)}</div>
+        <div class="dev-credit-region">${escapeHtml(dev.region)} · ${escapeHtml(dev.department)}</div>
+      </div>
+    `;
+  }
+
   return {
     $, $$,
     escapeHtml,
@@ -110,6 +139,7 @@ window.UI = (function () {
     toast,
     confirm: confirmDialog,
     badge,
-    gradeBadge
+    gradeBadge,
+    devCredit
   };
 })();
