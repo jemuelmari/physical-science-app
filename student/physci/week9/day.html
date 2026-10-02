@@ -15,7 +15,10 @@
         <h1 id="header-title">📘 Physical Science</h1>
         <span class="version">v1.0.0</span>
       </div>
-      <a href="index.html" id="back-link" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Week</a>
+      <div class="header-actions">
+        <a href="index.html" id="back-link" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Week</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-student">⏻ Logout</button>
+      </div>
     </div>
   </header>
 
@@ -33,6 +36,7 @@
   <script src="../../../config.js"></script>
   <script src="../../../assets/js/store.js"></script>
   <script src="../../../assets/js/ui-helpers.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
   <script src="../../../assets/js/gamify.js"></script>
   <script src="../../../assets/js/app.js"></script>
   <script src="../../../assets/js/activity-gate.js"></script>
@@ -40,6 +44,9 @@
   <script src="../../../assets/js/lesson-engine.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
+      const student = App.requireStudent();
+      if (!student) return;
+
       const params = new URLSearchParams(window.location.search);
       const day = parseInt(params.get('d') || '1', 10);
       const pathParts = window.location.pathname.split('/').filter(Boolean);
