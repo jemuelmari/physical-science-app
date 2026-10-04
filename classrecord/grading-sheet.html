@@ -149,7 +149,7 @@
   <script src="../assets/js/transmutation.js?v=8"></script>
   <script src="../assets/js/ui-helpers.js?v=8"></script>
   <script src="../assets/js/teacher-auth.js?v=8"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=8"></script>
   <script>
     (function() {
       'use strict';
@@ -159,11 +159,6 @@
       var ALLOWED_SECTIONS = ['HUMSS', 'GAS'];
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
-
         refreshSectionDropdown();
         refreshStudentDropdown();
         render();
@@ -181,7 +176,9 @@
           APP.toast('Refreshed', 'success', 1500);
         });
         document.getElementById('btn-export').addEventListener('click', exportSheet);
-        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+        document.getElementById('btn-logout').addEventListener('click', function() {
+          auth.logout({ redirect: 'teacher-login.html' });
+        });
       }, function() {
         document.getElementById('results-area').innerHTML =
           '<div class="card gs-empty">⚠️ <strong>Auth module failed to load</strong></div>';
