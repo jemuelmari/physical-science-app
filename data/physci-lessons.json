@@ -1,0 +1,600 @@
+{
+  "meta": {
+    "subject": "physci",
+    "version": "1.0.0",
+    "description": "Daily lesson content for Physical Science — 10 weeks × 4 days = 40 lessons"
+  },
+  "lessons": {
+    "1": {
+      "1": {
+        "intro": "The Big Bang theory proposes that the universe began as an incredibly hot, dense point approximately 13.8 billion years ago and has been expanding ever since. The lightest elements — hydrogen and helium — were the first to form.",
+        "objectives": [
+          "Explain what the Big Bang theory states about the origin of the universe",
+          "Cite at least three pieces of evidence supporting the Big Bang theory",
+          "Describe how hydrogen and helium formed in the first few minutes after the Big Bang"
+        ],
+        "body": [
+          "<h4>🌌 What Is the Big Bang?</h4><p>The Big Bang is not an explosion <em>in</em> space — it is the expansion <em>of</em> space itself. Every point in the universe was once concentrated in a single, infinitely dense point called a <strong>singularity</strong>.</p>",
+          "<h4>🔬 Evidence for the Big Bang</h4><ul><li><strong>Cosmic Microwave Background (CMB)</strong> — a faint glow of microwave radiation in every direction, the leftover heat from the Big Bang</li><li><strong>Redshift of galaxies</strong> — distant galaxies are moving away from us, meaning the universe is expanding</li><li><strong>Abundance of light elements</strong> — the universe is about 75% hydrogen and 25% helium, exactly what the Big Bang predicts</li></ul>",
+          "<h4>⏳ The First Three Minutes</h4><p>Within the first three minutes after the Big Bang, protons and neutrons fused to form hydrogen, helium, and traces of lithium. Heavier elements would have to wait for the first stars.</p>"
+        ],
+        "activity": "Draw a simple timeline of the Big Bang from t = 0 to 380,000 years, labeling the key events: inflation, nucleosynthesis, and recombination.",
+        "check": "Why is hydrogen the most abundant element in the universe?"
+      },
+      "2": {
+        "intro": "Stars are the factories where heavier elements are forged. Hydrogen fuses into helium in every star, but in massive stars, heavier elements like carbon, oxygen, and iron form through successive fusion stages.",
+        "objectives": [
+          "Describe the process of stellar nucleosynthesis",
+          "Identify the elements formed at each stage of a star's life",
+          "Explain why iron is the final product of fusion in a star's core"
+        ],
+        "body": [
+          "<h4>⭐ Stellar Nucleosynthesis</h4><p>Inside a star, gravity crushes hydrogen nuclei together until they fuse. This releases enormous energy — the light and heat we see.</p>",
+          "<h4>🔗 The Fusion Chain in Massive Stars</h4><ul><li><strong>H → He</strong> (main sequence, millions of years)</li><li><strong>He → C, O</strong> (red giant phase)</li><li><strong>C → Ne, Na, Mg</strong></li><li><strong>O → Si, S</strong></li><li><strong>Si → Fe</strong> (final stage, lasts only days)</li></ul>",
+          "<h4>🔥 The Onion-Layer Structure</h4><p>A massive star just before collapse looks like an onion — each layer fusing a different element, with an iron core at the center.</p>"
+        ],
+        "activity": "Sketch and label the onion-layer structure of a massive star before supernova. Show which element is being fused in each layer.",
+        "check": "Why does fusion stop at iron?"
+      },
+      "3": {
+        "intro": "Nuclear fusion reactions can be written as balanced equations — but unlike chemical equations, they involve changes to the nucleus with mass numbers and atomic numbers on both sides.",
+        "objectives": [
+          "Write balanced nuclear fusion equations",
+          "Conserve mass number (A) and atomic number (Z) on both sides",
+          "Identify the products of the proton-proton chain and the CNO cycle"
+        ],
+        "body": [
+          "<h4>✍️ Writing Fusion Reactions</h4><p>Every nuclear reaction must balance two quantities: <strong>mass number</strong> (total protons + neutrons) and <strong>atomic number</strong> (total protons).</p>",
+          "<h4>Example — Proton-Proton Chain (Step 1)</h4><p style='font-family:monospace;background:#f5f7fa;padding:12px;border-radius:8px;'>¹H + ¹H → ²H + e⁺ + ν</p>",
+          "<h4>Practice Reactions</h4><ul><li>²H + ¹H → ³He + γ</li><li>³He + ³He → ⁴He + 2¹H</li><li>⁴He + ⁴He → ⁸Be + γ</li><li>⁸Be + ⁴He → ¹²C + γ</li></ul>"
+        ],
+        "activity": "Write and balance at least 3 different fusion reactions that occur inside stars. Check that mass number and atomic number balance on both sides.",
+        "check": "What must be conserved when writing a nuclear reaction?"
+      },
+      "4": {
+        "intro": "Elements heavier than iron cannot be formed by ordinary stellar fusion — the process would absorb energy rather than release it. Instead, they require the extreme conditions of a supernova explosion or a neutron star merger.",
+        "objectives": [
+          "Explain why elements heavier than iron cannot form in normal stars",
+          "Describe the r-process and s-process of neutron capture",
+          "Identify the astronomical events that produce heavy elements"
+        ],
+        "body": [
+          "<h4>🚀 Beyond Iron</h4><p>Iron is the most tightly bound nucleus in nature. Fusing anything heavier actually <em>consumes</em> energy instead of releasing it. So once a star's core becomes iron, fusion stops.</p>",
+          "<h4>💥 Supernovae: The Element Factories</h4><p>When a massive star's iron core collapses, it triggers a supernova — a titanic explosion that briefly outshines an entire galaxy. In this chaos, rapid neutron capture (the <strong>r-process</strong>) forges elements like gold, platinum, and uranium.</p>",
+          "<h4>🐢 The s-process</h4><p>In AGB (asymptotic giant branch) stars, <strong>slow neutron capture</strong> builds heavy elements gradually — creating strontium, barium, and lead.</p>"
+        ],
+        "activity": "Research where gold, platinum, and uranium come from. Write a short paragraph tracing one of these elements back to its cosmic origin.",
+        "check": "Why are elements heavier than iron rare in the universe?"
+      }
+    },
+    "2": {
+      "1": {
+        "intro": "The Ancient Greek philosophers were the first to speculate about the fundamental nature of matter. Democritus proposed that all matter is made of tiny, indivisible particles he called 'atomos' — the root of our modern word 'atom'.",
+        "objectives": [
+          "Describe Democritus' atomic theory",
+          "Explain why Aristotle rejected it",
+          "Compare and contrast the two views of matter"
+        ],
+        "body": [
+          "<h4>🏛️ Democritus (c. 460–370 BC)</h4><p>Democritus reasoned that if you kept cutting a piece of matter in half, eventually you would reach a piece that could not be cut further. He called this particle <em>atomos</em> — Greek for 'uncuttable'.</p>",
+          "<h4>🚫 Aristotle's Objection</h4><p>Aristotle rejected atomism, arguing instead that matter was continuous — infinitely divisible. He proposed that everything was made of four elements (earth, water, air, fire). His view dominated Western thought for ~2,000 years.</p>",
+          "<h4>⚖️ The Debate</h4><p>Democritus asked, 'What is matter made of?' Aristotle asked, 'Why does matter behave the way it does?' Both were asking important questions — but only Democritus' answer survived the scientific revolution.</p>"
+        ],
+        "activity": "Write a two-paragraph essay: 'If I were a Greek philosopher, which view would I support — Democritus or Aristotle? Why?'",
+        "check": "Why did Aristotle's view win over Democritus' for nearly 2,000 years?"
+      },
+      "2": {
+        "intro": "The Ancient Greeks believed all matter was composed of four fundamental elements — earth, water, air, and fire — each with its own properties and natural place.",
+        "objectives": [
+          "Identify the four classical Greek elements",
+          "Describe the properties associated with each",
+          "Explain the role of 'aether' in Greek cosmology"
+        ],
+        "body": [
+          "<h4>🔥 The Four Elements</h4><ul><li><strong>Earth</strong> — cold and dry, tends downward</li><li><strong>Water</strong> — cold and wet, tends downward</li><li><strong>Air</strong> — hot and wet, tends upward</li><li><strong>Fire</strong> — hot and dry, tends upward</li></ul>",
+          "<h4>✨ Aether — The Fifth Element</h4><p>The heavens, according to Aristotle, were made of a fifth element: <em>aether</em>, a perfect, unchanging substance that moved in perfect circles.</p>",
+          "<h4>🧠 Why It Made Sense</h4><p>The four-element theory could explain everyday observations: fire rises, earth falls, water flows, air drifts. It was elegant — but wrong.</p>"
+        ],
+        "activity": "List 10 everyday materials (wood, glass, salt, smoke, etc.) and classify each by its supposed Greek element composition. Discuss why the classification breaks down.",
+        "check": "Why did the four-element theory persist for so long?"
+      },
+      "3": {
+        "intro": "Greek philosophers classified motion into three types: natural, violent, and celestial. This framework shaped physics for nearly 2,000 years.",
+        "objectives": [
+          "Distinguish natural, violent, and celestial motion",
+          "Explain why Greeks thought celestial motion was different from Earthly motion",
+          "Give examples of each type of motion"
+        ],
+        "body": [
+          "<h4>🌍 Three Types of Terrestrial Motion</h4><ul><li><strong>Natural motion</strong> — objects return to their natural place (earth falls, fire rises)</li><li><strong>Violent motion</strong> — forced motion; ends when the force stops (pushing a cart)</li><li><strong>Celestial motion</strong> — perfect circular motion of heavenly bodies</li></ul>",
+          "<h4>🤔 The Underlying Idea</h4><p>For the Greeks, the universe was divided into two realms — the imperfect Earth and the perfect heavens. Different laws applied to each. This is why they didn't expect a single set of physics to explain both.</p>"
+        ],
+        "activity": "Sort the following into natural / violent / celestial motion: a stone falling, a bird flying, the Moon orbiting Earth, a ball kicked, smoke rising, a planet moving.",
+        "check": "Why did Greeks believe celestial motion was different from Earthly motion?"
+      },
+      "4": {
+        "intro": "The Greeks had several lines of evidence that the Earth is spherical — not flat. Their reasoning was based on careful observation, not guesswork.",
+        "objectives": [
+          "Cite at least three pieces of evidence for a spherical Earth",
+          "Explain how Eratosthenes measured Earth's circumference",
+          "Understand how observation leads to scientific inference"
+        ],
+        "body": [
+          "<h4>🌕 Evidence for a Spherical Earth</h4><ul><li><strong>Lunar eclipses</strong> — Earth's shadow on the Moon is always circular, no matter the time of night</li><li><strong>Ships over the horizon</strong> — a departing ship's hull disappears first, then the mast</li><li><strong>Different constellations</strong> — travelers north and south see different stars</li><li><strong>Eratosthenes' measurement</strong> (~240 BC) — he compared shadow angles in two Egyptian cities and calculated Earth's circumference within 2% of the modern value</li></ul>",
+          "<h4>📐 How Eratosthenes Did It</h4><p>In Syene, the Sun was directly overhead at noon on the summer solstice. In Alexandria (≈800 km north), it was 7.2° off vertical. Since 7.2° is 1/50th of a full circle, Earth's circumference must be 50 × 800 km = 40,000 km.</p>"
+        ],
+        "activity": "Recreate Eratosthenes' method: given two cities with shadow angles of 0° and 7.2°, and a distance of 800 km, calculate Earth's circumference.",
+        "check": "Which evidence for a spherical Earth is the most convincing?"
+      }
+    },
+    "3": {
+      "1": {
+        "intro": "Alchemy was a medieval forerunner of chemistry. Alchemists sought to turn base metals into gold and to find the elixir of life — but in the process, they developed tools and techniques that shaped modern chemistry.",
+        "objectives": [
+          "Describe the goals of alchemy",
+          "Explain alchemy's contributions to modern chemistry",
+          "Identify key alchemists and their work"
+        ],
+        "body": [
+          "<h4>🔮 Goals of Alchemy</h4><ul><li>Transmutation of base metals into gold</li><li>The Philosopher's Stone — a legendary substance that could transmute metals</li><li>The Elixir of Life — a potion granting immortality</li></ul>",
+          "<h4>🧪 Contributions to Modern Chemistry</h4><ul><li>Discovery of mineral acids (nitric, sulfuric, hydrochloric)</li><li>Development of laboratory techniques: distillation, filtration, sublimation, crystallization</li><li>Isolation of elements like phosphorus and zinc</li><li>Invention of lab apparatus: alembics, retorts, crucibles</li></ul>",
+          "<h4>⚗️ From Magic to Method</h4><p>Alchemists mixed mystical beliefs with experimentation — but their careful record-keeping and hands-on approach laid the groundwork for the Scientific Revolution.</p>"
+        ],
+        "activity": "Research one famous alchemist (Paracelsus, Jabir ibn Hayyan, or Isaac Newton's alchemical work) and present three of their contributions.",
+        "check": "How did alchemy's failures lead to chemistry's successes?"
+      },
+      "2": {
+        "intro": "Alchemists developed many laboratory tools and techniques that are still used in modern chemistry — from distillation apparatus to crucibles and separatory methods.",
+        "objectives": [
+          "Identify key alchemical laboratory tools",
+          "Describe distillation, filtration, and sublimation",
+          "Explain why these techniques remain important today"
+        ],
+        "body": [
+          "<h4>🔬 Key Techniques</h4><ul><li><strong>Distillation</strong> — separating liquids based on boiling point</li><li><strong>Filtration</strong> — separating solids from liquids using a porous barrier</li><li><strong>Sublimation</strong> — a solid turning directly into a gas</li><li><strong>Calcination</strong> — heating a substance to remove volatile components</li><li><strong>Crystallization</strong> — purifying substances from solution</li></ul>",
+          "<h4>🧴 Where You See Them Today</h4><p>Oil refineries use distillation. Water treatment plants use filtration. Instant-dry ice uses sublimation. Pharmacies use crystallization to purify drugs.</p>"
+        ],
+        "activity": "In your lab (or a video), observe a simple filtration or distillation. Draw and label the apparatus.",
+        "check": "Which alchemical technique is most used in modern labs?"
+      },
+      "3": {
+        "intro": "Diurnal motion is the daily apparent motion of celestial objects across the sky. Annual motion is the yearly cycle of the Sun and stars. Precession is the slow wobble of Earth's axis over 26,000 years.",
+        "objectives": [
+          "Define diurnal, annual, and precession motion",
+          "Explain the causes of each type of motion",
+          "Distinguish apparent motion from real motion"
+        ],
+        "body": [
+          "<h4>🌞 Diurnal Motion</h4><p>The Sun, Moon, and stars appear to rise in the east and set in the west every day. This is caused by Earth's <strong>rotation</strong> on its axis — not by celestial objects moving around us.</p>",
+          "<h4>🌍 Annual Motion</h4><p>Over the course of a year, different constellations appear in the night sky, and the Sun's position at noon drifts north and south. This is due to Earth's <strong>revolution</strong> around the Sun.</p>",
+          "<h4>🌀 Precession of the Equinoxes</h4><p>Earth's axis wobbles like a spinning top — completing one full cycle every ~26,000 years. This means Polaris won't always be the North Star.</p>"
+        ],
+        "activity": "Observe the Sun's position at the same time for 3 days (or use a sun tracker app). Record how it shifts — is it diurnal or annual motion?",
+        "check": "What causes the precession of the equinoxes?"
+      },
+      "4": {
+        "intro": "Alchemy was not 'bad science' — it was the ancestral laboratory of modern chemistry. Its language, tools, and curiosity set the stage for the Scientific Revolution.",
+        "objectives": [
+          "Trace alchemy's transition into modern chemistry",
+          "Name the key figures who made the transition",
+          "Explain why the shift from alchemy to chemistry matters"
+        ],
+        "body": [
+          "<h4>🔗 From Alchemy to Chemistry</h4><ul><li><strong>Robert Boyle (1661)</strong> — <em>The Sceptical Chymist</em>, rejected the four classical elements</li><li><strong>Antoine Lavoisier (1789)</strong> — Law of Conservation of Mass, named oxygen, founded modern chemistry</li><li><strong>John Dalton (1803)</strong> — Atomic theory with quantitative predictions</li><li><strong>Dmitri Mendeleev (1869)</strong> — Periodic table organized by atomic weight</li></ul>",
+          "<h4>💡 The Change in Mindset</h4><p>Alchemists sought secret knowledge. Chemists sought public, reproducible results. That shift — from secrecy to transparency — is what made modern science possible.</p>"
+        ],
+        "activity": "Create a timeline: alchemy → Boyle → Lavoisier → Dalton → Mendeleev. Write one sentence for each about their key contribution.",
+        "check": "Who is considered the 'father of modern chemistry' and why?"
+      }
+    },
+    "4": {
+      "1": {
+        "intro": "John Dalton (1766–1844) revived atomic theory with quantitative evidence. His work explained the laws of chemical combination and gave chemistry its first rigorous theoretical foundation.",
+        "objectives": [
+          "State Dalton's atomic theory postulates",
+          "Explain how his theory accounted for chemical laws",
+          "Identify which postulates are still accepted today"
+        ],
+        "body": [
+          "<h4>⚛️ Dalton's Atomic Theory (1803)</h4><ol><li>All matter is made of atoms.</li><li>Atoms of the same element are identical in mass and properties.</li><li>Atoms of different elements differ in mass.</li><li>Atoms combine in whole-number ratios to form compounds.</li><li>Atoms are neither created nor destroyed in chemical reactions.</li></ol>",
+          "<h4>✅ What's Still True</h4><p>Postulates 1, 4, and 5 are still accepted (with modern refinements). Postulate 2 was modified: atoms of the same element can have different masses (isotopes).</p>"
+        ],
+        "activity": "Illustrate each of Dalton's five postulates with a simple diagram. Which one would you update based on modern knowledge?",
+        "check": "Which of Dalton's postulates is now known to be false?"
+      },
+      "2": {
+        "intro": "Dalton's postulates explained two key chemical laws: the Law of Definite Proportions and the Law of Multiple Proportions.",
+        "objectives": [
+          "State both laws of chemical combination",
+          "Explain how Dalton's theory explains them",
+          "Solve simple problems using these laws"
+        ],
+        "body": [
+          "<h4>⚖️ Law of Definite Proportions (Proust)</h4><p>A given compound always contains the same elements in the same proportions by mass. E.g., water is always 11.2% H and 88.8% O.</p>",
+          "<h4>🔢 Law of Multiple Proportions (Dalton)</h4><p>When two elements form multiple compounds, the mass ratios of one element are small whole numbers. E.g., in CO and CO₂, the masses of oxygen per 12 g of carbon are 16 g and 32 g — a 1:2 ratio.</p>",
+          "<h4>🧩 Why It Matters</h4><p>Both laws only make sense if matter is made of discrete atoms — not a continuous substance.</p>"
+        ],
+        "activity": "Analyze data for CO and CO₂: mass of O per 12 g of C is 16 g and 32 g. Show the ratio is a small whole number.",
+        "check": "How did Dalton's theory explain Proust's Law?"
+      },
+      "3": {
+        "intro": "With atomic theory established, chemists could systematically discover and identify new elements using atomic weights as their fingerprints.",
+        "objectives": [
+          "Describe how new elements were discovered after Dalton",
+          "Explain the role of atomic weights in element identification",
+          "Trace the development of the periodic table"
+        ],
+        "body": [
+          "<h4>🔍 The Element Rush</h4><p>Once chemists accepted atomic weights as the fingerprint of each element, they could isolate and identify new ones systematically. Sodium, potassium, chlorine, bromine, and iodine were isolated using electrochemistry and spectroscopy.</p>",
+          "<h4>📊 Mendeleev's Periodic Table (1869)</h4><p>Dmitri Mendeleev arranged the known elements by atomic weight and noticed recurring patterns. He left <strong>gaps</strong> for undiscovered elements and predicted their properties with remarkable accuracy.</p>",
+          "<h4>🎯 Success Rate</h4><p>Mendeleev's predictions for gallium, scandium, and germanium were confirmed within 15 years — a stunning triumph for atomic theory.</p>"
+        ],
+        "activity": "Recreate Mendeleev's 1871 periodic table and predict where the missing elements (Ga, Sc, Ge) would go.",
+        "check": "Why did Mendeleev leave gaps in his periodic table?"
+      },
+      "4": {
+        "intro": "The periodic table evolved from Dalton's atomic weights → Mendeleev's periodic arrangement → Moseley's atomic number ordering → the modern electron-configuration table.",
+        "objectives": [
+          "Trace the periodic table's history",
+          "Distinguish ordering by atomic weight vs atomic number",
+          "Explain why atomic number is the correct ordering principle"
+        ],
+        "body": [
+          "<h4>📅 Periodic Table Timeline</h4><ul><li><strong>1803</strong> — Dalton: atomic weights</li><li><strong>1869</strong> — Mendeleev: by atomic weight</li><li><strong>1913</strong> — Moseley: by atomic number</li><li><strong>Modern</strong> — by electron configuration</li></ul>",
+          "<h4>🎯 Why Atomic Number Wins</h4><p>Ordering by atomic mass caused a few elements to be placed out of order (like Te and I). Moseley showed that <strong>atomic number</strong> — the number of protons — is the real identity of an element. It gives a clean, integer sequence with no exceptions.</p>"
+        ],
+        "activity": "Create a 4-stage timeline showing how the periodic table evolved. Which stage would be impossible without the previous one?",
+        "check": "Why is the modern periodic table ordered by atomic number?"
+      }
+    },
+    "5": {
+      "1": {
+        "intro": "The discovery of the electron, proton, and neutron revolutionized our understanding of atomic structure. Each particle was discovered through a landmark experiment.",
+        "objectives": [
+          "Name the three subatomic particles and their charges",
+          "Describe the experiments that discovered each",
+          "Order the discoveries chronologically"
+        ],
+        "body": [
+          "<h4>🔬 The Subatomic Trio</h4><ul><li><strong>Electron</strong> — J.J. Thomson, 1897, cathode ray tube experiment</li><li><strong>Proton</strong> — Ernest Rutherford, 1919, gold foil experiment</li><li><strong>Neutron</strong> — James Chadwick, 1932, beryllium radiation</li></ul>",
+          "<h4>⚡ Charges and Masses</h4><ul><li>Electron: negative charge, mass ≈ 1/1836 of a proton</li><li>Proton: positive charge, mass ≈ 1 amu</li><li>Neutron: no charge, mass ≈ 1 amu</li></ul>"
+        ],
+        "activity": "Draw the atom as it was understood after each discovery — 1897, 1919, and 1932.",
+        "check": "Which discovery most changed the model of the atom?"
+      },
+      "2": {
+        "intro": "Four scientists — Thomson, Rutherford, Moseley, and Bohr — each contributed a crucial piece to our understanding of atomic structure.",
+        "objectives": [
+          "Match each scientist to their contribution",
+          "Compare and contrast their atomic models",
+          "Explain how each model improved on the previous one"
+        ],
+        "body": [
+          "<h4>🔬 Key Contributions</h4><ul><li><strong>J.J. Thomson</strong> — Plum pudding model, discovered the electron</li><li><strong>Ernest Rutherford</strong> — Nuclear model, gold foil experiment</li><li><strong>Henry Moseley</strong> — Atomic number = proton count</li><li><strong>Niels Bohr</strong> — Quantized electron orbits</li></ul>",
+          "<h4>🔗 The Chain of Discovery</h4><p>Each model addressed the failures of the previous one. Thomson found electrons. Rutherford found the nucleus. Moseley found what made each element unique. Bohr explained why electrons don't crash into the nucleus.</p>"
+        ],
+        "activity": "Create a timeline card for each scientist with a model diagram and one key sentence.",
+        "check": "How did Rutherford's model differ from Thomson's?"
+      },
+      "3": {
+        "intro": "The nuclear model places protons and neutrons in a tiny, dense nucleus at the center, with electrons orbiting in shells around it.",
+        "objectives": [
+          "Describe the nuclear model of the atom",
+          "Locate protons, neutrons, and electrons",
+          "Compare Bohr's model to the modern quantum model"
+        ],
+        "body": [
+          "<h4>🎯 The Nuclear Model</h4><ul><li>Nucleus — small, dense, positively charged (protons + neutrons)</li><li>Electrons — orbiting in shells (Bohr) or existing in probability clouds (quantum)</li><li>Most of the atom is empty space</li></ul>",
+          "<h4>📏 Scale Comparison</h4><p>If the atom were the size of a football stadium, the nucleus would be the size of a marble at the center — and the electrons would be specks of dust on the outer walls.</p>"
+        ],
+        "activity": "Build a physical or digital Bohr model of carbon (6 protons, 6 neutrons, 6 electrons). Label each part.",
+        "check": "Why is the atom mostly empty space?"
+      },
+      "4": {
+        "intro": "Today we consolidate all atomic models into a single historical timeline — from Democritus to the quantum model.",
+        "objectives": [
+          "Summarize the historical progression of atomic models",
+          "Present a creative timeline of the atom",
+          "Evaluate the strengths and weaknesses of each model"
+        ],
+        "body": [
+          "<h4>📜 Atomic Model Timeline</h4><ul><li>400 BC — Democritus: atomos</li><li>1803 — Dalton: solid sphere</li><li>1897 — Thomson: plum pudding</li><li>1911 — Rutherford: nuclear</li><li>1913 — Bohr: planetary</li><li>1926 — Schrödinger: quantum mechanical</li></ul>",
+          "<h4>🎨 Your Performance Task</h4><p>Create a timeline poster, digital infographic, or 3D display showing all six models — with dates, scientist names, and diagram of each.</p>"
+        ],
+        "activity": "Create a poster timeline of the six atomic models. Include a diagram, the scientist's name, and one sentence about each. This is your Performance Task (pt1).",
+        "check": "Which model is currently accepted?"
+      }
+    },
+    "6": {
+      "1": {
+        "intro": "Atomic number (Z) — the number of protons in the nucleus — is the identity of an element. Changing Z creates a new element. This discovery opened the door to synthetic elements.",
+        "objectives": [
+          "Explain what atomic number is",
+          "Describe the first artificial transmutation",
+          "Name key synthetic elements and how they were made"
+        ],
+        "body": [
+          "<h4>🔢 Atomic Number = Identity</h4><p>Every element has a unique number of protons. Carbon always has 6. Gold always has 79. Change the proton count and you have a new element.</p>",
+          "<h4>💥 The First Transmutation (1919)</h4><p>Rutherford bombarded nitrogen gas with alpha particles and detected oxygen — the first artificial transmutation.</p>",
+          "<h4>⚗️ Synthetic Elements</h4><ul><li>Technetium (1937) — first synthetic element</li><li>Plutonium (1940)</li><li>Oganesson (2002, Z=118) — the heaviest known</li></ul>"
+        ],
+        "activity": "Research one synthetic element and write a short report: who made it, how, when, and why it matters.",
+        "check": "How is the atomic number of a new element confirmed?"
+      },
+      "2": {
+        "intro": "Nuclear reactions can be written as equations. Mass number and atomic number must balance on both sides — just like chemical equations must be balanced for atoms.",
+        "objectives": [
+          "Write nuclear reactions for transmutation",
+          "Balance mass number and atomic number",
+          "Identify alpha, beta, and gamma emissions"
+        ],
+        "body": [
+          "<h4>✍️ Example — Transmutation</h4><p style='font-family:monospace;background:#f5f7fa;padding:12px;border-radius:8px;'>¹⁴N + ⁴He → ¹⁷O + ¹H</p>",
+          "<h4>🎯 Conservation Rules</h4><ul><li>Sum of mass numbers (top) must match</li><li>Sum of atomic numbers (bottom) must match</li></ul>",
+          "<h4>🧪 Practice</h4><ul><li>²³⁸U + n → ²³⁹Pu + γ</li><li>²⁴²Pu + ²²Ne → ²⁶⁰Rf + 4n</li></ul>"
+        ],
+        "activity": "Write 5 nuclear reactions for synthesizing known elements. Verify each is balanced.",
+        "check": "What is conserved in a nuclear reaction?"
+      },
+      "3": {
+        "intro": "Radioactive decay produces alpha, beta, and gamma radiation. Each has distinct properties and different effects on the nucleus.",
+        "objectives": [
+          "Distinguish alpha, beta, and gamma decay",
+          "Write balanced decay equations",
+          "Identify the change in atomic number for each"
+        ],
+        "body": [
+          "<h4>☢️ Types of Decay</h4><ul><li><strong>Alpha (α)</strong> — emits ⁴He nucleus (2p + 2n). Atomic number ↓2, mass number ↓4</li><li><strong>Beta-minus (β⁻)</strong> — neutron → proton + electron. Atomic number ↑1</li><li><strong>Beta-plus (β⁺)</strong> — proton → neutron + positron. Atomic number ↓1</li><li><strong>Gamma (γ)</strong> — pure energy, no change in mass or charge</li></ul>"
+        ],
+        "activity": "Balance 10 decay equations and identify which type of decay each represents.",
+        "check": "How does beta decay change the atomic number?"
+      },
+      "4": {
+        "intro": "Synthetic elements have applications in medicine, energy, and scientific research — but also raise questions about safety and ethics.",
+        "objectives": [
+          "Identify uses of synthetic elements",
+          "Evaluate benefits and risks",
+          "Form an opinion on continued synthesis of new elements"
+        ],
+        "body": [
+          "<h4>💊 Applications in Medicine</h4><p>Technetium-99m is used in over 10 million medical imaging procedures per year.</p>",
+          "<h4>⚡ Applications in Energy</h4><p>Plutonium-239 fuels nuclear reactors and weapons.</p>",
+          "<h4>🏠 Everyday Applications</h4><p>Americium-241 is in every ionization smoke detector.</p>",
+          "<h4>⚖️ The Debate</h4><p>Synthetic elements save lives but also create waste and weapons. Should we keep making new ones?</p>"
+        ],
+        "activity": "Debate the motion: 'Synthesizing new elements benefits humanity more than it harms it.' Write a 1-page position paper.",
+        "check": "What is the most beneficial synthetic element?"
+      }
+    },
+    "7": {
+      "1": {
+        "intro": "The polarity of a molecule depends on two things: the polarity of its bonds and its three-dimensional shape.",
+        "objectives": [
+          "Determine molecular polarity from structure",
+          "Use electronegativity differences",
+          "Apply VSEPR theory to predict shape"
+        ],
+        "body": [
+          "<h4>🧭 Polarity Rules</h4><ul><li>Symmetrical shape + no lone pairs on central atom = <strong>nonpolar</strong></li><li>Asymmetrical shape or lone pairs = <strong>polar</strong></li><li>Electronegativity difference > 0.4 → polar bond</li></ul>",
+          "<h4>🔍 Examples</h4><ul><li>CO₂ — linear, symmetrical → nonpolar</li><li>H₂O — bent, asymmetrical → polar</li><li>CH₄ — tetrahedral, symmetrical → nonpolar</li><li>NH₃ — pyramidal, lone pair → polar</li></ul>"
+        ],
+        "activity": "Draw Lewis structures for 5 molecules and classify each as polar or nonpolar. Explain your reasoning.",
+        "check": "Why is CO₂ nonpolar despite having polar bonds?"
+      },
+      "2": {
+        "intro": "Polarity determines solubility, boiling point, surface tension, and many other physical properties.",
+        "objectives": [
+          "Relate polarity to physical properties",
+          "Predict solubility using 'like dissolves like'",
+          "Compare boiling points of polar vs nonpolar substances"
+        ],
+        "body": [
+          "<h4>🔗 Polarity and Properties</h4><ul><li>Polar dissolves polar (water + salt, water + sugar)</li><li>Nonpolar dissolves nonpolar (oil + grease, hexane + wax)</li><li>Polar molecules generally have higher boiling points</li></ul>",
+          "<h4>🌊 Why Oil and Water Don't Mix</h4><p>Water is polar; oil is nonpolar. Their intermolecular forces are incompatible — polar water molecules prefer each other's company.</p>"
+        ],
+        "activity": "Predict which of 5 solutes dissolve in water and which in oil. Test your predictions in the lab if possible.",
+        "check": "Why doesn't oil mix with water?"
+      },
+      "3": {
+        "intro": "Intermolecular forces (IMFs) are the attractions between molecules — much weaker than chemical bonds, but crucial for physical properties.",
+        "objectives": [
+          "Name the three main types of IMFs",
+          "Rank them by strength",
+          "Identify which IMF dominates in a given substance"
+        ],
+        "body": [
+          "<h4>🎯 Types of IMFs</h4><ol><li><strong>London dispersion</strong> — weakest; present in all molecules; stronger in larger molecules</li><li><strong>Dipole–dipole</strong> — between polar molecules</li><li><strong>Hydrogen bonding</strong> — strongest; occurs when H is bonded to N, O, or F</li></ol>",
+          "<h4>🔥 Impact on Boiling Points</h4><p>Water (H-bonded) boils at 100°C. Methane (London) boils at −161°C. That's a 260°C difference from IMF type alone!</p>"
+        ],
+        "activity": "Identify the dominant IMF in: water, methane, ammonia, hydrogen chloride, and carbon dioxide. Rank their boiling points.",
+        "check": "Which IMF explains water's high boiling point?"
+      },
+      "4": {
+        "intro": "Intermolecular forces determine melting point, boiling point, viscosity, surface tension, and even the use of materials in everyday objects.",
+        "objectives": [
+          "Identify IMFs in given substances",
+          "Explain IMF effects on physical properties",
+          "Connect IMF strength to real-world applications"
+        ],
+        "body": [
+          "<h4>📊 IMF Effects on Properties</h4><ul><li>Stronger IMF → higher melting/boiling point</li><li>Hydrogen bonding in water → high surface tension (that's why droplets form)</li><li>Weak London forces in noble gases → very low boiling points</li><li>Hydrogen bonding in DNA → holds the double helix together</li></ul>"
+        ],
+        "activity": "Compare boiling points of 5 substances and explain the differences using IMF types.",
+        "check": "Why does water have a higher boiling point than methane?"
+      }
+    },
+    "8": {
+      "1": {
+        "intro": "Collision theory explains how concentration, temperature, and particle size affect reaction rates.",
+        "objectives": [
+          "State the postulates of collision theory",
+          "Explain the effect of concentration, temperature, and surface area on rate",
+          "Relate activation energy to reaction rate"
+        ],
+        "body": [
+          "<h4>💥 Collision Theory</h4><p>Reactions occur when reactant particles collide with enough energy (≥ activation energy) and correct orientation.</p>",
+          "<h4>⚡ Effects on Rate</h4><ul><li>Higher concentration → more collisions → faster rate</li><li>Higher temperature → more energy → faster rate</li><li>Smaller particle size → more surface area → faster rate</li></ul>"
+        ],
+        "activity": "Observe Alka-Seltzer in hot vs cold water and in crushed vs whole form. Record your observations.",
+        "check": "Why does food spoil faster at room temperature than in the fridge?"
+      },
+      "2": {
+        "intro": "A catalyst is a substance that speeds up a reaction without being consumed. It provides an alternative pathway with lower activation energy.",
+        "objectives": [
+          "Define catalyst",
+          "Explain how catalysts lower activation energy",
+          "Distinguish catalysts from reactants"
+        ],
+        "body": [
+          "<h4>🎯 Catalysts</h4><ul><li>Not consumed in the reaction</li><li>Lower the activation energy</li><li>Enzymes are biological catalysts</li><li>Catalytic converters in cars reduce pollution</li></ul>",
+          "<h4>🧪 Example</h4><p>MnO₂ catalyzes H₂O₂ → H₂O + O₂</p>"
+        ],
+        "activity": "Demonstrate MnO₂ catalysis of H₂O₂ decomposition. Compare the reaction rate with and without the catalyst.",
+        "check": "How does a catalyst differ from a reactant?"
+      },
+      "3": {
+        "intro": "Stoichiometry is the calculation of quantities in a chemical reaction using the balanced equation.",
+        "objectives": [
+          "Balance chemical equations",
+          "Calculate moles and masses of reactants and products",
+          "Use mole ratios from balanced equations"
+        ],
+        "body": [
+          "<h4>📐 Stoichiometry Steps</h4><ol><li>Balance the equation</li><li>Convert given mass to moles</li><li>Use mole ratio from the equation</li><li>Convert moles back to mass</li></ol>",
+          "<h4>🧪 Example</h4><p>2H₂ + O₂ → 2H₂O. How many grams of water form from 4 g of H₂?</p>"
+        ],
+        "activity": "Solve 5 stoichiometry problems. Show your work step by step.",
+        "check": "Why must the equation be balanced before doing stoichiometry?"
+      },
+      "4": {
+        "intro": "Percent yield is the ratio of actual yield to theoretical yield, expressed as a percentage.",
+        "objectives": [
+          "Calculate theoretical yield",
+          "Calculate percent yield",
+          "Explain why actual yield is usually less than theoretical"
+        ],
+        "body": [
+          "<h4>📊 Percent Yield</h4><p style='font-family:monospace;background:#f5f7fa;padding:12px;border-radius:8px;'>% Yield = (Actual Yield ÷ Theoretical Yield) × 100%</p>",
+          "<h4>⚠️ Why Yields Are Less Than 100%</h4><ul><li>Side reactions</li><li>Incomplete reactions</li><li>Loss during transfer</li><li>Impurities in reactants</li></ul>"
+        ],
+        "activity": "Given data, calculate percent yield for 3 reactions. Identify which factors may have reduced the yield.",
+        "check": "Can percent yield exceed 100%? Why or why not?"
+      }
+    },
+    "9": {
+      "1": {
+        "intro": "Cleaning materials are chemicals designed to remove dirt, grease, and germs from surfaces and bodies.",
+        "objectives": [
+          "Give examples of household and personal care cleaning products",
+          "Classify them by function",
+          "Explain the chemistry of soap and detergent"
+        ],
+        "body": [
+          "<h4>🧼 Common Cleaning Materials</h4><ul><li>Soap (fat + lye)</li><li>Detergent (synthetic surfactants)</li><li>Bleach (sodium hypochlorite)</li><li>Ammonia (NH₃)</li><li>Vinegar (acetic acid)</li><li>Baking soda (NaHCO₃)</li></ul>"
+        ],
+        "activity": "List 10 cleaning products at home and identify their purpose and active ingredient.",
+        "check": "What is the difference between soap and detergent?"
+      },
+      "2": {
+        "intro": "Product labels list active ingredients and other components. Understanding them helps consumers make safe choices.",
+        "objectives": [
+          "Read and interpret product labels",
+          "Identify active ingredients",
+          "Explain safety warnings"
+        ],
+        "body": [
+          "<h4>🏷️ Reading Labels</h4><ul><li>Active ingredient = the one that does the work</li><li>Inert ingredients = carriers, preservatives, colorants</li><li>Warning symbols: toxic, corrosive, flammable, irritant</li></ul>",
+          "<h4>⚠️ Safety First</h4><p>Never mix bleach and ammonia — it produces toxic chloramine gas. Always use in a ventilated area.</p>"
+        ],
+        "activity": "Bring 3 product labels and identify their active ingredients. Note any safety warnings.",
+        "check": "Why should you never mix bleach and ammonia?"
+      },
+      "3": {
+        "intro": "Personal care products are designed to enhance the appearance and hygiene of the human body.",
+        "objectives": [
+          "Give examples of personal care products",
+          "Describe their functions",
+          "Understand the chemistry behind them"
+        ],
+        "body": [
+          "<h4>🧴 Personal Care Products</h4><ul><li>Body lotion — moisturizes skin</li><li>Skin whitener — reduces melanin production</li><li>Deodorant — reduces body odor</li><li>Shaving cream — softens hair</li><li>Perfume — adds fragrance</li><li>Shampoo — cleans hair</li><li>Toothpaste — cleans teeth</li></ul>"
+        ],
+        "activity": "Make a poster classifying personal care products by function.",
+        "check": "What is the main purpose of a deodorant?"
+      },
+      "4": {
+        "intro": "Cosmetics contain a mix of ingredients — each with a specific role in the product's look, feel, or shelf life.",
+        "objectives": [
+          "Identify major cosmetic ingredients",
+          "Explain each ingredient's function",
+          "Evaluate the safety of common cosmetic ingredients"
+        ],
+        "body": [
+          "<h4>🧪 Cosmetic Ingredients</h4><ul><li><strong>Emollients</strong> — soften skin (oils, lanolin)</li><li><strong>Humectants</strong> — retain moisture (glycerin)</li><li><strong>Emulsifiers</strong> — blend oil and water</li><li><strong>Preservatives</strong> — prevent spoilage</li><li><strong>Fragrance</strong> — adds scent</li></ul>"
+        ],
+        "activity": "Analyze a lotion label and classify each ingredient. Which ingredients are essential? Which are optional?",
+        "check": "Why do cosmetics need preservatives?"
+      }
+    },
+    "10": {
+      "1": {
+        "intro": "Plato's problem of 'Saving the Appearances' required Greek astronomers to explain all observed celestial motions using perfect circular paths.",
+        "objectives": [
+          "Explain Plato's challenge to Greek astronomers",
+          "Describe how it constrained Greek astronomy",
+          "Explain the concept of retrograde motion"
+        ],
+        "body": [
+          "<h4>🌀 Saving the Appearances</h4><p>Plato argued that celestial bodies must move in perfect circles — the 'most perfect' shape. Any observed deviation (like retrograde motion) had to be explained without abandoning circles.</p>",
+          "<h4>🔄 Retrograde Motion</h4><p>Mars occasionally appears to move backward in the sky relative to the stars. This puzzling observation inspired complex models.</p>",
+          "<h4>🌐 The Consequence</h4><p>Greek astronomers invented <strong>epicycles</strong> — small circles on top of big circles — to explain planetary motion.</p>"
+        ],
+        "activity": "Draw the epicycle model for Mars' retrograde motion. Explain how it 'saves the appearances' of circular motion.",
+        "check": "Why did Plato insist on circular motion?"
+      },
+      "2": {
+        "intro": "Greek astronomers proposed several competing models of the universe before the telescope was invented.",
+        "objectives": [
+          "Compare Eudoxus, Aristotle, Aristarchus, Ptolemy, and Copernicus",
+          "Identify geocentric vs heliocentric views",
+          "Trace how the models evolved over time"
+        ],
+        "body": [
+          "<h4>🌍 Competing Models</h4><ul><li><strong>Eudoxus</strong> — concentric spheres</li><li><strong>Aristotle</strong> — 55 crystalline spheres, Earth at center</li><li><strong>Aristarchus</strong> — heliocentric (ahead of his time!)</li><li><strong>Ptolemy</strong> — epicycles, geocentric</li><li><strong>Copernicus</strong> — heliocentric, circular orbits</li></ul>"
+        ],
+        "activity": "Create a comparison chart of all 5 models: Earth's position, planetary motion, and key features.",
+        "check": "Who was the first to propose a heliocentric model?"
+      },
+      "3": {
+        "intro": "Kepler's 3rd law relates a planet's orbital period to its distance from the Sun: T² ∝ a³.",
+        "objectives": [
+          "State Kepler's 3rd law",
+          "Apply it to solar system objects",
+          "Calculate orbital periods"
+        ],
+        "body": [
+          "<h4>🎯 Kepler's 3rd Law</h4><p style='font-family:monospace;background:#f5f7fa;padding:12px;border-radius:8px;'>T² = a³ (with T in years, a in AU)</p>",
+          "<h4>🪐 Examples</h4><ul><li>Earth: a = 1 AU → T = 1 year</li><li>Mars: a = 1.52 AU → T = 1.88 years</li><li>Jupiter: a = 5.2 AU → T = 11.9 years</li></ul>"
+        ],
+        "activity": "Calculate the orbital period of 3 planets using Kepler's 3rd law.",
+        "check": "Does Kepler's 3rd law work for moons orbiting planets?"
+      },
+      "4": {
+        "intro": "Newton's laws of motion and universal gravitation unified terrestrial and celestial mechanics — showing that the same physics governs Earth and the heavens.",
+        "objectives": [
+          "State Newton's 2nd Law and Law of Universal Gravitation",
+          "Show that all objects fall with the same acceleration (in vacuum)",
+          "Explain why Newton's laws are called axioms"
+        ],
+        "body": [
+          "<h4>🎯 Newton's 2nd Law</h4><p style='font-family:monospace;background:#f5f7fa;padding:12px;border-radius:8px;'>F = ma</p>",
+          "<h4>🌍 Universal Gravitation</h4><p style='font-family:monospace;background:#f5f7fa;padding:12px;border-radius:8px;'>F = G m₁m₂ / r²</p>",
+          "<h4>🔗 Combined Result</h4><p>ma = G·m·M / r² → a = G·M / r² — independent of the falling object's mass.</p>",
+          "<h4>🌕 Famous Test</h4><p>Apollo 15 astronaut David Scott dropped a feather and a hammer on the Moon. They landed at the same time — confirming Newton's prediction.</p>"
+        ],
+        "activity": "Derive that g = 9.8 m/s² at Earth's surface. Explain why a feather and hammer fall together in a vacuum.",
+        "check": "Why do all objects fall with the same acceleration in a vacuum?"
+      }
+    }
+  }
+}
