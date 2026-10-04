@@ -1,96 +1,123 @@
 /* ============================================================
    teacher-auth.js — Physical Science · Teacher Authentication
-   Version: 1.0.0
+   Version: 1.1.0
    Depends on: config.js, store.js, security.js
    ============================================================ */
 
 window.TeacherAuth = (function () {
   'use strict';
 
-  // SHA-256 hash of the teacher token
-  // Regenerate this when you change the teacher token!
-  const TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
+  var TOKEN_KEY_LS = 'physci_teacher_token';
+  var TOKEN_KEY_SS = 'physci_teacher_token';
+  var SESSION_KEY  = 'physci_teacher_session';
 
-  // Alternative: also accept a plaintext token (config.gasToken)
-  function getAcceptedToken() {
-    return (window.PHYSCI_CONFIG && window.PHYSCI_CONFIG.gasToken) || '';
+  // The app's root folder name (the repo name on GitHub Pages)
+  var APP_ROOT_SEGMENT = '/physical-science-app/';
+
+  /**
+   * Compute an absolute URL to a file at the app root,
+   * regardless of where the current page lives.
+   * Example: redirectTo('teacher-login.html')
+   *   from /physical-science-app/classrecord/grading-sheet.html
+   *   → /physical-science-app/teacher-login.html
+   */
+  function appUrl(relativePath) {
+    var path = window.location.pathname;
+    var idx = path.indexOf(APP_ROOT_SEGMENT);
+    var root;
+    if (idx >= 0) {
+      root = path.substring(0, idx + APP_ROOT_SEGMENT.length);
+    } else {
+      // Fallback: assume we're at the app root already
+      root = path.substring(0, path.lastIndexOf('/') + 1);
+    }
+    return root + relativePath.replace(/^\/+/, '');
   }
 
-  async function verify(token) {
-    if (!token) return false;
+  /* ---------------- Token handling ---------------- */
 
-    // 1. Check plaintext token first (fast path)
-    if (getAcceptedToken() && token === getAcceptedToken()) {
-      return true;
-    }
-
-    // 2. Fall back to SHA-256 hash comparison
-    if (window.Security && typeof Security.sha256Hex === 'function') {
-      try {
-        const hash = await Security.sha256Hex(token);
-        return hash === TEACHER_TOKEN_HASH;
-      } catch (e) {
-        console.warn('TeacherAuth.verify hash error:', e);
-        return false;
+  function saveToken(token, remember) {
+    try {
+      if (remember) {
+        localStorage.setItem(TOKEN_KEY_LS, token);
+      } else {
+        sessionStorage.setItem(TOKEN_KEY_SS, token);
       }
+    } catch (e) { /* noop */ }
+  }
+
+  function getToken() {
+    try {
+      return sessionStorage.getItem(TOKEN_KEY_SS)
+          || localStorage.getItem(TOKEN_KEY_LS)
+          || '';
+    } catch (e) { return ''; }
+  }
+
+  function clearToken() {
+    try { sessionStorage.removeItem(TOKEN_KEY_SS); } catch (e) {}
+    try { localStorage.removeItem(TOKEN_KEY_LS); } catch (e) {}
+    try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+    try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+  }
+
+  /* ---------------- Auth checks ---------------- */
+
+  function isAuthenticated() {
+    return !!getToken();
+  }
+
+  function requireTeacher(options) {
+    options = options || {};
+    if (!isAuthenticated()) {
+      var redirect = options.redirect || 'teacher-login.html';
+      window.location.replace(appUrl(redirect));
+      return false;
     }
-
-    return false;
+    return true;
   }
 
-  function save(teacher) {
-    if (!teacher || !teacher.name) {
-      throw new Error('Teacher name required');
-    }
-    const payload = Object.assign({}, teacher, {
-      loggedInAt: teacher.loggedInAt || new Date().toISOString()
-    });
-    return Store.setTeacher(payload);
+  /* ---------------- Login / Logout ---------------- */
+
+  /**
+   * Log in with a token (typically after verifying it against the Apps Script).
+   * Stores the token, then redirects to the teacher dashboard.
+   */
+  function login(token, remember) {
+    if (!token) return false;
+    saveToken(token, !!remember);
+    return true;
   }
 
-  function get() {
-    return (window.Store && Store.getTeacher()) || null;
+  /**
+   * Log out. Clears tokens, then redirects to teacher-login.html.
+   * The redirect is always absolute to the app root, so it works
+   * from any nested page (classrecord/, teacher/, etc.).
+   *
+   * Options:
+   *   redirect (string)  — target file at app root. Default 'teacher-login.html'.
+   *   noRedirect (bool)  — if true, do NOT navigate away. Caller handles it.
+   */
+  function logout(options) {
+    options = options || {};
+    clearToken();
+
+    if (options.noRedirect) return;
+
+    var target = options.redirect || 'teacher-login.html';
+    window.location.replace(appUrl(target));
   }
 
-  function isLoggedIn() {
-    const t = get();
-    return !!(t && t.name);
-  }
-
-  function teacherHubPath() {
-    const path = window.location.pathname;
-    if (path.includes('/teacher/')) return '../instructor.html';
-    return 'instructor.html';
-  }
-
-  function teacherLoginPath() {
-    const path = window.location.pathname;
-    if (path.includes('/teacher/') || path.includes('/classrecord/')) return '../teacher-login.html';
-    return 'teacher-login.html';
-  }
-
-  function logout() {
-    Store.clearTeacher();
-    window.location.href = teacherLoginPath();
-  }
-
-  function requireTeacher() {
-    if (!isLoggedIn()) {
-      window.location.href = teacherLoginPath();
-      return null;
-    }
-    return get();
-  }
+  /* ---------------- Exports ---------------- */
 
   return {
-    verify,
-    save,
-    get,
-    isLoggedIn,
-    logout,
-    requireTeacher,
-    teacherHubPath,
-    teacherLoginPath,
-    TEACHER_TOKEN_HASH
+    saveToken: saveToken,
+    getToken: getToken,
+    clearToken: clearToken,
+    isAuthenticated: isAuthenticated,
+    requireTeacher: requireTeacher,
+    login: login,
+    logout: logout,
+    appUrl: appUrl
   };
 })();
