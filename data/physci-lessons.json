@@ -179,7 +179,7 @@
       "Every heavy element on Earth has a cosmic origin story billions of years old."
     ]
   }
-}
+},
     "2": {
   "1": {
     "intro": "Long before microscopes or particle accelerators, Ancient Greek philosophers were already asking the deepest question in science: what is matter made of? Around 400 BC, a thinker named Democritus proposed a radical idea — that everything in the universe is made of tiny, indivisible particles he called 'atomos'. His theory was rejected by the greatest philosopher of his age, Aristotle, and forgotten for nearly 2,000 years. Yet today, Democritus is celebrated as the father of atomic theory. This lesson explores how the first atomists thought about matter and why their idea was so far ahead of its time.",
@@ -379,7 +379,7 @@
       "This shows how careful observation and reasoning lead to scientific discoveries."
     ]
   }
-}
+},
 "3": {
   "1": {
     "intro": "For over a thousand years, alchemy was the world's most advanced form of chemistry. Alchemists sought the impossible — turning lead into gold and finding the secret to eternal life. But in their quest, they developed the tools, techniques, and observations that would eventually become modern chemistry. This lesson explores who the alchemists were, what they sought, and how their failures led to the birth of a science.",
@@ -582,7 +582,7 @@
       "The shift from alchemy to chemistry required abandoning mysticism in favor of precise measurement."
     ]
   }
-}
+},
 "4": {
   "1": {
     "intro": "In 1803, an English schoolteacher named John Dalton revived an idea that had been dormant for over 2,000 years: that all matter is made of tiny, indivisible particles called atoms. But unlike Democritus, Dalton had evidence — the quantitative laws of chemistry that had been discovered in the preceding century. Dalton's atomic theory gave chemistry its first rigorous foundation and explained, for the first time, why chemical reactions obey the laws they do. In this lesson, we explore Dalton's five postulates, which of them are still accepted, and how his theory set the stage for modern chemistry.",
@@ -776,8 +776,7 @@
       "The periodic table encodes the electron structure of atoms — it is chemistry's central tool."
     ]
   }
-}
-{
+},
   "5": {
     "1": {
       "intro": "By the late 19th century, scientists knew that atoms existed — but they thought atoms were indivisible spheres. Then J.J. Thomson discovered the electron, shattering the idea that atoms had no internal structure. This lesson explores the discovery of the electron, Thomson's Plum Pudding model, and the first experimental evidence that atoms are made of smaller particles. It aligns with competency code S11/12PS-IIIb-8.",
@@ -969,8 +968,7 @@
       ]
     }
   }
-}
-{
+},
   "6": {
     "1": {
       "intro": "By the early 20th century, scientists understood that atoms have a nucleus containing protons and neutrons. But they soon discovered that nuclei are not always stable — some spontaneously change into other elements, releasing energy in the process. This lesson explores atomic number, isotopes, and the phenomenon of nuclear transmutation: the conversion of one element into another. It aligns with competency code S11/12PS-IIIb-11.",
@@ -1166,8 +1164,7 @@
       ]
     }
   }
-}
-{
+},
   "7": {
     "1": {
       "intro": "Atoms rarely exist alone — they bond together to form molecules and compounds. The way atoms bond determines everything about a substance: its shape, its melting point, its solubility, and even its biological function. This lesson explores the nature of chemical bonds, electronegativity, and how bond polarity arises. It aligns with competency code S11/12PS-IIIc-15.",
@@ -1361,8 +1358,7 @@
       ]
     }
   }
-}
-{
+},
   "8": {
     "1": {
       "intro": "Chemical reactions are the heart of industrial chemistry — from manufacturing fertilizers to producing plastics. But not all reactions are equally fast or efficient. Some occur in seconds; others take years. This lesson explores chemical kinetics: the factors that affect reaction rates and how we can control them to optimize industrial processes. It aligns with competency codes S11/12PS-IIId-e-21 and IIId-e-24.",
@@ -1557,8 +1553,7 @@
       ]
     }
   }
-}
-{
+},
   "9": {
     "1": {
       "intro": "Every time you wash your hands, brush your teeth, or apply lotion, you are using products of consumer chemistry. These products are carefully formulated using chemical principles to clean, protect, and improve our daily lives. This lesson explores the chemistry of cleaning agents — soaps, detergents, and disinfectants — and how they work at the molecular level. It aligns with competency codes S11/12PS-IIIi-j-30, -31, -32.",
@@ -1756,8 +1751,7 @@
       ]
     }
   }
-}
-{
+},
   "10": {
     "1": {
       "intro": "For centuries, humans believed that Earth was the center of the universe and that heavenly bodies moved in perfect circles. Then, in the early 17th century, Johannes Kepler used meticulous astronomical data to show that planets move in ellipses, not circles. This lesson explores Kepler's laws of planetary motion and how they revolutionized our understanding of the cosmos. It aligns with competency codes S11/12PS-IVa-39 and IVa-40.",
