@@ -51,7 +51,7 @@
     <div class="container flex-between">
       <div>
         <h1>📋 Grading Sheet</h1>
-        <span class="version">Physical Science · v1.0.1</span>
+        <span class="version">Physical Science · v1.0.2</span>
       </div>
       <nav class="teacher-nav">
         <a href="../classrecord.html">← Class Record</a>
@@ -76,11 +76,6 @@
         <label class="form-label">Section</label>
         <select id="filter-section" class="form-control">
           <option value="">All Sections</option>
-          <option value="STEM A">STEM A</option>
-          <option value="STEM B">STEM B</option>
-          <option value="ABM A">ABM A</option>
-          <option value="HUMSS A">HUMSS A</option>
-          <option value="GAS A">GAS A</option>
         </select>
       </div>
       <div class="form-group">
@@ -101,15 +96,15 @@
 
     <div id="results-area">
       <div class="card gs-empty">
-        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
-        <p>Loading…</p>
+        <div style="font-size:2.5rem;margin-bottom:12px;">📋</div>
+        <p>Select a student to view their detailed grading sheet.</p>
       </div>
     </div>
 
   </main>
 
   <footer class="app-footer">
-    <p>Physical Science Online Modular App · <span class="version">v1.0.1</span></p>
+    <p>Physical Science Online Modular App · <span class="version">v1.0.2</span></p>
   </footer>
 
   <script src="../config.js?v=8"></script>
@@ -136,11 +131,23 @@
       var WEIGHTS     = { ww: 0.25, pt: 0.50, ex: 0.25 };
       var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
 
+      /* ---------------------------------------------------------------
+         Only these sections are shown in the dropdown.
+         Students whose section is missing or not in this list are grouped
+         under "Unassigned" so they still appear in the Student dropdown.
+         --------------------------------------------------------------- */
+      var ALLOWED_SECTIONS = ['HUMSS', 'GAS'];
+
       TeacherAuthBoot.ready(function(auth) {
         if (!auth.isAuthenticated()) {
           window.location.replace('../teacher-login.html');
           return;
         }
+
+        // Build the Section dropdown from actual student data, then render.
+        refreshSectionDropdown();
+        refreshStudentDropdown();
+        render();
 
         document.getElementById('filter-term').addEventListener('change', render);
         document.getElementById('filter-student').addEventListener('change', render);
@@ -149,36 +156,129 @@
           render();
         });
         document.getElementById('btn-refresh').addEventListener('click', function() {
+          refreshSectionDropdown();
           refreshStudentDropdown();
           render();
           APP.toast('Refreshed', 'success', 1500);
         });
         document.getElementById('btn-export').addEventListener('click', exportSheet);
         document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
-
-        refreshStudentDropdown();
-        render();
       }, function() {
         document.getElementById('results-area').innerHTML =
           '<div class="card gs-empty">⚠️ <strong>Auth module failed to load</strong></div>';
       });
 
-      function refreshStudentDropdown() {
-        var section = document.getElementById('filter-section').value;
+      /* ---------------------------------------------------------------
+         Normalize a raw section string from a student profile.
+         Returns 'HUMSS', 'GAS', or null (if not one of the allowed).
+         Handles case-insensitive matches and common trailing/leading
+         formatting: "humss", "Humss A", "GAS-B", etc.
+         --------------------------------------------------------------- */
+      function normalizeSection(raw) {
+        if (!raw) return null;
+        var s = String(raw).trim().toUpperCase();
+        for (var i = 0; i < ALLOWED_SECTIONS.length; i++) {
+          var allowed = ALLOWED_SECTIONS[i];
+          // Exact match or starts with the allowed name followed by space/dash
+          if (s === allowed) return allowed;
+          if (s.indexOf(allowed + ' ') === 0) return allowed;
+          if (s.indexOf(allowed + '-') === 0) return allowed;
+        }
+        return null;
+      }
+
+      /* ---------------------------------------------------------------
+         Build the Section dropdown from the students stored in
+         localStorage. Only sections that (a) match ALLOWED_SECTIONS
+         and (b) actually have at least one student are shown.
+         --------------------------------------------------------------- */
+      function refreshSectionDropdown() {
+        var select = document.getElementById('filter-section');
+        var current = select.value;
+
         var students = Store.getAllUsers();
-        if (section) students = students.filter(function(s) { return s.section === section; });
+
+        // Bucket students by normalized section
+        var buckets = {}; // { HUMSS: n, GAS: n }
+        ALLOWED_SECTIONS.forEach(function(s) { buckets[s] = 0; });
+
+        students.forEach(function(st) {
+          var sec = normalizeSection(st.section);
+          if (sec) buckets[sec] += 1;
+        });
+
+        // Count unassigned students (section missing / invalid)
+        var unassignedCount = students.filter(function(st) {
+          return !normalizeSection(st.section);
+        }).length;
+
+        // Rebuild the option list
+        var html = '<option value="">All Sections</option>';
+        ALLOWED_SECTIONS.forEach(function(sec) {
+          if (buckets[sec] > 0) {
+            html += '<option value="' + sec + '">' + sec + ' (' + buckets[sec] + ')</option>';
+          }
+        });
+        if (unassignedCount > 0) {
+          html += '<option value="__unassigned__">Unassigned (' + unassignedCount + ')</option>';
+        }
+
+        // If no students at all, disable the dropdown with a helpful message
+        if (students.length === 0) {
+          select.disabled = true;
+          select.innerHTML = '<option value="">No students yet</option>';
+          return;
+        }
+        select.disabled = false;
+        select.innerHTML = html;
+
+        // Restore previous selection if still valid
+        if (current && [].slice.call(select.options).some(function(o) { return o.value === current; })) {
+          select.value = current;
+        } else {
+          select.value = '';
+        }
+      }
+
+      /* ---------------------------------------------------------------
+         Populate the Student dropdown based on the current Section
+         selection. Empty section = all students (still filtered to
+         those matching ALLOWED_SECTIONS or Unassigned).
+         --------------------------------------------------------------- */
+      function refreshStudentDropdown() {
+        var sectionValue = document.getElementById('filter-section').value;
+        var students = Store.getAllUsers();
+
+        if (sectionValue === '__unassigned__') {
+          students = students.filter(function(s) { return !normalizeSection(s.section); });
+        } else if (sectionValue) {
+          students = students.filter(function(s) { return normalizeSection(s.section) === sectionValue; });
+        }
+
         students = APP.sortStudents(students, 'last', 'asc');
 
         var select = document.getElementById('filter-student');
         var currentValue = select.value;
+
         select.innerHTML = '<option value="">— Select a student —</option>';
-        students.forEach(function(s) {
-          var opt = document.createElement('option');
-          opt.value = s.lrn;
-          opt.textContent = APP.formatFullName(s.lastName, s.firstName, s.middleName) + ' · ' + (s.section || '');
-          select.appendChild(opt);
-        });
-        if (currentValue) select.value = currentValue;
+
+        if (students.length === 0) {
+          select.disabled = true;
+        } else {
+          select.disabled = false;
+          students.forEach(function(s) {
+            var opt = document.createElement('option');
+            opt.value = s.lrn;
+            var normalizedSec = normalizeSection(s.section) || 'Unassigned';
+            opt.textContent = APP.formatFullName(s.lastName, s.firstName, s.middleName)
+                            + ' · ' + normalizedSec;
+            select.appendChild(opt);
+          });
+        }
+
+        if (currentValue && [].slice.call(select.options).some(function(o) { return o.value === currentValue; })) {
+          select.value = currentValue;
+        }
       }
 
       function getScore(lrn, term, type, id) {
@@ -205,8 +305,10 @@
 
         if (!lrn) {
           area.innerHTML =
-            '<div class="card gs-empty"><div style="font-size:2.5rem;margin-bottom:12px;">📋</div>' +
-            '<p>Select a student to view their detailed grading sheet.</p></div>';
+            '<div class="card gs-empty">' +
+              '<div style="font-size:2.5rem;margin-bottom:12px;">📋</div>' +
+              '<p>Select a student to view their detailed grading sheet.</p>' +
+            '</div>';
           return;
         }
 
@@ -219,6 +321,7 @@
         var initials = ((student.firstName || '?').charAt(0) + (student.lastName || '?').charAt(0)).toUpperCase();
         var avatarClass = (typeof UI !== 'undefined' && UI.getAvatarClass) ? UI.getAvatarClass(student.lrn) : 'av-1';
         var termLabel = term.replace('term', 'Term ');
+        var displaySection = normalizeSection(student.section) || 'Unassigned';
 
         // Fetch all 9 assessments
         var q1  = getScore(lrn, term, 'quizzes', 'quiz1');
@@ -286,7 +389,7 @@
                 '</div>' +
                 '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">' +
                   'LRN: ' + APP.formatLRN(student.lrn) + ' · ' +
-                  (student.section || '—') + ' · ' +
+                  displaySection + ' · ' +
                   (APP.getSexValue ? (APP.getSexValue(student.sex) || '—') : (student.sex || '—')) +
                 '</div>' +
               '</div>' +
@@ -438,7 +541,7 @@
         var rows = [
           ['Student', APP.formatFullName(student.lastName, student.firstName, student.middleName)],
           ['LRN', student.lrn],
-          ['Section', student.section || ''],
+          ['Section', normalizeSection(student.section) || 'Unassigned'],
           ['Term', term],
           [],
           ['Assessment', 'Score', 'Total', '%']
