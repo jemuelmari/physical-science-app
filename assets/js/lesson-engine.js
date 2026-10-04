@@ -1,7 +1,7 @@
 /* ============================================================
    lesson-engine.js — Physical Science · Lesson Engine (v2.0.0)
-   Adds: 5-question gamified quiz, XP/Level/Streak system,
-         celebration animations, per-day completion tracking.
+   Loads quizzes from data/physci-quizzes.json (all 200 questions
+   in one place). Includes XP, level, streak, celebration system.
    Depends on: config.js, store.js, ui-helpers.js
    ============================================================ */
 
@@ -9,7 +9,7 @@ window.LessonEngine = (function () {
   'use strict';
 
   // ------------------------------------------------------------
-  // XP Rules
+  // XP defaults — overridden by physci-quizzes.json if present
   // ------------------------------------------------------------
   const XP = {
     COMPLETE_DAY: 20,
@@ -18,14 +18,12 @@ window.LessonEngine = (function () {
     STREAK_BONUS: 5
   };
 
-  const LEVEL_THRESHOLD = 200; // XP per level
+  let LEVEL_THRESHOLD = 200;
 
   // ------------------------------------------------------------
   // State
   // ------------------------------------------------------------
   let cfg = {};
-  let content = null;
-  let currentQuizAnswers = {};
 
   // ------------------------------------------------------------
   // Helpers
@@ -43,7 +41,58 @@ window.LessonEngine = (function () {
   }
 
   // ------------------------------------------------------------
-  // Gamification persistence
+  // Path resolver: find data/physci-quizzes.json from any page
+  // ------------------------------------------------------------
+  function resolveDataPath(filename) {
+    const here = window.location.pathname;
+    if (here.includes('/student/physci/week')) return '../../../data/' + filename;
+    if (here.includes('/student/physci/'))     return '../../data/' + filename;
+    if (here.includes('/student/assessments/'))return '../../data/' + filename;
+    if (here.includes('/student/'))            return '../data/' + filename;
+    if (here.includes('/teacher/'))            return '../data/' + filename;
+    return 'data/' + filename;
+  }
+
+  // ------------------------------------------------------------
+  // XP config loader
+  // ------------------------------------------------------------
+  async function loadXpConfig() {
+    try {
+      const res = await fetch(resolveDataPath('physci-quizzes.json'));
+      if (!res.ok) return;
+      const bank = await res.json();
+      if (bank && bank.xp) {
+        if (typeof bank.xp.base === 'number')         XP.QUIZ_BASE = bank.xp.base;
+        if (typeof bank.xp.perfect === 'number')      XP.QUIZ_PERFECT = bank.xp.perfect;
+        if (typeof bank.xp.completeDay === 'number')  XP.COMPLETE_DAY = bank.xp.completeDay;
+        if (typeof bank.xp.streakBonus === 'number')  XP.STREAK_BONUS = bank.xp.streakBonus;
+        if (typeof bank.xp.levelThreshold === 'number') LEVEL_THRESHOLD = bank.xp.levelThreshold;
+      }
+    } catch (e) { /* use defaults */ }
+  }
+
+  // ------------------------------------------------------------
+  // Quiz loader — from central physci-quizzes.json
+  // ------------------------------------------------------------
+  async function loadQuiz(week, day) {
+    try {
+      const res = await fetch(resolveDataPath('physci-quizzes.json'));
+      if (!res.ok) return [];
+      const bank = await res.json();
+      const weekKey = String(week);
+      const dayKey = String(day);
+      if (bank.quizzes && bank.quizzes[weekKey] && bank.quizzes[weekKey][dayKey]) {
+        return bank.quizzes[weekKey][dayKey];
+      }
+      return [];
+    } catch (e) {
+      console.warn('Could not load physci-quizzes.json:', e);
+      return [];
+    }
+  }
+
+  // ------------------------------------------------------------
+  // Gamification state
   // ------------------------------------------------------------
   function getGamState() {
     try {
@@ -65,19 +114,18 @@ window.LessonEngine = (function () {
     const leveledUp = newLevel > s.level;
     s.level = newLevel;
     saveGamState(s);
-    return { ...s, leveledUp, xpAdded: amount };
+    return { xp: s.xp, level: s.level, leveledUp, xpAdded: amount };
   }
 
   function updateStreak() {
     const s = getGamState();
     const today = new Date().toISOString().slice(0, 10);
-
     if (s.lastDay === today) {
-      // Same day — no change
+      // same day — no change
     } else if (s.lastDay === yesterdayIso()) {
-      s.streak += 1; // Continue streak
+      s.streak += 1;
     } else {
-      s.streak = 1; // New streak
+      s.streak = 1;
     }
     s.lastDay = today;
     saveGamState(s);
@@ -92,7 +140,7 @@ window.LessonEngine = (function () {
 
   function markDayComplete(week, day) {
     const s = getGamState();
-    const key = `w${week}d${day}`;
+    const key = 'w' + week + 'd' + day;
     if (!s.completedDays.includes(key)) {
       s.completedDays.push(key);
       saveGamState(s);
@@ -101,7 +149,7 @@ window.LessonEngine = (function () {
 
   function isDayComplete(week, day) {
     const s = getGamState();
-    return s.completedDays.includes(`w${week}d${day}`);
+    return s.completedDays.includes('w' + week + 'd' + day);
   }
 
   function getXpToNextLevel() {
@@ -110,7 +158,7 @@ window.LessonEngine = (function () {
   }
 
   // ------------------------------------------------------------
-  // Render: stats bar
+  // Render helpers
   // ------------------------------------------------------------
   function renderStatsBar() {
     const s = getGamState();
@@ -143,9 +191,6 @@ window.LessonEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: lesson header
-  // ------------------------------------------------------------
   function renderHeader(day, data) {
     return `
       <div class="lesson-hero">
@@ -156,9 +201,6 @@ window.LessonEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: objectives
-  // ------------------------------------------------------------
   function renderObjectives(objectives) {
     if (!objectives || !objectives.length) return '';
     return `
@@ -171,9 +213,6 @@ window.LessonEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: content
-  // ------------------------------------------------------------
   function renderContent(contentArr) {
     if (!contentArr || !contentArr.length) return '';
     return `
@@ -184,9 +223,6 @@ window.LessonEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: activity
-  // ------------------------------------------------------------
   function renderActivity(activity) {
     if (!activity) return '';
     return `
@@ -199,9 +235,6 @@ window.LessonEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: 5-question gamified quiz
-  // ------------------------------------------------------------
   function renderQuiz(quiz) {
     if (!quiz || !quiz.length) return '';
 
@@ -241,9 +274,6 @@ window.LessonEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: mark complete button
-  // ------------------------------------------------------------
   function renderCompleteButton(week, day) {
     const done = isDayComplete(week, day);
     return `
@@ -254,15 +284,12 @@ window.LessonEngine = (function () {
           ${done ? 'disabled' : ''}>
           ${done
             ? '✅ Day Completed!'
-            : `🎉 Mark Day as Complete (+${XP.COMPLETE_DAY} XP)`}
+            : '🎉 Mark Day as Complete (+' + XP.COMPLETE_DAY + ' XP)'}
         </button>
       </div>
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render: navigation
-  // ------------------------------------------------------------
   function renderNav(weekNum, dayNum, totalDays) {
     const prev = dayNum > 1
       ? `<a class="btn btn-outline" href="day.html?d=${dayNum - 1}">← Day ${dayNum - 1}</a>`
@@ -274,7 +301,7 @@ window.LessonEngine = (function () {
   }
 
   // ------------------------------------------------------------
-  // Quiz: submit handler
+  // Quiz submission
   // ------------------------------------------------------------
   function bindQuiz(quiz) {
     const form = $('quiz-form');
@@ -284,23 +311,18 @@ window.LessonEngine = (function () {
       e.preventDefault();
 
       let correct = 0;
-      let answered = 0;
 
       quiz.forEach(item => {
         const selected = form.querySelector(`input[name="q_${item.id}"]:checked`);
         const qEl = form.querySelector(`.quiz-item[data-qid="${item.id}"]`);
         if (!qEl) return;
 
-        // Clear previous states
-        qEl.querySelectorAll('.quiz-opt').forEach(el => {
-          el.classList.remove('correct', 'incorrect');
-        });
+        qEl.querySelectorAll('.quiz-opt').forEach(el => el.classList.remove('correct', 'incorrect'));
 
         const opts = qEl.querySelectorAll('.quiz-opt');
         opts[item.answer].classList.add('correct');
 
         if (selected) {
-          answered++;
           const idx = parseInt(selected.value, 10);
           if (idx === item.answer) {
             correct++;
@@ -312,16 +334,14 @@ window.LessonEngine = (function () {
 
       const total = quiz.length;
       const perfect = correct === total;
-      const passed = correct >= Math.ceil(total * 0.6); // 60% to pass
+      const passed = correct >= Math.ceil(total * 0.6);
 
-      // XP reward
       let xpEarned = 0;
       if (perfect) xpEarned = XP.QUIZ_PERFECT;
       else if (passed) xpEarned = XP.QUIZ_BASE;
 
       const result = addXp(xpEarned);
 
-      // Feedback
       const fb = $('quiz-feedback');
       fb.classList.remove('hidden');
       fb.className = 'quiz-feedback ' + (perfect ? 'perfect' : passed ? 'pass' : 'fail');
@@ -334,20 +354,17 @@ window.LessonEngine = (function () {
           </div>
           <div class="fb-sub">
             You got ${correct} out of ${total}.
-            ${xpEarned > 0 ? `Earned <strong>+${xpEarned} XP</strong>.` : 'No XP this time — try again!'}
+            ${xpEarned > 0 ? 'Earned <strong>+' + xpEarned + ' XP</strong>.' : 'No XP this time.'}
           </div>
-          ${result.leveledUp ? `<div class="fb-levelup">🎉 Level Up! You're now Level ${result.level}</div>` : ''}
+          ${result.leveledUp ? '<div class="fb-levelup">🎉 Level Up! You are now Level ' + result.level + '</div>' : ''}
         </div>
       `;
 
-      // Refresh stats bar
       const statsBar = $('lesson-stats');
       if (statsBar) statsBar.innerHTML = renderStatsBar();
 
-      // Scroll to feedback
       fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // Log activity
       if (window.ActivityTracker) {
         ActivityTracker.log({
           action: 'quiz_submit',
@@ -362,7 +379,7 @@ window.LessonEngine = (function () {
   }
 
   // ------------------------------------------------------------
-  // Complete: button handler
+  // Complete button
   // ------------------------------------------------------------
   function bindComplete(week, day) {
     const btn = $('btn-complete');
@@ -375,24 +392,19 @@ window.LessonEngine = (function () {
       updateStreak();
       const result = addXp(XP.COMPLETE_DAY);
 
-      // Visual celebration
       showCelebration(XP.COMPLETE_DAY, result.leveledUp);
 
-      // Update button
       btn.disabled = true;
       btn.classList.add('completed');
       btn.textContent = '✅ Day Completed!';
 
-      // Refresh stats
       const statsBar = $('lesson-stats');
       if (statsBar) statsBar.innerHTML = renderStatsBar();
 
-      // Persist to Store
       if (window.Store && Store.markDayComplete) {
         Store.markDayComplete(week, day);
       }
 
-      // Log activity
       if (window.ActivityTracker) {
         ActivityTracker.log({
           action: 'day_complete',
@@ -420,7 +432,6 @@ window.LessonEngine = (function () {
     `;
     document.body.appendChild(overlay);
 
-    // Confetti particles
     for (let i = 0; i < 20; i++) {
       const c = document.createElement('div');
       c.className = 'confetti';
@@ -442,33 +453,23 @@ window.LessonEngine = (function () {
   async function init(config) {
     cfg = config;
 
-    // Fetch content bank
-    const weekFolder = config.weekFolder || `week${config.week}`;
-    const res = await fetch(`${weekFolder}.json`);
+    await loadXpConfig();
+
+    // Fetch week content
+    const weekFolder = config.weekFolder || ('week' + config.week);
+    const res = await fetch(weekFolder + '.json');
     const data = await res.json();
     const day = data.days.find(d => d.day === config.day.day);
 
     if (!day) {
-      $('lesson-body').innerHTML =
-        `<div class="alert alert-danger">Lesson not found.</div>`;
+      $('lesson-body').innerHTML = `<div class="alert alert-danger">Lesson not found.</div>`;
       return;
     }
 
-    // Try to fetch quiz content from a separate file
-    // Format: quiz_week{N}_day{D}.json — falls back to inline if missing
-    let quiz = [];
-    try {
-      const quizRes = await fetch(`${weekFolder}/quiz_day${day.day}.json`);
-      if (quizRes.ok) {
-        const quizData = await quizRes.json();
-        quiz = quizData.questions || [];
-      }
-    } catch (e) {
-      // No quiz file — try inline from week JSON
-      quiz = day.quiz || [];
-    }
+    // Load quiz from central file
+    const quiz = await loadQuiz(data.week, day.day);
 
-    // Fallback content if week JSON has no content block
+    // Content fallback
     const content = day.content || {
       intro: day.intro || 'Lesson content for this day.',
       objectives: day.objectives || ['Understand the day\'s competency.'],
@@ -491,7 +492,6 @@ window.LessonEngine = (function () {
     `;
     $('lesson-nav').innerHTML = renderNav(data.week, day.day, data.days.length);
 
-    // Bind
     bindQuiz(quiz);
     bindComplete(data.week, day.day);
   }
