@@ -1,759 +1,297 @@
 /* ============================================================
-   student.css — Physical Science · Student-facing styles
-   Version: 1.2.0
-   Depends on: main.css
+   LOGIN PAGE — FULL REDESIGN
+   Replaces the generic .login-page rules
    ============================================================ */
 
-/* ============================================================
-   TIMELINE (student/physci/index.html)
-   ============================================================ */
-.timeline {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 32px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, #1b7a3d, #42a5f5, #6a1b9a);
-  border-radius: 999px;
-  opacity: 0.3;
-}
-
-.timeline-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 16px 20px 16px 76px;
-  background: #fff;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid #eceff1;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s;
-}
-
-.timeline-item:hover {
-  transform: translateX(4px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--color-primary);
-  text-decoration: none;
-}
-
-.timeline-icon {
-  position: absolute;
-  left: 12px;
-  width: 42px;
-  height: 42px;
+.login-page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  border: 3px solid var(--color-primary);
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 40px 20px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.10) 0%, transparent 45%),
+    linear-gradient(135deg, #145c2d 0%, #1b7a3d 50%, #2e7d32 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Floating back button */
+.login-back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.login-back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #fff;
+  transform: translateX(-2px);
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Wrapper */
+.login-wrapper {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
   z-index: 1;
 }
 
-.timeline-body { flex: 1; min-width: 0; }
-
-.timeline-era {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  margin-bottom: 4px;
+/* Card */
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: loginCardEnter 0.35s ease-out;
 }
 
-.timeline-title {
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 2px;
+@keyframes loginCardEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.timeline-span {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-}
-
-/* ============================================================
-   WEEK HERO (weekN/index.html)
-   ============================================================ */
-.week-hero {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 22px;
-  background: linear-gradient(135deg, #1b7a3d, #4caf50);
+/* Hero */
+.login-hero {
+  padding: 32px 24px 28px;
+  background: linear-gradient(135deg, #1b7a3d 0%, #2e7d32 100%);
   color: #fff;
-  border-radius: var(--radius-lg);
-  margin-bottom: 22px;
-  box-shadow: 0 8px 24px rgba(27, 122, 61, 0.2);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-
-.week-hero[data-era="Cosmic Origins"]       { background: linear-gradient(135deg, #0d47a1, #1e88e5); }
-.week-hero[data-era="Ancient Greece"]       { background: linear-gradient(135deg, #5d4037, #8d6e63); }
-.week-hero[data-era="Alchemy → Chemistry"]  { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
-.week-hero[data-era="Atomic Theory"]        { background: linear-gradient(135deg, #00695c, #26a69a); }
-.week-hero[data-era="Subatomic Revolution"] { background: linear-gradient(135deg, #283593, #5c6bc0); }
-.week-hero[data-era="Nuclear Age"]          { background: linear-gradient(135deg, #b71c1c, #ef5350); }
-.week-hero[data-era="Chemical Bonding Era"] { background: linear-gradient(135deg, #004d40, #00897b); }
-.week-hero[data-era="Industrial Chemistry"] { background: linear-gradient(135deg, #e65100, #ff9800); }
-.week-hero[data-era="Consumer Chemistry"]   { background: linear-gradient(135deg, #ad1457, #ec407a); }
-.week-hero[data-era="Cosmos & Motion"]      { background: linear-gradient(135deg, #1a237e, #3949ab); }
-
-.week-hero-icon { font-size: 2.4rem; flex-shrink: 0; line-height: 1; }
-
-.week-hero-body h2 {
+.login-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+.login-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+}
+.login-icon {
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.login-hero h1 {
   color: #fff;
-  margin: 4px 0 6px;
-  font-size: 1.25rem;
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.3px;
 }
-
-.week-hero-body .text-muted {
-  color: rgba(255, 255, 255, 0.85) !important;
+.login-subtitle {
   font-size: 0.85rem;
+  opacity: 0.92;
+  position: relative;
+  z-index: 1;
   margin: 0;
 }
 
-.week-hero-era {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.95);
+/* Body */
+.login-body {
+  padding: 28px 28px 24px;
 }
+.login-form { display: block; }
 
-/* ============================================================
-   DAYS LIST (weekN/index.html)
-   ============================================================ */
-.days-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.day-card {
+/* Form labels */
+.login-form .form-label {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 14px 18px;
-  background: #fff;
-  border: 1px solid #eceff1;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.15s;
-}
-
-.day-card:hover {
-  border-color: var(--color-primary);
-  transform: translateX(4px);
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-}
-
-.day-num {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 800;
-  font-size: 0.82rem;
-  border-radius: var(--radius-md);
-  text-align: center;
-  line-height: 1.2;
-}
-
-.day-body { flex: 1; min-width: 0; }
-
-.day-comp {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 4px;
-}
-
-.day-code {
-  font-size: 0.72rem;
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-}
-
-/* ============================================================
-   LESSON PAGE (day.html)
-   ============================================================ */
-.lesson-hero {
-  padding: 20px 22px;
-  background: linear-gradient(135deg, #f5f7fa, #eceff1);
-  border-radius: var(--radius-md);
-  margin-bottom: 24px;
-  border-left: 5px solid var(--color-primary);
-}
-
-.lesson-hero .lesson-era {
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-primary);
-  margin-bottom: 4px;
-}
-
-.lesson-hero h2 {
-  font-size: 1.2rem;
-  margin: 0 0 6px;
-  color: var(--color-text);
-}
-
-.lesson-hero .lesson-code {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--color-text-muted);
-}
-
-.lesson-section { margin-bottom: 24px; }
-
-.lesson-section h3 {
-  font-size: 1rem;
-  color: var(--color-primary-dark);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--color-primary-light);
-}
-
-.lesson-section h4 {
-  font-size: 0.95rem;
-  color: #37474f;
-  margin: 14px 0 6px;
-}
-
-.lesson-section p {
-  font-size: 0.94rem;
-  line-height: 1.7;
-  color: #37474f;
-  margin-bottom: 10px;
-}
-
-.lesson-section ul,
-.lesson-section ol {
-  padding-left: 22px;
-  margin-bottom: 12px;
-}
-
-.lesson-section li {
-  font-size: 0.92rem;
-  line-height: 1.7;
-  color: #37474f;
-  margin-bottom: 5px;
-}
-
-.lesson-section em {
-  color: #6a1b9a;
-  font-style: italic;
-}
-
-.lesson-section strong { color: var(--color-text); }
-
-.lesson-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding-top: 16px;
-  border-top: 1px solid #eceff1;
-  flex-wrap: wrap;
-}
-
-/* ============================================================
-   ASSESSMENTS HUB (student/assessments/index.html)
-   ============================================================ */
-.assessments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.assessment-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  background: #fff;
-  border: 1px solid #eceff1;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.15s;
-  position: relative;
-}
-
-.assessment-card:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  text-decoration: none;
-}
-
-.assessment-card.locked {
-  opacity: 0.75;
-  cursor: not-allowed;
-  background: #fafbfc;
-}
-
-.assessment-card.locked:hover {
-  transform: none;
-  border-color: #eceff1;
-  box-shadow: var(--shadow-sm);
-}
-
-.assessment-card.completed {
-  border-left: 4px solid var(--color-success);
-}
-
-.assessment-icon {
-  font-size: 1.7rem;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.assessment-body { flex: 1; min-width: 0; }
-
-.assessment-title {
-  font-weight: 700;
-  font-size: 0.98rem;
-  color: var(--color-text);
-  margin-bottom: 4px;
-}
-
-.assessment-meta {
-  font-size: 0.76rem;
-  color: var(--color-text-muted);
-  display: flex;
-  flex-wrap: wrap;
   gap: 6px;
-  align-items: center;
-}
-
-.assessment-meta .dot { color: #cfd8dc; }
-
-.assessment-lock-msg {
-  font-size: 0.78rem;
-  color: #e65100;
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-.assessment-right { flex-shrink: 0; }
-
-/* ============================================================
-   AVATAR COLORS
-   ============================================================ */
-.student-avatar.av-1 { background: linear-gradient(135deg, #1b7a3d, #4caf50); }
-.student-avatar.av-2 { background: linear-gradient(135deg, #0d47a1, #42a5f5); }
-.student-avatar.av-3 { background: linear-gradient(135deg, #ed6c02, #ffb74d); }
-.student-avatar.av-4 { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
-.student-avatar.av-5 { background: linear-gradient(135deg, #c62828, #ef5350); }
-.student-avatar.av-6 { background: linear-gradient(135deg, #00695c, #26a69a); }
-
-/* ============================================================
-   LOGIN CONSENT ROW
-   ============================================================ */
-.consent-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  background: #f5f7fa;
-  border: 1px solid #eceff1;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-weight: 700;
+  font-size: 0.82rem;
   color: #37474f;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.15s;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
 }
-
-.consent-row:hover {
-  border-color: var(--color-primary);
-  background: var(--color-primary-light);
+.login-form .form-label .label-icon {
+  font-size: 0.95rem;
 }
-
-.consent-row input[type="checkbox"] {
-  margin-top: 2px;
-  width: 16px;
-  height: 16px;
-  accent-color: var(--color-primary);
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.form-label .req {
+.login-form .form-label .req {
   color: #c62828;
   font-weight: 700;
 }
 
-/* ============================================================
-   GAMIFICATION (XP bar, quiz, streak, completion)
-   ============================================================ */
-
-/* ---------- XP Bar ---------- */
-.xp-bar {
-  background: linear-gradient(135deg, #1b7a3d, #4caf50);
-  color: #fff;
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-  margin-bottom: 18px;
-  box-shadow: 0 6px 18px rgba(27, 122, 61, 0.2);
-}
-.xp-bar-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.xp-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 12px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-.xp-chip.hot {
-  background: linear-gradient(135deg, #ff5722, #ff9800);
-  border-color: #ff9800;
-  animation: xpHot 1.4s infinite;
-}
-@keyframes xpHot {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-.xp-progress {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.xp-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ffeb3b, #ffb300);
-  border-radius: 999px;
-  transition: width 0.4s ease;
-}
-.xp-progress-label {
-  font-size: 0.7rem;
-  opacity: 0.9;
-  margin-top: 6px;
-  text-align: center;
-  font-family: var(--font-mono);
-}
-
-/* ---------- Lesson Quiz ---------- */
-.lesson-quiz {
-  margin-top: 32px;
-  padding: 20px;
-  background: linear-gradient(135deg, #f5f7fa, #eceff1);
-  border-radius: var(--radius-md);
-  border: 2px dashed var(--color-primary);
-}
-.lesson-quiz-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #cfd8dc;
-}
-.lesson-quiz-header h3 {
-  font-size: 1rem;
-  color: var(--color-primary-dark);
-  margin: 0;
-}
-.lesson-quiz-reward {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #e65100;
-  background: #fff3e0;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-.lesson-quiz-q {
-  margin-bottom: 18px;
-  padding: 14px 16px;
-  background: #fff;
-  border-radius: var(--radius-sm);
-  border-left: 4px solid var(--color-primary);
-}
-.lesson-quiz-qtext {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 10px;
-  line-height: 1.45;
-}
-.lesson-quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.lesson-quiz-option {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 12px;
+/* Form controls */
+.login-form .form-control {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: 1.5px solid #cfd8dc;
+  border-radius: 10px;
   background: #fafbfc;
-  border: 1.5px solid #eceff1;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.15s;
-  font-size: 0.88rem;
+  color: #1a1a1a;
+  transition: all 0.15s ease;
 }
-.lesson-quiz-option:hover {
-  border-color: var(--color-primary);
-  background: var(--color-primary-light);
+.login-form .form-control::placeholder {
+  color: #b0bec5;
+  font-size: 0.9rem;
 }
-.lesson-quiz-option input[type="radio"] {
-  accent-color: var(--color-primary);
-  margin-top: 2px;
-  flex-shrink: 0;
+.login-form .form-control:focus {
+  outline: none;
+  border-color: #1b7a3d;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(27, 122, 61, 0.12);
 }
-.lesson-quiz-option.correct {
-  border-color: #2e7d32;
-  background: #e8f5e9;
-  font-weight: 600;
-}
-.lesson-quiz-option.correct::after { content: ' ✓'; color: #2e7d32; font-weight: 800; margin-left: auto; }
-.lesson-quiz-option.incorrect {
-  border-color: #c62828;
-  background: #ffebee;
-}
-.lesson-quiz-option.incorrect::after { content: ' ✗'; color: #c62828; font-weight: 800; margin-left: auto; }
-
-.lesson-quiz-result {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: var(--radius-sm);
-  text-align: center;
-}
-.lesson-quiz-result-inner {
-  padding: 16px;
-  border-radius: var(--radius-sm);
-}
-.lesson-quiz-result-inner.pass {
-  background: #e8f5e9;
-  border: 2px solid #2e7d32;
-}
-.lesson-quiz-result-inner.fail {
-  background: #fff3e0;
-  border: 2px solid #ed6c02;
-}
-.lqr-score {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--color-text);
-  margin-bottom: 6px;
-}
-.lqr-msg {
-  font-size: 0.88rem;
-  color: #37474f;
+.login-form .form-hint {
+  font-size: 0.75rem;
+  color: #78909c;
+  margin-top: 6px;
+  line-height: 1.4;
 }
 
-/* ---------- Complete Block ---------- */
-.lesson-complete-block {
-  margin-top: 24px;
+/* Primary button */
+.login-form .btn-lg {
+  padding: 14px 20px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border-radius: 10px;
+  margin-top: 8px;
+  background: linear-gradient(135deg, #1b7a3d, #2e7d32);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(27, 122, 61, 0.25);
+  transition: all 0.2s ease;
+}
+.login-form .btn-lg:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(27, 122, 61, 0.35);
+}
+.login-form .btn-lg:active {
+  transform: translateY(0);
+}
+
+/* Secondary actions */
+.login-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #eceff1;
+  font-size: 0.82rem;
 }
-.lesson-complete-badge {
-  padding: 12px 16px;
-  background: #e8f5e9;
-  color: #1b5e20;
-  border-left: 4px solid #2e7d32;
-  border-radius: var(--radius-sm);
-  font-weight: 700;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-/* ============================================================
-   LOGIN TABS + SAVED USERS
-   ============================================================ */
-
-/* ---------- Hero banner ---------- */
-.login-hero-banner {
-  text-align: center;
-  padding: 32px 20px;
-  background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
-  color: #fff;
-  border-radius: var(--radius-lg);
-  margin-bottom: 24px;
-  box-shadow: 0 12px 32px rgba(13, 71, 161, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-.login-hero-banner::before {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 200px; height: 200px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-}
-.login-hero-banner .hero-icon {
-  font-size: 3rem;
-  line-height: 1;
-  margin-bottom: 8px;
-  position: relative;
-}
-.login-hero-banner h2 {
-  color: #fff;
-  font-size: 1.6rem;
-  margin-bottom: 6px;
-  position: relative;
-}
-.login-hero-banner p {
-  font-size: 0.9rem;
-  opacity: 0.95;
-  margin: 0;
-  position: relative;
-}
-
-/* ---------- Tabs ---------- */
-.tabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 2px solid #eceff1;
-  margin-bottom: 20px;
-  overflow-x: auto;
-}
-.tab-btn {
-  padding: 12px 18px;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #5f6368;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-  margin-bottom: -2px;
+.login-secondary-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  color: #1b7a3d;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
 }
-.tab-btn:hover { color: var(--color-primary); background: #f5f7fa; }
-.tab-btn.active {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
+.login-secondary-link:hover {
+  background: #e6f4ea;
+  text-decoration: none;
+  color: #145c2d;
 }
-
-.tab-panel { display: none; }
-.tab-panel.active { display: block; animation: panelIn 0.2s ease; }
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------- Saved Users ---------- */
-.saved-user-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background: #fff;
-  border: 1px solid #eceff1;
-  border-radius: var(--radius-md);
-  margin-bottom: 10px;
-  transition: all 0.15s;
-}
-.saved-user-card:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-sm);
+.login-secondary .divider {
+  color: #cfd8dc;
+  font-size: 1rem;
 }
 
-.saved-user-avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 800;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-  letter-spacing: 0.5px;
+/* Credit footer */
+.login-credit {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  font-size: 0.78rem;
+  padding: 0 12px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
-
-.saved-user-body { flex: 1; min-width: 0; }
-.saved-user-name {
+.login-credit .credit-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   font-weight: 700;
-  color: var(--color-text);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 8px;
 }
-.saved-user-meta {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
+.login-credit .credit-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+.login-credit .credit-role {
+  font-size: 0.76rem;
+  opacity: 0.9;
+}
+.login-credit .credit-school {
+  font-size: 0.74rem;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+.login-credit .credit-region {
+  font-size: 0.72rem;
+  opacity: 0.7;
+  font-style: italic;
   margin-top: 2px;
 }
-.saved-user-date {
-  font-size: 0.7rem;
-  color: #90a4ae;
-  margin-top: 3px;
+
+/* Alert inside card */
+.login-form .alert {
+  margin-bottom: 16px;
+  font-size: 0.85rem;
 }
 
-.saved-user-actions {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 640px) {
-  .timeline::before { left: 20px; }
-  .timeline-item { padding: 14px 14px 14px 60px; }
-  .timeline-icon { left: 4px; width: 36px; height: 36px; font-size: 1rem; }
-  .week-hero { flex-direction: column; text-align: center; padding: 18px; }
-  .week-hero-icon { font-size: 2rem; }
-  .day-card { padding: 12px; gap: 12px; }
-  .day-num { width: 48px; height: 48px; font-size: 0.72rem; }
-  .assessment-card { padding: 14px; gap: 12px; }
-  .assessment-icon { font-size: 1.4rem; }
-  .saved-user-card { flex-wrap: wrap; }
-  .saved-user-actions { width: 100%; justify-content: flex-end; }
-  .tab-btn { padding: 10px 14px; font-size: 0.82rem; }
-  .xp-bar-row { gap: 6px; }
-  .xp-chip { font-size: 0.7rem; padding: 3px 8px; }
-  .lesson-quiz { padding: 14px; }
+/* Responsive */
+@media (max-width: 480px) {
+  .login-back-btn {
+    top: 12px;
+    left: 12px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+  .login-hero { padding: 24px 20px 22px; }
+  .login-hero h1 { font-size: 1.2rem; }
+  .login-icon { font-size: 2.2rem; }
+  .login-body { padding: 22px 20px 20px; }
+  .login-form .form-control { padding: 12px 14px; font-size: 0.92rem; }
+  .login-secondary { font-size: 0.78rem; }
+  .login-credit { font-size: 0.72rem; }
 }
