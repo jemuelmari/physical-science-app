@@ -138,7 +138,7 @@
   <script src="../assets/js/transmutation.js?v=8"></script>
   <script src="../assets/js/ui-helpers.js?v=8"></script>
   <script src="../assets/js/teacher-auth.js?v=8"></script>
-  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=8"></script>
   <script>
     (function() {
       'use strict';
@@ -156,11 +156,6 @@
       var lastReport = null;
 
       TeacherAuthBoot.ready(function(auth) {
-        if (!auth.isAuthenticated()) {
-          window.location.replace('../teacher-login.html');
-          return;
-        }
-
         refreshSectionDropdown();
 
         document.getElementById('btn-refresh').addEventListener('click', function() {
@@ -171,7 +166,9 @@
         document.getElementById('filter-term').addEventListener('change', render);
         document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
         document.getElementById('btn-export').addEventListener('click', exportCSV);
-        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
+        document.getElementById('btn-logout').addEventListener('click', function() {
+          auth.logout({ redirect: 'teacher-login.html' });
+        });
 
         render();
       }, function() {
