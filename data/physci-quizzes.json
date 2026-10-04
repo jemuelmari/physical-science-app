@@ -1,0 +1,318 @@
+{
+  "meta": {
+    "subject": "physci",
+    "subjectTitle": "Physical Science",
+    "version": "1.0.0",
+    "description": "Daily gamified quizzes — 5 questions per day, 4 days per week, 10 weeks total (200 questions).",
+    "lastUpdated": "2026-01-15"
+  },
+  "xp": {
+    "base": 15,
+    "perfect": 30,
+    "completeDay": 20,
+    "streakBonus": 5,
+    "levelThreshold": 200
+  },
+  "quizzes": {
+    "1": {
+      "1": [
+        { "id": "w1d1q1", "question": "Which piece of evidence BEST supports the Big Bang theory?", "options": ["Abundance of H and He", "Presence of iron in the crust", "Discovery of exoplanets", "Existence of black holes"], "answer": 0 },
+        { "id": "w1d1q2", "question": "The Big Bang theory states that the universe began as a:", "options": ["Steady, unchanging void", "Hot, dense point that expanded", "Cold, empty space", "Rotating disc of dust"], "answer": 1 },
+        { "id": "w1d1q3", "question": "What does the cosmic microwave background radiation represent?", "options": ["Light from the first stars", "Leftover heat from the Big Bang", "Glow of distant galaxies", "Radiation from black holes"], "answer": 1 },
+        { "id": "w1d1q4", "question": "Approximately how old is the universe?", "options": ["4.6 billion years", "13.8 billion years", "100 million years", "1 trillion years"], "answer": 1 },
+        { "id": "w1d1q5", "question": "Which element was NOT formed in significant amounts during Big Bang nucleosynthesis?", "options": ["Hydrogen", "Helium", "Lithium", "Iron"], "answer": 3 }
+      ],
+      "2": [
+        { "id": "w1d2q1", "question": "During stellar nucleosynthesis, hydrogen nuclei fuse to form:", "options": ["Helium", "Carbon", "Iron", "Uranium"], "answer": 0 },
+        { "id": "w1d2q2", "question": "In a massive star, which element forms LAST in the fusion chain before collapse?", "options": ["Helium", "Carbon", "Silicon", "Iron"], "answer": 3 },
+        { "id": "w1d2q3", "question": "The proton-proton chain is a series of fusion reactions that primarily produces:", "options": ["Hydrogen", "Helium", "Oxygen", "Iron"], "answer": 1 },
+        { "id": "w1d2q4", "question": "Which stage of stellar evolution produces elements like carbon and oxygen?", "options": ["Main sequence", "Red giant phase", "White dwarf stage", "Black hole formation"], "answer": 1 },
+        { "id": "w1d2q5", "question": "The CNO cycle uses carbon, nitrogen, and oxygen as:", "options": ["Final products", "Catalysts", "Byproducts", "Fuels only"], "answer": 1 }
+      ],
+      "3": [
+        { "id": "w1d3q1", "question": "In the reaction ¹H + ¹H → ²H + e⁺ + ν, what particles are emitted?", "options": ["A neutron", "A positron and a neutrino", "An alpha particle", "A gamma ray only"], "answer": 1 },
+        { "id": "w1d3q2", "question": "When writing a nuclear fusion equation, which quantities must balance?", "options": ["Only mass number", "Only atomic number", "Both mass number and atomic number", "Neither"], "answer": 2 },
+        { "id": "w1d3q3", "question": "Which of the following is a correct fusion reaction that occurs in stars?", "options": ["²H + ¹H → ³He + γ", "²³⁸U → ²³⁴Th + ⁴He", "¹⁴C → ¹⁴N + e⁻", "²³⁵U + n → ¹⁴¹Ba + ⁹²Kr"], "answer": 0 },
+        { "id": "w1d3q4", "question": "The overall result of the proton-proton chain is the conversion of:", "options": ["Helium into hydrogen", "Hydrogen into helium", "Carbon into oxygen", "Iron into heavier elements"], "answer": 1 },
+        { "id": "w1d3q5", "question": "Which fusion process dominates in stars more massive and hotter than the Sun?", "options": ["Proton-proton chain", "CNO cycle", "Triple-alpha process", "Carbon fusion"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w1d4q1", "question": "Why does fusion STOP at iron in a star's core?", "options": ["Iron has no mass", "Fusion beyond iron absorbs energy instead of releasing it", "Iron cannot be fused", "Iron is too light"], "answer": 1 },
+        { "id": "w1d4q2", "question": "Elements heavier than iron are primarily formed through:", "options": ["Stellar fusion in the core", "Supernova explosions and neutron star mergers", "Chemical reactions", "Radioactive decay"], "answer": 1 },
+        { "id": "w1d4q3", "question": "The r-process (rapid neutron capture) occurs mainly during:", "options": ["Main sequence phase", "Red giant phase", "Supernova explosions", "White dwarf cooling"], "answer": 2 },
+        { "id": "w1d4q4", "question": "Gold on Earth was most likely formed in:", "options": ["The Big Bang", "Ordinary stars like the Sun", "Supernovae or neutron star mergers", "Earth's core"], "answer": 2 },
+        { "id": "w1d4q5", "question": "The s-process (slow neutron capture) primarily occurs in:", "options": ["Main sequence stars", "AGB stars", "Neutron stars", "Black holes"], "answer": 1 }
+      ]
+    },
+    "2": {
+      "1": [
+        { "id": "w2d1q1", "question": "Who was the first philosopher to propose that matter is made of indivisible particles called 'atomos'?", "options": ["Aristotle", "Democritus", "Plato", "Socrates"], "answer": 1 },
+        { "id": "w2d1q2", "question": "The Greek word 'atomos' means:", "options": ["Small", "Invisible", "Indivisible", "Round"], "answer": 2 },
+        { "id": "w2d1q3", "question": "Which philosopher rejected the atomic theory and argued matter was continuous?", "options": ["Democritus", "Aristotle", "Pythagoras", "Eratosthenes"], "answer": 1 },
+        { "id": "w2d1q4", "question": "The atomic theory of Democritus was largely rejected in his time because:", "options": ["It was mathematically incorrect", "It lacked experimental evidence and Aristotle opposed it", "Atoms were too large", "It conflicted with astronomy"], "answer": 1 },
+        { "id": "w2d1q5", "question": "Democritus believed that atoms differed in:", "options": ["Color only", "Shape, size, and arrangement", "Charge", "Mass only"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w2d2q1", "question": "Which of the following was NOT one of the four classical Greek elements?", "options": ["Earth", "Water", "Metal", "Fire"], "answer": 2 },
+        { "id": "w2d2q2", "question": "According to Greek cosmology, the fifth element that filled the heavens was:", "options": ["Aether", "Plasma", "Void", "Quintessence"], "answer": 0 },
+        { "id": "w2d2q3", "question": "Which Greek element was associated with 'cold and dry' qualities?", "options": ["Fire", "Water", "Earth", "Air"], "answer": 2 },
+        { "id": "w2d2q4", "question": "The four classical Greek elements were proposed by:", "options": ["Democritus", "Empedocles", "Euclid", "Hippocrates"], "answer": 1 },
+        { "id": "w2d2q5", "question": "Aristotle added a fifth element called:", "options": ["Aether", "Fire", "Atom", "Void"], "answer": 0 }
+      ],
+      "3": [
+        { "id": "w2d3q1", "question": "Which type of motion did the Ancient Greeks consider 'violent'?", "options": ["The natural fall of a stone", "The circular orbit of the Moon", "Motion forced by a hand or external force", "The rising of smoke"], "answer": 2 },
+        { "id": "w2d3q2", "question": "According to Aristotle, natural motion of an object is:", "options": ["Continues only while a force acts on it", "The tendency to return to its natural place", "Always in a straight line", "Always circular"], "answer": 1 },
+        { "id": "w2d3q3", "question": "Which type of motion did Aristotle consider 'celestial'?", "options": ["Falling stones", "Rising fire", "Perfect circular motion of heavenly bodies", "Throwing a spear"], "answer": 2 },
+        { "id": "w2d3q4", "question": "In Aristotelian physics, a heavy object like a rock falls because:", "options": ["It is pushed by air", "It seeks its natural place (Earth)", "It is pulled by gravity", "It has momentum"], "answer": 1 },
+        { "id": "w2d3q5", "question": "The three types of terrestrial motion according to the Greeks are:", "options": ["Fast, slow, and medium", "Natural, violent, and celestial", "Linear, circular, and spiral", "Positive, negative, and neutral"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w2d4q1", "question": "Which observation led Ancient Greeks to conclude the Earth is spherical?", "options": ["The rising of the Sun", "The circular shadow of Earth on the Moon during a lunar eclipse", "The movement of clouds", "The change of seasons"], "answer": 1 },
+        { "id": "w2d4q2", "question": "Eratosthenes estimated Earth's circumference by comparing:", "options": ["Heights of mountains", "Shadow angles in two cities at noon", "Star positions at midnight", "Speed of ships"], "answer": 1 },
+        { "id": "w2d4q3", "question": "Ships disappearing hull-first over the horizon is evidence that:", "options": ["The Earth is flat", "The Earth is spherical", "The ocean is curved", "Light bends over water"], "answer": 1 },
+        { "id": "w2d4q4", "question": "Different constellations visible at different latitudes support the idea that:", "options": ["Stars move daily", "The Earth is spherical", "The Sun orbits Earth", "Stars change over time"], "answer": 1 },
+        { "id": "w2d4q5", "question": "Eratosthenes' estimate of Earth's circumference was remarkable because:", "options": ["He used satellites", "He measured it using only shadows and geometry", "He traveled around the world", "He used a telescope"], "answer": 1 }
+      ]
+    },
+    "3": {
+      "1": [
+        { "id": "w3d1q1", "question": "What was the primary goal of alchemists?", "options": ["Discover atoms", "Transform base metals into gold", "Build telescopes", "Classify living things"], "answer": 1 },
+        { "id": "w3d1q2", "question": "Which legendary substance did alchemists seek to turn metals into gold?", "options": ["Elixir of Life", "Philosopher's Stone", "Universal Solvent", "Aether"], "answer": 1 },
+        { "id": "w3d1q3", "question": "Alchemists are considered the forerunners of:", "options": ["Astronomy", "Modern chemistry", "Biology", "Geology"], "answer": 1 },
+        { "id": "w3d1q4", "question": "Which of the following did alchemists NOT achieve?", "options": ["Discovery of phosphorus", "Development of distillation", "Transmutation of lead to gold", "Isolation of minerals"], "answer": 2 },
+        { "id": "w3d1q5", "question": "Alchemy's greatest contribution to modern science was:", "options": ["Discovery of atoms", "Development of laboratory techniques and apparatus", "Theories of motion", "The periodic table"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w3d2q1", "question": "Which laboratory technique was developed by alchemists and is still used today?", "options": ["Spectroscopy", "Distillation", "Chromatography", "Electrophoresis"], "answer": 1 },
+        { "id": "w3d2q2", "question": "Filtration separates a solid from a liquid by:", "options": ["Boiling", "Passing through a porous material", "Freezing", "Magnetizing"], "answer": 1 },
+        { "id": "w3d2q3", "question": "Sublimation is the process of a solid changing directly into a:", "options": ["Liquid", "Gas", "Plasma", "Solution"], "answer": 1 },
+        { "id": "w3d2q4", "question": "Which element was discovered by alchemists through the distillation of urine?", "options": ["Phosphorus", "Sulfur", "Mercury", "Gold"], "answer": 0 },
+        { "id": "w3d2q5", "question": "Which alchemist is credited with developing early laboratory equipment?", "options": ["Jabir ibn Hayyan", "Isaac Newton", "Robert Boyle", "John Dalton"], "answer": 0 }
+      ],
+      "3": [
+        { "id": "w3d3q1", "question": "Diurnal motion refers to the:", "options": ["Yearly movement of the Sun", "Daily east-to-west motion of celestial objects", "26,000-year wobble of Earth's axis", "Motion of the Moon"], "answer": 1 },
+        { "id": "w3d3q2", "question": "Annual motion is caused by:", "options": ["Earth's rotation", "Earth's revolution around the Sun", "The Moon's orbit", "The Sun's rotation"], "answer": 1 },
+        { "id": "w3d3q3", "question": "The precession of the equinoxes is a cycle that lasts about:", "options": ["1 year", "100 years", "26,000 years", "1 million years"], "answer": 2 },
+        { "id": "w3d3q4", "question": "Precession of the equinoxes is caused by:", "options": ["Earth's revolution", "Earth's rotation", "The gravitational pull of the Moon and Sun on Earth's equatorial bulge", "Solar flares"], "answer": 2 },
+        { "id": "w3d3q5", "question": "The apparent daily motion of the Sun across the sky is due to:", "options": ["The Sun orbiting Earth", "Earth's rotation on its axis", "Earth's revolution", "Precession"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w3d4q1", "question": "Who is considered the 'father of modern chemistry' for rejecting the four Greek elements?", "options": ["Robert Boyle", "John Dalton", "Antoine Lavoisier", "Dmitri Mendeleev"], "answer": 0 },
+        { "id": "w3d4q2", "question": "Antoine Lavoisier is best known for:", "options": ["Discovering the electron", "The Law of Conservation of Mass", "The periodic table", "Atomic theory"], "answer": 1 },
+        { "id": "w3d4q3", "question": "Which book by Robert Boyle (1661) helped transition alchemy into chemistry?", "options": ["The Sceptical Chymist", "Principia", "Origin of Species", "The Alchemist"], "answer": 0 },
+        { "id": "w3d4q4", "question": "The transition from alchemy to chemistry primarily involved:", "options": ["Rejecting experimentation", "Emphasizing quantitative measurement and reproducible experiments", "Returning to the four Greek elements", "Removing mathematics from science"], "answer": 1 },
+        { "id": "w3d4q5", "question": "Alchemy differed from modern chemistry in that alchemists primarily relied on:", "options": ["Careful measurement", "Mystical and philosophical beliefs mixed with experimentation", "Peer review", "Mathematical proofs"], "answer": 1 }
+      ]
+    },
+    "4": {
+      "1": [
+        { "id": "w4d1q1", "question": "John Dalton is best known for:", "options": ["Discovering the electron", "Proposing the atomic theory", "Inventing the periodic table", "Discovering radioactivity"], "answer": 1 },
+        { "id": "w4d1q2", "question": "Which of the following is a postulate of Dalton's atomic theory?", "options": ["Atoms can be divided", "Atoms of the same element are identical", "Atoms change identity in reactions", "Atoms are made of electrons"], "answer": 1 },
+        { "id": "w4d1q3", "question": "According to Dalton, atoms combine in:", "options": ["Random ratios", "Whole-number ratios", "Continuous proportions", "Only 1:1 ratios"], "answer": 1 },
+        { "id": "w4d1q4", "question": "Dalton's theory explained the Law of Definite Proportions because:", "options": ["Atoms can change identity", "Compounds always have fixed ratios of atoms of each element", "Atoms combine in any ratio", "Molecules are single atoms"], "answer": 1 },
+        { "id": "w4d1q5", "question": "Which of Dalton's postulates is now known to be FALSE?", "options": ["Atoms are the smallest particles", "Atoms of the same element are identical", "Atoms combine in whole-number ratios", "Atoms are not created or destroyed in reactions"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w4d2q1", "question": "The Law of Definite Proportions states that:", "options": ["Elements can combine in any ratio", "A compound always has the same elements in the same proportions by mass", "All compounds have equal masses", "Atoms are indivisible"], "answer": 1 },
+        { "id": "w4d2q2", "question": "The Law of Multiple Proportions describes when:", "options": ["Two elements form only one compound", "Two elements form multiple compounds in whole-number mass ratios", "Elements combine randomly", "Compounds have fixed colors"], "answer": 1 },
+        { "id": "w4d2q3", "question": "CO and CO₂ illustrate the Law of Multiple Proportions because:", "options": ["They have the same mass", "Their oxygen-to-carbon mass ratios are in a small whole-number ratio", "They are both gases", "They contain different elements"], "answer": 1 },
+        { "id": "w4d2q4", "question": "Dalton's atomic theory helped chemists by:", "options": ["Replacing experiments", "Explaining the laws of chemical combination", "Rejecting quantitative chemistry", "Establishing biology"], "answer": 1 },
+        { "id": "w4d2q5", "question": "The Law of Conservation of Mass is explained by Dalton's postulate that:", "options": ["Atoms are indivisible", "Atoms are neither created nor destroyed in chemical reactions", "Atoms have different masses", "Atoms combine in ratios"], "answer": 1 }
+      ],
+      "3": [
+        { "id": "w4d3q1", "question": "How did Dalton's atomic theory help in the discovery of new elements?", "options": ["It showed elements were created artificially", "It provided a way to weigh atoms and identify elements by atomic weight", "It proved atoms were indivisible", "It introduced the concept of isotopes"], "answer": 1 },
+        { "id": "w4d3q2", "question": "The concept that each element has a unique atomic weight was important because:", "options": ["All atoms have the same weight", "It allowed chemists to distinguish elements", "It made elements identical", "It disproved atoms"], "answer": 1 },
+        { "id": "w4d3q3", "question": "Which instrument or method helped verify Dalton's atomic theory?", "options": ["Telescope", "Chemical analysis by mass", "Microscope", "Barometer"], "answer": 1 },
+        { "id": "w4d3q4", "question": "After Dalton, chemists were able to:", "options": ["Create any element", "Systematically identify and quantify elements in compounds", "Reject atomic theory", "Skip experiments"], "answer": 1 },
+        { "id": "w4d3q5", "question": "Atomic weights became the 'fingerprint' of elements because:", "options": ["All elements have equal weights", "Each element has a distinctive atomic weight", "Weights change over time", "Weights depend on color"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w4d4q1", "question": "Who arranged the first widely accepted periodic table?", "options": ["John Dalton", "Dmitri Mendeleev", "Antoine Lavoisier", "Robert Boyle"], "answer": 1 },
+        { "id": "w4d4q2", "question": "Mendeleev arranged the periodic table based on:", "options": ["Atomic number", "Atomic mass", "Electron configuration", "Number of neutrons"], "answer": 1 },
+        { "id": "w4d4q3", "question": "Mendeleev's greatest predictive success was:", "options": ["Predicting undiscovered elements and their properties", "Discovering oxygen", "Inventing the spectroscope", "Finding the electron"], "answer": 0 },
+        { "id": "w4d4q4", "question": "The modern periodic table is ordered by:", "options": ["Atomic mass", "Atomic number", "Alphabetical order", "Density"], "answer": 1 },
+        { "id": "w4d4q5", "question": "Who reorganized the periodic table by atomic number in 1913?", "options": ["Mendeleev", "Henry Moseley", "Rutherford", "Bohr"], "answer": 1 }
+      ]
+    },
+    "5": {
+      "1": [
+        { "id": "w5d1q1", "question": "Which scientist discovered the electron using cathode ray tubes?", "options": ["Rutherford", "Bohr", "J.J. Thomson", "Moseley"], "answer": 2 },
+        { "id": "w5d1q2", "question": "Cathode rays are:", "options": ["Positively charged particles", "Negatively charged particles called electrons", "Neutral particles", "Light waves only"], "answer": 1 },
+        { "id": "w5d1q3", "question": "In Thomson's 'plum pudding' model, the atom was:", "options": ["Mostly empty space", "A positive sphere with electrons embedded in it", "A tiny nucleus with orbiting electrons", "A cloud of electrons only"], "answer": 1 },
+        { "id": "w5d1q4", "question": "The proton was discovered by:", "options": ["Thomson", "Rutherford", "Chadwick", "Bohr"], "answer": 1 },
+        { "id": "w5d1q5", "question": "The neutron was discovered in 1932 by:", "options": ["Chadwick", "Rutherford", "Thomson", "Moseley"], "answer": 0 }
+      ],
+      "2": [
+        { "id": "w5d2q1", "question": "Rutherford's gold foil experiment demonstrated that:", "options": ["Electrons orbit in fixed paths", "The atom has a small, dense, positively charged nucleus", "Atoms are indivisible", "Protons have no charge"], "answer": 1 },
+        { "id": "w5d2q2", "question": "In the gold foil experiment, most alpha particles:", "options": ["Bounced back", "Passed straight through", "Were absorbed", "Turned into electrons"], "answer": 1 },
+        { "id": "w5d2q3", "question": "What did Henry Moseley contribute to atomic theory?", "options": ["Discovering the neutron", "Showing the atomic number equals the number of protons", "Proposing the plum pudding model", "Discovering radioactivity"], "answer": 1 },
+        { "id": "w5d2q4", "question": "Niels Bohr's model of the atom proposed that:", "options": ["Electrons can have any energy", "Electrons orbit in quantized energy levels", "The nucleus contains only protons", "Atoms are continuous"], "answer": 1 },
+        { "id": "w5d2q5", "question": "Which scientist's model is often called the 'planetary model' of the atom?", "options": ["Dalton", "Thomson", "Rutherford", "Bohr"], "answer": 3 }
+      ],
+      "3": [
+        { "id": "w5d3q1", "question": "In the nuclear model of the atom, protons and neutrons are located:", "options": ["In the electron cloud", "In the nucleus at the center", "Orbiting the nucleus", "Throughout the atom"], "answer": 1 },
+        { "id": "w5d3q2", "question": "Which of the following best describes the size of the nucleus compared to the atom?", "options": ["Very small — most of the atom is empty space", "Half the size of the atom", "The same size", "Larger than the atom"], "answer": 0 },
+        { "id": "w5d3q3", "question": "The mass of the atom is concentrated in the:", "options": ["Electron cloud", "Nucleus", "Outer shell", "Empty space"], "answer": 1 },
+        { "id": "w5d3q4", "question": "Which subatomic particle has a negative charge?", "options": ["Proton", "Neutron", "Electron", "Nucleus"], "answer": 2 },
+        { "id": "w5d3q5", "question": "Which subatomic particle has no charge?", "options": ["Proton", "Electron", "Neutron", "Ion"], "answer": 2 }
+      ],
+      "4": [
+        { "id": "w5d4q1", "question": "The correct chronological order of atomic models is:", "options": ["Dalton → Thomson → Rutherford → Bohr", "Bohr → Rutherford → Thomson → Dalton", "Rutherford → Dalton → Bohr → Thomson", "Thomson → Dalton → Bohr → Rutherford"], "answer": 0 },
+        { "id": "w5d4q2", "question": "Which model first placed the positive charge in a tiny central nucleus?", "options": ["Dalton", "Thomson", "Rutherford", "Bohr"], "answer": 2 },
+        { "id": "w5d4q3", "question": "Which model introduced the concept of quantized energy levels for electrons?", "options": ["Dalton's solid sphere", "Thomson's plum pudding", "Rutherford's nuclear", "Bohr's planetary"], "answer": 3 },
+        { "id": "w5d4q4", "question": "The current accepted model of the atom is the:", "options": ["Plum pudding model", "Bohr model", "Quantum mechanical model", "Solid sphere model"], "answer": 2 },
+        { "id": "w5d4q5", "question": "Each successive atomic model improved on the previous one by:", "options": ["Rejecting all earlier evidence", "Incorporating new experimental evidence", "Ignoring mathematics", "Making atoms larger"], "answer": 1 }
+      ]
+    },
+    "6": {
+      "1": [
+        { "id": "w6d1q1", "question": "The atomic number of an element is equal to the number of:", "options": ["Neutrons", "Protons", "Nucleons", "Outer electrons"], "answer": 1 },
+        { "id": "w6d1q2", "question": "Which scientist performed the first artificial transmutation by bombarding nitrogen with alpha particles?", "options": ["Marie Curie", "Ernest Rutherford", "James Chadwick", "Enrico Fermi"], "answer": 1 },
+        { "id": "w6d1q3", "question": "Which of the following is the FIRST synthetic element produced in a laboratory?", "options": ["Plutonium", "Technetium", "Oganesson", "Americium"], "answer": 1 },
+        { "id": "w6d1q4", "question": "Transmutation means:", "options": ["Changing one element into another", "Breaking down molecules", "Dissolving solids", "Melting metals"], "answer": 0 },
+        { "id": "w6d1q5", "question": "The synthesis of new elements in the laboratory requires:", "options": ["Low energies", "High-energy particle collisions", "Only chemical reactions", "Sunlight"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w6d2q1", "question": "Which of the following is a correctly balanced nuclear reaction?", "options": ["¹⁴N + ⁴He → ¹⁷O + ¹H", "²³⁸U → ²³⁴Th + ⁴He + 2n", "¹H + ¹H → ²H + e⁻", "⁴He → ²H + ²H + γ"], "answer": 0 },
+        { "id": "w6d2q2", "question": "In a nuclear reaction, which quantities must be conserved?", "options": ["Only mass number", "Only atomic number", "Both mass number and atomic number", "Neither"], "answer": 2 },
+        { "id": "w6d2q3", "question": "The synthesis of plutonium-239 involves:", "options": ["Chemical reaction", "Neutron capture by uranium-238", "Electron capture", "Alpha emission only"], "answer": 1 },
+        { "id": "w6d2q4", "question": "Which symbol represents a neutron in nuclear equations?", "options": ["e⁻", "p⁺", "n", "γ"], "answer": 2 },
+        { "id": "w6d2q5", "question": "The first artificial transmutation (Rutherford, 1919) produced:", "options": ["Oxygen-17 from nitrogen", "Hydrogen from helium", "Carbon from boron", "Iron from silicon"], "answer": 0 }
+      ],
+      "3": [
+        { "id": "w6d3q1", "question": "When an alpha particle is emitted, the atomic number of the parent nucleus:", "options": ["Increases by 2", "Decreases by 2", "Stays the same", "Decreases by 4"], "answer": 1 },
+        { "id": "w6d3q2", "question": "When a beta particle is emitted, the atomic number:", "options": ["Increases by 1", "Decreases by 1", "Stays the same", "Decreases by 4"], "answer": 0 },
+        { "id": "w6d3q3", "question": "Gamma radiation differs from alpha and beta because it:", "options": ["Has mass", "Has charge", "Has no mass or charge — it's pure energy", "Is a particle"], "answer": 2 },
+        { "id": "w6d3q4", "question": "Which type of radioactive decay reduces the mass number by 4?", "options": ["Alpha decay", "Beta decay", "Gamma emission", "Electron capture"], "answer": 0 },
+        { "id": "w6d3q5", "question": "Which type of radioactive decay does NOT change the atomic number?", "options": ["Alpha decay", "Beta decay", "Gamma emission", "Positron emission"], "answer": 2 }
+      ],
+      "4": [
+        { "id": "w6d4q1", "question": "Technetium-99m is used in medicine for:", "options": ["Cancer treatment", "Medical imaging", "Anesthesia", "Vaccines"], "answer": 1 },
+        { "id": "w6d4q2", "question": "Americium-241 is used in:", "options": ["Smoke detectors", "Telescopes", "Computers", "Batteries"], "answer": 0 },
+        { "id": "w6d4q3", "question": "Plutonium-239 is used for:", "options": ["Medical imaging", "Nuclear fuel and weapons", "Smoke detectors", "Food preservation"], "answer": 1 },
+        { "id": "w6d4q4", "question": "The synthesis of new elements is significant because:", "options": ["It proves atoms can be destroyed", "It expands our understanding of matter and nuclear physics", "It replaces the periodic table", "It disproves atomic theory"], "answer": 1 },
+        { "id": "w6d4q5", "question": "Element 118 (Oganesson) is notable because:", "options": ["It is the lightest element", "It is the heaviest known synthetic element", "It was found in nature", "It is a gas"], "answer": 1 }
+      ]
+    },
+    "7": {
+      "1": [
+        { "id": "w7d1q1", "question": "A molecule is considered polar when:", "options": ["It has a symmetrical shape", "It has an asymmetrical distribution of charge", "It contains only nonpolar bonds", "It is diatomic"], "answer": 1 },
+        { "id": "w7d1q2", "question": "Which of the following molecules is NONPOLAR despite having polar bonds?", "options": ["H₂O", "NH₃", "CO₂", "HCl"], "answer": 2 },
+        { "id": "w7d1q3", "question": "A molecule's polarity depends on:", "options": ["Only its size", "Both bond polarity and molecular shape", "Only its mass", "Only its color"], "answer": 1 },
+        { "id": "w7d1q4", "question": "Water (H₂O) is a polar molecule because:", "options": ["It is linear", "It has a bent shape with uneven charge distribution", "It is symmetrical", "It has no lone pairs"], "answer": 1 },
+        { "id": "w7d1q5", "question": "Electronegativity difference greater than ~0.4 typically results in:", "options": ["Nonpolar bond", "Polar bond", "Ionic bond always", "Metallic bond"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w7d2q1", "question": "The rule 'like dissolves like' means:", "options": ["All solutes dissolve in all solvents", "Polar solvents dissolve polar solutes; nonpolar solvents dissolve nonpolar solutes", "Water dissolves everything", "Only inorganic compounds dissolve in water"], "answer": 1 },
+        { "id": "w7d2q2", "question": "Polar molecules generally have _____ boiling points than nonpolar molecules of similar size.", "options": ["Lower", "Higher", "The same", "Unpredictable"], "answer": 1 },
+        { "id": "w7d2q3", "question": "Why doesn't oil mix with water?", "options": ["Oil is heavier than water", "Oil is nonpolar and water is polar", "Water is acidic", "Oil evaporates quickly"], "answer": 1 },
+        { "id": "w7d2q4", "question": "Which will dissolve in water?", "options": ["Salt (ionic)", "Oil (nonpolar)", "Wax", "Gasoline"], "answer": 0 },
+        { "id": "w7d2q5", "question": "Polarity affects which of the following properties?", "options": ["Atomic number", "Solubility and boiling point", "Number of neutrons", "Nuclear stability"], "answer": 1 }
+      ],
+      "3": [
+        { "id": "w7d3q1", "question": "Which is the STRONGEST type of intermolecular force?", "options": ["London dispersion forces", "Dipole–dipole interactions", "Hydrogen bonding", "Ionic bonding"], "answer": 2 },
+        { "id": "w7d3q2", "question": "London dispersion forces are present in:", "options": ["Only polar molecules", "Only ionic compounds", "All molecules — but strongest in large nonpolar molecules", "Only hydrogen-bonded molecules"], "answer": 2 },
+        { "id": "w7d3q3", "question": "Hydrogen bonding occurs when hydrogen is covalently bonded to:", "options": ["Carbon, silicon, or germanium", "Nitrogen, oxygen, or fluorine", "Any metal", "Another hydrogen atom"], "answer": 1 },
+        { "id": "w7d3q4", "question": "Which IMF is responsible for water's unusually high boiling point?", "options": ["London dispersion", "Dipole–dipole", "Hydrogen bonding", "Ionic bonding"], "answer": 2 },
+        { "id": "w7d3q5", "question": "Ranked from weakest to strongest, the IMFs are:", "options": ["Hydrogen < dipole < London", "London < dipole < hydrogen", "Dipole < hydrogen < London", "London < hydrogen < dipole"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w7d4q1", "question": "Water has a much higher boiling point than methane (CH₄) because:", "options": ["Water has stronger hydrogen bonds between molecules", "Methane has larger molecules", "Water is a smaller molecule", "Methane is polar"], "answer": 0 },
+        { "id": "w7d4q2", "question": "Which property is DIRECTLY affected by the strength of intermolecular forces?", "options": ["Number of protons", "Boiling point", "Atomic number", "Nuclear stability"], "answer": 1 },
+        { "id": "w7d4q3", "question": "Noble gases have very low boiling points because:", "options": ["They have strong bonds", "They only have weak London dispersion forces", "They are polar", "They are ionic"], "answer": 1 },
+        { "id": "w7d4q4", "question": "As IMF strength increases, the viscosity of a liquid:", "options": ["Decreases", "Increases", "Stays the same", "Becomes zero"], "answer": 1 },
+        { "id": "w7d4q5", "question": "Diamond is used in cutting tools because:", "options": ["It is soft and flexible", "It has a very high melting point and strong covalent bonds", "It conducts electricity", "It is lightweight"], "answer": 1 }
+      ]
+    },
+    "8": {
+      "1": [
+        { "id": "w8d1q1", "question": "Which factor INCREASES the rate of a chemical reaction?", "options": ["Decreasing temperature", "Increasing concentration of reactants", "Decreasing surface area", "Adding an inhibitor"], "answer": 1 },
+        { "id": "w8d1q2", "question": "Collision theory states that reactions occur when:", "options": ["Particles touch slowly", "Particles collide with sufficient energy and correct orientation", "Particles are cold", "Particles are far apart"], "answer": 1 },
+        { "id": "w8d1q3", "question": "Why does food spoil faster at room temperature than in a refrigerator?", "options": ["Cold destroys food", "Higher temperature increases reaction rates", "Refrigerators are vacuum", "Room temperature has more oxygen"], "answer": 1 },
+        { "id": "w8d1q4", "question": "Powdered sugar dissolves faster than a sugar cube because:", "options": ["Powdered sugar is warmer", "Powdered sugar has more surface area", "Sugar cubes have more mass", "Cubes dissolve in stages"], "answer": 1 },
+        { "id": "w8d1q5", "question": "Activation energy is:", "options": ["The energy released by a reaction", "The minimum energy needed for a reaction to occur", "The total energy of products", "The energy of the catalyst"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w8d2q1", "question": "A catalyst speeds up a reaction by:", "options": ["Increasing temperature", "Lowering the activation energy", "Being consumed in the reaction", "Increasing concentration"], "answer": 1 },
+        { "id": "w8d2q2", "question": "Which is TRUE about a catalyst?", "options": ["It is consumed in the reaction", "It is not consumed in the reaction", "It changes the products", "It only works in gases"], "answer": 1 },
+        { "id": "w8d2q3", "question": "Which compound catalyzes the decomposition of H₂O₂ into H₂O and O₂?", "options": ["NaCl", "MnO₂", "HCl", "NaOH"], "answer": 1 },
+        { "id": "w8d2q4", "question": "Enzymes are examples of:", "options": ["Inhibitors", "Biological catalysts", "Reactants", "Products"], "answer": 1 },
+        { "id": "w8d2q5", "question": "A catalyst that slows down a reaction is called a(n):", "options": ["Promoter", "Inhibitor", "Enzyme", "Electrolyte"], "answer": 1 }
+      ],
+      "3": [
+        { "id": "w8d3q1", "question": "In the reaction 2H₂ + O₂ → 2H₂O, how many moles of H₂O form from 4 moles of H₂?", "options": ["2", "4", "6", "8"], "answer": 1 },
+        { "id": "w8d3q2", "question": "How many grams of water are produced when 4 g of H₂ reacts completely with O₂? (2H₂ + O₂ → 2H₂O)", "options": ["18 g", "36 g", "4 g", "32 g"], "answer": 1 },
+        { "id": "w8d3q3", "question": "Stoichiometry is the calculation of:", "options": ["Temperature changes", "Quantities of reactants and products", "Reaction colors", "Viscosity"], "answer": 1 },
+        { "id": "w8d3q4", "question": "Why must chemical equations be balanced before stoichiometric calculations?", "options": ["For clarity", "To satisfy the law of conservation of mass", "For style", "To increase speed"], "answer": 1 },
+        { "id": "w8d3q5", "question": "If 2 moles of N₂ react with excess H₂ in N₂ + 3H₂ → 2NH₃, how many moles of NH₃ form?", "options": ["2", "3", "4", "6"], "answer": 2 }
+      ],
+      "4": [
+        { "id": "w8d4q1", "question": "If the theoretical yield is 50 g and the actual yield is 40 g, the percent yield is:", "options": ["40%", "50%", "80%", "90%"], "answer": 2 },
+        { "id": "w8d4q2", "question": "Percent yield is calculated as:", "options": ["Actual / Theoretical × 100", "Theoretical / Actual × 100", "Actual + Theoretical", "Theoretical − Actual"], "answer": 0 },
+        { "id": "w8d4q3", "question": "A reaction that releases heat to its surroundings is called:", "options": ["Endothermic", "Exothermic", "Isothermal", "Reversible"], "answer": 1 },
+        { "id": "w8d4q4", "question": "A reaction that absorbs heat from its surroundings is called:", "options": ["Exothermic", "Endothermic", "Isothermal", "Adiabatic"], "answer": 1 },
+        { "id": "w8d4q5", "question": "Which is a renewable energy source?", "options": ["Coal", "Petroleum", "Solar", "Natural gas"], "answer": 2 }
+      ]
+    },
+    "9": {
+      "1": [
+        { "id": "w9d1q1", "question": "Which of the following is a cleaning material for the house?", "options": ["Body lotion", "Bleach", "Lipstick", "Perfume"], "answer": 1 },
+        { "id": "w9d1q2", "question": "What is the difference between soap and detergent?", "options": ["Soap is made from fats; detergent is synthetic", "Soap is synthetic; detergent is natural", "They are identical", "Detergent is only for dishes"], "answer": 0 },
+        { "id": "w9d1q3", "question": "Which is a common personal care product?", "options": ["Bleach", "Ammonia", "Shampoo", "Vinegar"], "answer": 2 },
+        { "id": "w9d1q4", "question": "Cleaning materials are designed to remove:", "options": ["Color", "Dirt, grease, and germs", "Water", "Oxygen"], "answer": 1 },
+        { "id": "w9d1q5", "question": "Which is NOT a cleaning material?", "options": ["Soap", "Detergent", "Baking soda", "Sunscreen"], "answer": 3 }
+      ],
+      "2": [
+        { "id": "w9d2q1", "question": "The active ingredient in bleach that kills germs is:", "options": ["Sodium chloride", "Sodium hypochlorite", "Sodium bicarbonate", "Citric acid"], "answer": 1 },
+        { "id": "w9d2q2", "question": "Why should you never mix bleach and ammonia?", "options": ["They explode", "They produce toxic chloramine gas", "They cancel each other", "They become acidic"], "answer": 1 },
+        { "id": "w9d2q3", "question": "Active ingredients in a product are:", "options": ["Fillers", "The components that do the main work", "Colorings only", "Preservatives only"], "answer": 1 },
+        { "id": "w9d2q4", "question": "A product's label typically lists:", "options": ["Only the price", "Active and inert ingredients, warnings, and directions", "Only the brand", "Only the country of origin"], "answer": 1 },
+        { "id": "w9d2q5", "question": "Which warning symbol indicates a corrosive substance?", "options": ["Flame", "Skull and crossbones", "Corrosive", "Exclamation mark"], "answer": 2 }
+      ],
+      "3": [
+        { "id": "w9d3q1", "question": "Which is a personal care product?", "options": ["Soap", "Body lotion", "Bleach", "Ammonia"], "answer": 1 },
+        { "id": "w9d3q2", "question": "Personal care products are primarily designed to:", "options": ["Clean the house", "Enhance appearance and hygiene", "Fuel vehicles", "Build structures"], "answer": 1 },
+        { "id": "w9d3q3", "question": "Which is NOT a personal care product?", "options": ["Shampoo", "Toothpaste", "Deodorant", "Dishwashing liquid"], "answer": 3 },
+        { "id": "w9d3q4", "question": "Deodorants primarily function to:", "options": ["Moisturize skin", "Reduce body odor", "Whiten teeth", "Remove stains"], "answer": 1 },
+        { "id": "w9d3q5", "question": "Personal care products should be used with caution because:", "options": ["They are free", "They may contain chemicals that irritate skin or cause allergies", "They are always organic", "They are hard to find"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w9d4q1", "question": "Which is a common humectant in cosmetics?", "options": ["Glycerin", "Petroleum jelly", "Sodium chloride", "Ethanol"], "answer": 0 },
+        { "id": "w9d4q2", "question": "Emollients in cosmetics function to:", "options": ["Kill germs", "Soften and smooth the skin", "Add color", "Add fragrance"], "answer": 1 },
+        { "id": "w9d4q3", "question": "Why do cosmetics need preservatives?", "options": ["For color", "To prevent spoilage from bacteria and mold", "For smell", "For texture"], "answer": 1 },
+        { "id": "w9d4q4", "question": "Emulsifiers in cosmetics:", "options": ["Blend oil and water", "Add color", "Add scent", "Preserve the product"], "answer": 0 },
+        { "id": "w9d4q5", "question": "Fragrance in cosmetics is added for:", "options": ["Preservation", "Pleasant scent", "Cleansing", "Sun protection"], "answer": 1 }
+      ]
+    },
+    "10": {
+      "1": [
+        { "id": "w10d1q1", "question": "Plato's problem of 'Saving the Appearances' required that:", "options": ["All celestial motions must be perfect circles", "All stars are identical", "The Earth moves", "The Sun is at the center"], "answer": 0 },
+        { "id": "w10d1q2", "question": "Plato's insistence on circular celestial motion led to:", "options": ["Simple models", "Complex models with epicycles", "The rejection of astronomy", "Heliocentrism"], "answer": 1 },
+        { "id": "w10d1q3", "question": "Retrograde motion is:", "options": ["The daily motion of the Sun", "The apparent backward motion of a planet in the sky", "The rotation of the Moon", "The precession of the equinoxes"], "answer": 1 },
+        { "id": "w10d1q4", "question": "To 'save the appearances' means to:", "options": ["Ignore observations", "Explain observed phenomena with a model", "Hide the truth", "Change the data"], "answer": 1 },
+        { "id": "w10d1q5", "question": "Plato's influence on Greek astronomy was significant because:", "options": ["He encouraged quantitative measurements", "He insisted on perfect circular motion, which shaped subsequent models", "He invented the telescope", "He discovered Earth's rotation"], "answer": 1 }
+      ],
+      "2": [
+        { "id": "w10d2q1", "question": "Who proposed the heliocentric model of the universe?", "options": ["Ptolemy", "Aristotle", "Copernicus", "Eudoxus"], "answer": 2 },
+        { "id": "w10d2q2", "question": "The Ptolemaic model of the universe was:", "options": ["Heliocentric", "Geocentric with epicycles", "Sun-centered with circular orbits", "Based on elliptical orbits"], "answer": 1 },
+        { "id": "w10d2q3", "question": "Aristarchus of Samos was notable for:", "options": ["Proposing a heliocentric model centuries before Copernicus", "Inventing the telescope", "Discovering Pluto", "Charting Mars"], "answer": 0 },
+        { "id": "w10d2q4", "question": "Aristotle's model of the universe included:", "options": ["Elliptical orbits", "55 concentric crystalline spheres", "A single sphere", "No spheres"], "answer": 1 },
+        { "id": "w10d2q5", "question": "Which ancient astronomer cataloged stars and developed the geocentric model that dominated for 1,400 years?", "options": ["Eudoxus", "Aristotle", "Ptolemy", "Aristarchus"], "answer": 2 }
+      ],
+      "3": [
+        { "id": "w10d3q1", "question": "Kepler's 3rd law states that:", "options": ["T² ∝ a³", "T ∝ a", "F = ma", "E = mc²"], "answer": 0 },
+        { "id": "w10d3q2", "question": "If a planet is 4 AU from the Sun, its orbital period is about:", "options": ["4 years", "8 years", "16 years", "64 years"], "answer": 1 },
+        { "id": "w10d3q3", "question": "Earth is 1 AU from the Sun and takes 1 year to orbit. This is consistent with Kepler's 3rd law because:", "options": ["1² = 1³", "1 = 1", "Both sides equal", "All of the above"], "answer": 3 },
+        { "id": "w10d3q4", "question": "Kepler's 3rd law applies to:", "options": ["Only Earth", "Only planets", "Any object orbiting a central mass", "Only the Moon"], "answer": 2 },
+        { "id": "w10d3q5", "question": "Jupiter is about 5.2 AU from the Sun. Its orbital period is approximately:", "options": ["5.2 years", "11.9 years", "27 years", "140 years"], "answer": 1 }
+      ],
+      "4": [
+        { "id": "w10d4q1", "question": "According to Galileo, if friction were removed, a moving object would:", "options": ["Stop immediately", "Continue moving forever", "Curve upward", "Reverse direction"], "answer": 1 },
+        { "id": "w10d4q2", "question": "Newton's 2nd Law of Motion is expressed as:", "options": ["F = ma", "E = mc²", "F = G m₁m₂ / r²", "T² = a³"], "answer": 0 },
+        { "id": "w10d4q3", "question": "Newton's 1st Law of Motion is also known as the Law of:", "options": ["Acceleration", "Inertia", "Action-Reaction", "Gravitation"], "answer": 1 },
+        { "id": "w10d4q4", "question": "In a vacuum, a feather and a hammer dropped from the same height will:", "options": ["Fall at different rates", "Fall at the same rate", "Float", "Not move"], "answer": 1 },
+        { "id": "w10d4q5", "question": "Newton's Law of Universal Gravitation is expressed as:", "options": ["F = ma", "E = mc²", "F = G m₁m₂ / r²", "T² = a³"], "answer": 2 }
+      ]
+    }
+  }
+}
