@@ -1,6 +1,6 @@
 /* ============================================================
    activity-tracker.js — Physical Science · Activity Logger
-   Version: 1.0.0
+   Version: 1.1.0 — Cross-device sync via Google Apps Script
    Depends on: config.js, store.js
    ============================================================ */
 
@@ -29,18 +29,90 @@ window.ActivityTracker = (function () {
     }
   }
 
-  function log(event) {
-    if (!event || typeof event !== 'object') return false;
-    const student = (window.Store && Store.getStudent()) || null;
-    const entry = Object.assign({
+  // Grab the student profile from Store (in-memory current session)
+  function getProfile() {
+    if (window.Store && typeof Store.getStudent === 'function') {
+      return Store.getStudent() || null;
+    }
+    return null;
+  }
+
+  // Fallback: read the profile from localStorage by LRN
+  function getProfileByLrn(lrn) {
+    if (!lrn) return null;
+    try {
+      const raw = localStorage.getItem('physci_profile_' + lrn);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Build the enriched event — carries name + grade + section
+  function enrich(event) {
+    const sessionProfile = getProfile();
+    const lrn = event.lrn || (sessionProfile && sessionProfile.lrn) || null;
+    const storedProfile = lrn ? getProfileByLrn(lrn) : null;
+    const p = sessionProfile || storedProfile || {};
+
+    return Object.assign({
       timestamp: new Date().toISOString(),
-      lrn: student ? student.lrn : null,
+      lrn: lrn,
+      lastName: p.lastName || '',
+      firstName: p.firstName || '',
+      middleName: p.middleName || '',
+      gradeLevel: p.gradeLevel || '',
+      section: p.section || '',
       subject: 'physci'
     }, event);
+  }
 
+  // ---- Remote push (fire-and-forget) ----
+  function pushToBackend(entry) {
+    const url = (window.CONFIG && CONFIG.gasEndpoint) || '';
+    if (!url) return;
+
+    const body = JSON.stringify({
+      action: 'logEvent',
+      payload: {
+        timestamp: entry.timestamp,
+        action: entry.action,
+        lrn: entry.lrn,
+        lastName: entry.lastName,
+        firstName: entry.firstName,
+        middleName: entry.middleName,
+        gradeLevel: entry.gradeLevel,
+        section: entry.section,
+        week: entry.week || '',
+        day: entry.day || '',
+        code: entry.code || '',
+        assessmentId: entry.assessmentId || '',
+        score: entry.score || '',
+        total: entry.total || '',
+        percent: entry.percent || '',
+        extra: entry.extra || {}
+      }
+    });
+
+    try {
+      // no-cors is required because Apps Script doesn't send CORS headers on POST.
+      // We get fire-and-forget semantics — the write happens, we just can't read the reply.
+      fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body
+      }).catch(() => { /* swallow network errors — offline students shouldn't crash */ });
+    } catch (e) { /* noop */ }
+  }
+
+  function log(event) {
+    if (!event || typeof event !== 'object') return false;
+    const entry = enrich(event);
     const list = readLog();
     list.push(entry);
     writeLog(list);
+    pushToBackend(entry);
     return true;
   }
 
@@ -89,6 +161,21 @@ window.ActivityTracker = (function () {
     catch (e) { return false; }
   }
 
+  // ---- Remote fetch for teacher tracker ----
+  async function fetchRemoteEvents(token) {
+    const url = (window.CONFIG && CONFIG.gasEndpoint) || '';
+    if (!url) return [];
+    try {
+      const params = new URLSearchParams({ action: 'activity', token: token || '' });
+      const r = await fetch(url + '?' + params.toString());
+      const j = await r.json();
+      return (j && j.ok && Array.isArray(j.events)) ? j.events : [];
+    } catch (e) {
+      console.warn('ActivityTracker.fetchRemoteEvents failed:', e);
+      return [];
+    }
+  }
+
   return {
     log,
     logDayComplete,
@@ -98,6 +185,7 @@ window.ActivityTracker = (function () {
     getEvents,
     getEventsForStudent,
     countByAction,
-    clear
+    clear,
+    fetchRemoteEvents
   };
 })();
