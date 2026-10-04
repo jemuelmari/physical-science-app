@@ -3,222 +3,490 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grading Sheet · Physical Science</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/teacher.css" />
-  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+  <title>Grading Sheet — Physical Science</title>
+  <link rel="stylesheet" href="../assets/css/main.css?v=8" />
+  <link rel="stylesheet" href="../assets/css/teacher.css?v=8" />
   <style>
-    @media print {
-      .app-header, .filter-bar, .no-print, .app-footer { display: none !important; }
-      body { background: #fff !important; }
-      .grading-sheet { box-shadow: none !important; border: none !important; }
-    }
+    .gs-filter-bar { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; background: #fff; padding: 18px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 24px; }
+    .gs-filter-bar .form-group { min-width: 180px; flex: 1; margin-bottom: 0; }
+    .gs-student-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .gs-summary-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 4px solid #1b7a3d; }
+    .gs-summary-card .lbl { font-size: 0.72rem; font-weight: 700; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; }
+    .gs-summary-card .val { font-size: 1.8rem; font-weight: 800; line-height: 1.1; color: #1a1a1a; letter-spacing: -0.5px; margin-top: 6px; }
+    .gs-summary-card .sub { font-size: 0.75rem; color: #90a4ae; margin-top: 4px; }
+    .gs-summary-card.green { border-left-color: #2e7d32; }
+    .gs-summary-card.amber { border-left-color: #ed6c02; }
+    .gs-summary-card.red { border-left-color: #c62828; }
+    .gs-group { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid #1b7a3d; }
+    .gs-group.ww { border-top-color: #0d47a1; }
+    .gs-group.pt { border-top-color: #00695c; }
+    .gs-group.ex { border-top-color: #6a1b9a; }
+    .gs-group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .gs-group-title { font-size: 1rem; font-weight: 700; color: #1b5e20; display: flex; align-items: center; gap: 8px; }
+    .gs-group.ww .gs-group-title { color: #0d47a1; }
+    .gs-group.pt .gs-group-title { color: #00695c; }
+    .gs-group.ex .gs-group-title { color: #6a1b9a; }
+    .gs-weight-badge { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: #e8f5e9; color: #1b5e20; }
+    .gs-group.ww .gs-weight-badge { background: #e3f2fd; color: #0d47a1; }
+    .gs-group.pt .gs-weight-badge { background: #e0f2f1; color: #004d40; }
+    .gs-group.ex .gs-weight-badge { background: #f3e5f5; color: #6a1b9a; }
+    .gs-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; align-items: center; }
+    .gs-row:last-child { border-bottom: none; }
+    .gs-row.header { border-bottom: 2px solid #e0e0e0; font-size: 0.72rem; font-weight: 700; color: #5f6368; text-transform: uppercase; letter-spacing: 0.4px; padding: 8px 0; }
+    .gs-row .label { font-size: 0.9rem; color: #37474f; font-weight: 600; }
+    .gs-row .val { font-size: 0.92rem; color: #37474f; text-align: right; font-variant-numeric: tabular-nums; }
+    .gs-row .val.missing { color: #bdbdbd; }
+    .gs-row .val.pct { font-weight: 700; }
+    .gs-row .val.pct.high  { color: #2e7d32; }
+    .gs-row .val.pct.mid   { color: #0d47a1; }
+    .gs-row .val.pct.low   { color: #ed6c02; }
+    .gs-row .val.pct.crit  { color: #c62828; }
+    .gs-empty { text-align: center; padding: 48px 24px; color: #90a4ae; }
+    @media (max-width: 700px) { .gs-row { grid-template-columns: 1fr 1fr; row-gap: 6px; } .gs-row.header { display: none; } }
   </style>
 </head>
 <body>
 
-  <header class="app-header teacher-header no-print">
+  <header class="app-header teacher-header">
     <div class="container flex-between">
       <div>
-        <h1>📄 Grading Sheet</h1>
-        <span class="version">Physical Science · Teacher</span>
+        <h1>📋 Grading Sheet</h1>
+        <span class="version">Physical Science · v1.0.1</span>
       </div>
-      <div class="header-actions">
-        <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
-        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-teacher">⏻ Logout</button>
-      </div>
+      <nav class="teacher-nav">
+        <a href="../classrecord.html">← Class Record</a>
+        <a href="../instructor.html">🏠 Dashboard</a>
+        <button id="btn-logout">🚪 Logout</button>
+      </nav>
     </div>
   </header>
 
-  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <div class="filter-bar no-print">
-      <div class="filter-group">
-        <label>Student</label>
-        <select id="student-select"><option value="">— Select Student —</option></select>
+    <div class="gs-filter-bar">
+      <div class="form-group">
+        <label class="form-label">Term</label>
+        <select id="filter-term" class="form-control">
+          <option value="term1">Term 1</option>
+          <option value="term2">Term 2</option>
+          <option value="term3">Term 3</option>
+        </select>
       </div>
-      <div class="filter-actions">
-        <button id="btn-generate" class="btn btn-primary">▶ Generate Sheet</button>
-        <button id="btn-print" class="btn btn-outline">🖨 Print</button>
+      <div class="form-group">
+        <label class="form-label">Section</label>
+        <select id="filter-section" class="form-control">
+          <option value="">All Sections</option>
+          <option value="STEM A">STEM A</option>
+          <option value="STEM B">STEM B</option>
+          <option value="ABM A">ABM A</option>
+          <option value="HUMSS A">HUMSS A</option>
+          <option value="GAS A">GAS A</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Student</label>
+        <select id="filter-student" class="form-control">
+          <option value="">— Select a student —</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex:0;">
+        <label class="form-label">&nbsp;</label>
+        <button id="btn-refresh" class="btn btn-primary">🔄 Refresh</button>
+      </div>
+      <div class="form-group" style="flex:0;">
+        <label class="form-label">&nbsp;</label>
+        <button id="btn-export" class="btn btn-outline">📥 Export</button>
       </div>
     </div>
 
-    <div id="sheet-output"></div>
+    <div id="results-area">
+      <div class="card gs-empty">
+        <div style="font-size:2.5rem;margin-bottom:12px;">⏳</div>
+        <p>Loading…</p>
+      </div>
+    </div>
 
   </main>
 
-  <footer class="app-footer no-print"><p>Grading Sheet · v1.0.0</p></footer>
+  <footer class="app-footer">
+    <p>Physical Science Online Modular App · <span class="version">v1.0.1</span></p>
+  </footer>
 
-  <script src="../config.js"></script>
-  <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/app.js"></script>
-  <script src="../assets/js/transmutation.js"></script>
-  <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../config.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
+  <script src="../assets/js/store.js?v=8"></script>
+  <script src="../assets/js/security.js?v=8"></script>
+  <script src="../assets/js/transmutation.js?v=8"></script>
+  <script src="../assets/js/ui-helpers.js?v=8"></script>
+  <script src="../assets/js/teacher-auth.js?v=8"></script>
+  <script src="../assets/js/teacher-auth-boot.js?v=1"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      App.requireTeacher();
-      await App.loadRegistry();
+    (function() {
+      'use strict';
 
-      // Populate student dropdown
-      const studentsMap = new Map();
-      Store.getRecords().forEach(r => {
-        if (!studentsMap.has(r.lrn)) {
-          studentsMap.set(r.lrn, {
-            lrn: r.lrn,
-            lastName: r.lastName || '',
-            firstName: r.firstName || '',
-            gradeLevel: r.gradeLevel || '',
-            section: r.section || ''
-          });
-        }
-      });
+      /* ---------------------------------------------------------------
+         WEIGHTS — DepEd SHS standard for Physical Science
+           Written Works      = 25%
+           Performance Tasks  = 50%
+           Term Exam          = 25%
+             ST1  30% of EX
+             ST2  30% of EX
+             TE   40% of EX
+         --------------------------------------------------------------- */
+      var WEIGHTS     = { ww: 0.25, pt: 0.50, ex: 0.25 };
+      var EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
 
-      const sel = document.getElementById('student-select');
-      [...studentsMap.values()]
-        .sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''))
-        .forEach(s => {
-          const opt = document.createElement('option');
-          opt.value = s.lrn;
-          opt.textContent = `${s.lastName}, ${s.firstName} (${s.lrn})`;
-          sel.appendChild(opt);
-        });
-
-      document.getElementById('btn-generate').addEventListener('click', () => {
-        const lrn = sel.value;
-        if (!lrn) { alert('Please select a student.'); return; }
-        generateSheet(lrn);
-      });
-
-      document.getElementById('btn-print').addEventListener('click', () => window.print());
-
-      function generateSheet(lrn) {
-        const student = studentsMap.get(lrn);
-        const records = Store.getRecordsByStudent(lrn);
-        const assessments = App.getAssessments();
-
-        if (!student || !records.length) {
-          document.getElementById('sheet-output').innerHTML =
-            `<div class="empty-state">No records found.</div>`;
+      TeacherAuthBoot.ready(function(auth) {
+        if (!auth.isAuthenticated()) {
+          window.location.replace('../teacher-login.html');
           return;
         }
 
-        const byAssessment = {};
-        records.forEach(r => { byAssessment[r.assessmentId] = r; });
-
-        const rows = assessments.map(a => {
-          const rec = byAssessment[a.id];
-          return {
-            title: a.title,
-            type: a.type,
-            weeks: a.weeks,
-            items: a.items,
-            score: rec ? rec.score : null,
-            total: rec ? rec.total : a.items,
-            percent: rec ? rec.percent : null,
-            grade: rec ? rec.finalGrade : null,
-            timestamp: rec ? rec.timestamp : null,
-            passed: rec ? rec.passed : null
-          };
+        document.getElementById('filter-term').addEventListener('change', render);
+        document.getElementById('filter-student').addEventListener('change', render);
+        document.getElementById('filter-section').addEventListener('change', function() {
+          refreshStudentDropdown();
+          render();
         });
+        document.getElementById('btn-refresh').addEventListener('click', function() {
+          refreshStudentDropdown();
+          render();
+          APP.toast('Refreshed', 'success', 1500);
+        });
+        document.getElementById('btn-export').addEventListener('click', exportSheet);
+        document.getElementById('btn-logout').addEventListener('click', function() { auth.logout(); });
 
-        const completed = rows.filter(r => r.grade != null);
-        const avg = completed.length
-          ? Math.round(completed.reduce((s, r) => s + r.grade, 0) / completed.length)
-          : null;
-        const transmuted = avg != null ? Transmutation.apply(avg) : null;
-        const passed = transmuted != null && transmuted >= 75;
-        const descriptor = transmuted != null ? Transmutation.getDescriptor(transmuted) : null;
+        refreshStudentDropdown();
+        render();
+      }, function() {
+        document.getElementById('results-area').innerHTML =
+          '<div class="card gs-empty">⚠️ <strong>Auth module failed to load</strong></div>';
+      });
 
-        document.getElementById('sheet-output').innerHTML = `
-          <div class="grading-sheet card" style="padding:32px;">
+      function refreshStudentDropdown() {
+        var section = document.getElementById('filter-section').value;
+        var students = Store.getAllUsers();
+        if (section) students = students.filter(function(s) { return s.section === section; });
+        students = APP.sortStudents(students, 'last', 'asc');
 
-            <div style="text-align:center;border-bottom:2px solid #1b7a3d;padding-bottom:16px;margin-bottom:24px;">
-              <div style="font-size:0.85rem;letter-spacing:1px;color:#5f6368;text-transform:uppercase;">Republic of the Philippines</div>
-              <div style="font-size:0.85rem;color:#5f6368;">Department of Education</div>
-              <div style="font-size:1.3rem;font-weight:800;color:#1b7a3d;margin-top:6px;">PHYSICAL SCIENCE</div>
-              <div style="font-size:0.85rem;color:#5f6368;">Senior High School · Grade 11/12</div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-              <div>
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Student Name</div>
-                <div style="font-size:1.1rem;font-weight:700;">${UI.escapeHtml(student.lastName)}, ${UI.escapeHtml(student.firstName)}</div>
-              </div>
-              <div>
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">LRN</div>
-                <div style="font-size:1.1rem;font-weight:700;font-family:monospace;">${UI.escapeHtml(student.lrn)}</div>
-              </div>
-              <div>
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Grade Level</div>
-                <div style="font-size:1rem;font-weight:600;">${UI.escapeHtml(student.gradeLevel)}</div>
-              </div>
-              <div>
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Section</div>
-                <div style="font-size:1rem;font-weight:600;">${UI.escapeHtml(student.section)}</div>
-              </div>
-            </div>
-
-            <table class="modern-table" style="margin-bottom:24px;">
-              <thead>
-                <tr>
-                  <th>Assessment</th>
-                  <th>Weeks</th>
-                  <th>Items</th>
-                  <th>Score</th>
-                  <th>%</th>
-                  <th>Grade</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows.map(r => `
-                  <tr>
-                    <td>${UI.escapeHtml(r.title)}</td>
-                    <td>${UI.escapeHtml(r.weeks)}</td>
-                    <td>${r.total}</td>
-                    <td>${r.score != null ? r.score : '—'}</td>
-                    <td>${r.percent != null ? r.percent + '%' : '—'}</td>
-                    <td>${r.grade != null ? r.grade : '—'}</td>
-                    <td>${r.passed == null ? '—' : (r.passed ? '✓ Passed' : '✗ Failed')}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px;background:#f5f7fa;border-radius:12px;">
-              <div>
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Average Grade</div>
-                <div style="font-size:2rem;font-weight:800;color:${passed ? '#2e7d32' : '#c62828'};">${avg != null ? avg : '—'}</div>
-              </div>
-              <div>
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Transmuted Grade</div>
-                <div style="font-size:2rem;font-weight:800;color:${passed ? '#2e7d32' : '#c62828'};">${transmuted != null ? transmuted : '—'}</div>
-              </div>
-              <div style="grid-column:1 / -1;">
-                <div style="font-size:0.72rem;color:#90a4ae;text-transform:uppercase;letter-spacing:0.5px;">Descriptor</div>
-                <div style="font-size:1.1rem;font-weight:700;color:${descriptor ? descriptor.color : '#5f6368'};">
-                  ${descriptor ? descriptor.label + ' (' + descriptor.code + ')' : '—'}
-                </div>
-              </div>
-            </div>
-
-            <div style="margin-top:32px;padding-top:24px;border-top:1px dashed #cfd8dc;display:grid;grid-template-columns:1fr 1fr;gap:32px;">
-              <div>
-                <div style="border-top:1px solid #37474f;margin-top:32px;padding-top:4px;font-size:0.8rem;text-align:center;">Subject Teacher</div>
-              </div>
-              <div>
-                <div style="border-top:1px solid #37474f;margin-top:32px;padding-top:4px;font-size:0.8rem;text-align:center;">Parent / Guardian</div>
-              </div>
-            </div>
-
-            <div style="margin-top:24px;font-size:0.72rem;color:#90a4ae;text-align:center;">
-              Generated on ${UI.formatDate(new Date().toISOString())} · Physical Science Online Modular App v1.0.0
-            </div>
-
-          </div>
-        `;
+        var select = document.getElementById('filter-student');
+        var currentValue = select.value;
+        select.innerHTML = '<option value="">— Select a student —</option>';
+        students.forEach(function(s) {
+          var opt = document.createElement('option');
+          opt.value = s.lrn;
+          opt.textContent = APP.formatFullName(s.lastName, s.firstName, s.middleName) + ' · ' + (s.section || '');
+          select.appendChild(opt);
+        });
+        if (currentValue) select.value = currentValue;
       }
-    });
+
+      function getScore(lrn, term, type, id) {
+        var scores = Store.getScores(lrn);
+        var t = scores[term] || {};
+        var record = null;
+        if (type === 'te') record = t.te;
+        else if (t[type] && t[type][id]) record = t[type][id];
+        return record || null;
+      }
+
+      function pctClass(pct) {
+        if (pct === null || pct === undefined) return '';
+        if (pct >= 90) return 'high';
+        if (pct >= 75) return 'mid';
+        if (pct >= 65) return 'low';
+        return 'crit';
+      }
+
+      function render() {
+        var term = document.getElementById('filter-term').value;
+        var lrn  = document.getElementById('filter-student').value;
+        var area = document.getElementById('results-area');
+
+        if (!lrn) {
+          area.innerHTML =
+            '<div class="card gs-empty"><div style="font-size:2.5rem;margin-bottom:12px;">📋</div>' +
+            '<p>Select a student to view their detailed grading sheet.</p></div>';
+          return;
+        }
+
+        var student = Store.getUser(lrn);
+        if (!student) {
+          area.innerHTML = '<div class="card gs-empty"><p>Student not found.</p></div>';
+          return;
+        }
+
+        var initials = ((student.firstName || '?').charAt(0) + (student.lastName || '?').charAt(0)).toUpperCase();
+        var avatarClass = (typeof UI !== 'undefined' && UI.getAvatarClass) ? UI.getAvatarClass(student.lrn) : 'av-1';
+        var termLabel = term.replace('term', 'Term ');
+
+        // Fetch all 9 assessments
+        var q1  = getScore(lrn, term, 'quizzes', 'quiz1');
+        var q2  = getScore(lrn, term, 'quizzes', 'quiz2');
+        var q3  = getScore(lrn, term, 'quizzes', 'quiz3');
+        var st1 = getScore(lrn, term, 'st', 'st1');
+        var st2 = getScore(lrn, term, 'st', 'st2');
+        var pt1 = getScore(lrn, term, 'pt', 'pt1');
+        var pt2 = getScore(lrn, term, 'pt', 'pt2');
+        var pt3 = getScore(lrn, term, 'pt', 'pt3');
+        var te  = getScore(lrn, term, 'te', 'te');
+
+        // WW average
+        var quizPcts = [q1, q2, q3].map(function(q) {
+          return q && q.percent !== undefined ? q.percent : null;
+        }).filter(function(v) { return v !== null; });
+        var wwAvg = quizPcts.length
+          ? quizPcts.reduce(function(a, b) { return a + b; }, 0) / quizPcts.length
+          : null;
+
+        // PT average
+        var ptPcts = [pt1, pt2, pt3].map(function(p) {
+          return p && p.percent !== undefined ? p.percent : null;
+        }).filter(function(v) { return v !== null; });
+        var ptAvg = ptPcts.length
+          ? ptPcts.reduce(function(a, b) { return a + b; }, 0) / ptPcts.length
+          : null;
+
+        // EX — only valid when all three components present
+        var st1Pct = st1 && st1.percent !== undefined ? st1.percent : null;
+        var st2Pct = st2 && st2.percent !== undefined ? st2.percent : null;
+        var tePct  = te  && te.percent  !== undefined ? te.percent  : null;
+
+        var exAvg = null;
+        if (st1Pct !== null && st2Pct !== null && tePct !== null) {
+          exAvg = (st1Pct * EX_INTERNAL.st1) + (st2Pct * EX_INTERNAL.st2) + (tePct * EX_INTERNAL.te);
+        }
+
+        // Final grade (safe computation)
+        var final = Transmutation.computeFinalGradeSafe(wwAvg, ptAvg, exAvg, WEIGHTS);
+
+        var finalDisplay  = final.insufficient ? '—' : final.transmuted;
+        var finalColor    = final.insufficient ? '#90a4ae' : (final.passing ? '#2e7d32' : '#c62828');
+        var finalLabel    = final.insufficient
+          ? 'Not Yet Available'
+          : (final.passing ? '✅ PASSED' : '❌ FAILED');
+        var finalSubText  = final.insufficient
+          ? '⚠️ Waiting for ST1, ST2, and TE'
+          : 'Raw: ' + final.raw.toFixed(2);
+
+        // Classification (uses available averages)
+        var availableAvg = [wwAvg, ptAvg, exAvg]
+          .filter(function(v) { return v !== null; })
+          .reduce(function(a, b, _, arr) { return a + b / arr.length; }, 0);
+        var classification = Transmutation.classifyStudent(availableAvg);
+
+        area.innerHTML =
+          // Header card
+          '<div class="card" style="padding:20px;margin-bottom:20px;">' +
+            '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
+              '<div class="student-avatar ' + avatarClass + '" style="width:56px;height:56px;font-size:1.1rem;">' + initials + '</div>' +
+              '<div style="flex:1;min-width:200px;">' +
+                '<div style="font-size:1.15rem;font-weight:700;color:#1b5e20;">' +
+                  APP.formatFullName(student.lastName, student.firstName, student.middleName) +
+                '</div>' +
+                '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">' +
+                  'LRN: ' + APP.formatLRN(student.lrn) + ' · ' +
+                  (student.section || '—') + ' · ' +
+                  (APP.getSexValue ? (APP.getSexValue(student.sex) || '—') : (student.sex || '—')) +
+                '</div>' +
+              '</div>' +
+              '<span class="badge-pill ' +
+                (classification.key === 'enrichment'  ? 'success' :
+                 classification.key === 'on-track'    ? 'info' :
+                 classification.key === 'remediation' ? 'warning' : 'danger') +
+              '">' + classification.label + '</span>' +
+            '</div>' +
+          '</div>' +
+
+          // Four summary cards
+          '<div class="gs-student-summary">' +
+            '<div class="gs-summary-card ' + (wwAvg !== null && wwAvg >= 75 ? 'green' : wwAvg !== null ? 'amber' : '') + '">' +
+              '<div class="lbl">Written Works (25%)</div>' +
+              '<div class="val">' + (wwAvg !== null ? wwAvg.toFixed(1) + '%' : '—') + '</div>' +
+              '<div class="sub">' + quizPcts.length + '/3 quizzes taken</div>' +
+            '</div>' +
+            '<div class="gs-summary-card ' + (ptAvg !== null && ptAvg >= 75 ? 'green' : ptAvg !== null ? 'amber' : '') + '">' +
+              '<div class="lbl">Performance Tasks (50%)</div>' +
+              '<div class="val">' + (ptAvg !== null ? ptAvg.toFixed(1) + '%' : '—') + '</div>' +
+              '<div class="sub">' + ptPcts.length + '/3 PTs completed</div>' +
+            '</div>' +
+            '<div class="gs-summary-card ' + (exAvg !== null && exAvg >= 75 ? 'green' : exAvg !== null ? 'amber' : '') + '">' +
+              '<div class="lbl">Term Exam (25%)</div>' +
+              '<div class="val">' + (exAvg !== null ? exAvg.toFixed(1) + '%' : '—') + '</div>' +
+              '<div class="sub">30% ST1 + 30% ST2 + 40% TE</div>' +
+            '</div>' +
+            '<div class="gs-summary-card ' + (final.insufficient ? '' : (final.passing ? 'green' : 'red')) + '">' +
+              '<div class="lbl">Final Grade (' + termLabel + ')</div>' +
+              '<div class="val" style="color:' + finalColor + ';">' + finalDisplay + '</div>' +
+              '<div class="sub">' + finalSubText + '</div>' +
+            '</div>' +
+          '</div>' +
+
+          // Written Works group — 25%
+          '<div class="gs-group ww">' +
+            '<div class="gs-group-header">' +
+              '<div class="gs-group-title">📝 Written Works — 25%</div>' +
+              '<span class="gs-weight-badge">' + (wwAvg !== null ? wwAvg.toFixed(1) + '%' : 'No data') + '</span>' +
+            '</div>' +
+            '<div class="gs-row header"><div>Assessment</div><div style="text-align:right;">Score</div><div style="text-align:right;">Total</div><div style="text-align:right;">%</div><div style="text-align:right;">Weighted</div></div>' +
+            renderRow('Quiz 1', q1, WEIGHTS.ww / 3) +
+            renderRow('Quiz 2', q2, WEIGHTS.ww / 3) +
+            renderRow('Quiz 3', q3, WEIGHTS.ww / 3) +
+          '</div>' +
+
+          // Performance Tasks group — 50%
+          '<div class="gs-group pt">' +
+            '<div class="gs-group-header">' +
+              '<div class="gs-group-title">🎯 Performance Tasks — 50%</div>' +
+              '<span class="gs-weight-badge">' + (ptAvg !== null ? ptAvg.toFixed(1) + '%' : 'No data') + '</span>' +
+            '</div>' +
+            '<div class="gs-row header"><div>Assessment</div><div style="text-align:right;">Score</div><div style="text-align:right;">Total</div><div style="text-align:right;">%</div><div style="text-align:right;">Weighted</div></div>' +
+            renderRow('PT1 — Physics in My Daily Life', pt1, WEIGHTS.pt / 3, 'pt') +
+            renderRow('PT2 — Model Filipino House', pt2, WEIGHTS.pt / 3, 'pt') +
+            renderRow('PT3 — Chemistry in My Home', pt3, WEIGHTS.pt / 3, 'pt') +
+          '</div>' +
+
+          // Term Exam group — 25%
+          '<div class="gs-group ex">' +
+            '<div class="gs-group-header">' +
+              '<div class="gs-group-title">📚 Term Exam — 25%</div>' +
+              '<span class="gs-weight-badge">' + (exAvg !== null ? exAvg.toFixed(1) + '%' : 'No data') + '</span>' +
+            '</div>' +
+            '<div class="gs-row header"><div>Assessment</div><div style="text-align:right;">Score</div><div style="text-align:right;">Total</div><div style="text-align:right;">%</div><div style="text-align:right;">Weighted</div></div>' +
+            renderRow('Summative Test 1 (30% of EX)', st1, EX_INTERNAL.st1) +
+            renderRow('Summative Test 2 (30% of EX)', st2, EX_INTERNAL.st2) +
+            renderRow('Term Exam (40% of EX)', te, EX_INTERNAL.te) +
+          '</div>' +
+
+          // Final computation
+          '<div class="gs-group" style="border-top-color:#1b5e20;background:linear-gradient(135deg,#f0fdf4,#e8f5e9);">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">' +
+              '<div>' +
+                '<div style="font-size:0.75rem;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:0.5px;">Final Computation</div>' +
+                '<div style="font-size:0.88rem;color:#37474f;margin-top:6px;line-height:1.6;">' +
+                  (final.insufficient
+                    ? '⚠️ Final grade not yet available — waiting for ST1, ST2, and TE.'
+                    : '(WW ' + wwAvg.toFixed(1) + ' × ' + WEIGHTS.ww + ') + ' +
+                      '(PT ' + ptAvg.toFixed(1) + ' × ' + WEIGHTS.pt + ') + ' +
+                      '(EX ' + exAvg.toFixed(1) + ' × ' + WEIGHTS.ex + ') = ' +
+                      '<strong>' + final.raw.toFixed(2) + '</strong>'
+                  ) +
+                '</div>' +
+                (final.insufficient ? '' :
+                  '<div style="font-size:0.82rem;color:#5f6368;margin-top:4px;">' +
+                    'Transmuted grade: <strong style="color:' + finalColor + ';font-size:1rem;">' + final.transmuted + '</strong>' +
+                    ' · ' + finalLabel +
+                  '</div>'
+                ) +
+              '</div>' +
+              '<div style="text-align:center;padding:12px 24px;background:#fff;border-radius:12px;border:2px solid ' +
+                (final.insufficient ? '#bdbdbd' : (final.passing ? '#2e7d32' : '#c62828')) + ';">' +
+                '<div style="font-size:2.5rem;font-weight:900;color:' + finalColor + ';line-height:1;">' +
+                  finalDisplay +
+                '</div>' +
+                '<div style="font-size:0.7rem;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;">Final Grade</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      function renderRow(label, record, weight, type) {
+        if (!record) {
+          return '<div class="gs-row">' +
+            '<div class="label">' + label + '</div>' +
+            '<div class="val missing">—</div>' +
+            '<div class="val missing">—</div>' +
+            '<div class="val missing">—</div>' +
+            '<div class="val missing">—</div></div>';
+        }
+
+        var score = record.score !== undefined
+          ? record.score
+          : (type === 'pt' && record.submittedAt ? '✓' : '—');
+        var total = record.total !== undefined
+          ? record.total
+          : (type === 'pt' ? 100 : '—');
+        var pct = record.percent !== undefined
+          ? record.percent
+          : (record.score !== undefined && record.total
+              ? (record.score / record.total) * 100
+              : null);
+        var weighted = pct !== null ? (pct * weight) : null;
+
+        return '<div class="gs-row">' +
+          '<div class="label">' + label + '</div>' +
+          '<div class="val">' + score + '</div>' +
+          '<div class="val">' + total + '</div>' +
+          '<div class="val pct ' + pctClass(pct) + '">' +
+            (pct !== null ? pct.toFixed(1) + '%' : '—') +
+          '</div>' +
+          '<div class="val">' +
+            (weighted !== null ? weighted.toFixed(2) : '—') +
+          '</div>' +
+        '</div>';
+      }
+
+      function exportSheet() {
+        var lrn = document.getElementById('filter-student').value;
+        if (!lrn) { APP.toast('Select a student first', 'warning'); return; }
+
+        var term    = document.getElementById('filter-term').value;
+        var student = Store.getUser(lrn);
+        var scores  = Store.getScores(lrn);
+        var t       = scores[term] || {};
+
+        var rows = [
+          ['Student', APP.formatFullName(student.lastName, student.firstName, student.middleName)],
+          ['LRN', student.lrn],
+          ['Section', student.section || ''],
+          ['Term', term],
+          [],
+          ['Assessment', 'Score', 'Total', '%']
+        ];
+
+        function addRow(label, rec, total) {
+          if (!rec) { rows.push([label, '', '', '']); return; }
+          var pct = rec.percent !== undefined
+            ? rec.percent
+            : (rec.score !== undefined && rec.total
+                ? (rec.score / rec.total) * 100
+                : null);
+          rows.push([
+            label,
+            rec.score !== undefined ? rec.score : (rec.submittedAt ? 'Submitted' : ''),
+            rec.total !== undefined ? rec.total : (total || ''),
+            pct !== null ? pct.toFixed(1) : ''
+          ]);
+        }
+
+        addRow('Quiz 1', t.quizzes && t.quizzes.quiz1, 20);
+        addRow('Quiz 2', t.quizzes && t.quizzes.quiz2, 20);
+        addRow('Quiz 3', t.quizzes && t.quizzes.quiz3, 20);
+        addRow('PT1',     t.pt && t.pt.pt1, 100);
+        addRow('PT2',     t.pt && t.pt.pt2, 100);
+        addRow('PT3',     t.pt && t.pt.pt3, 100);
+        addRow('ST1',     t.st && t.st.st1, 30);
+        addRow('ST2',     t.st && t.st.st2, 30);
+        addRow('Term Exam', t.te, 60);
+
+        var csv = rows.map(function(row) {
+          return row.map(function(c) {
+            return '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"';
+          }).join(',');
+        }).join('\n');
+
+        var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'PHYSCI_GradingSheet_' + student.lastName + '_' + term + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        APP.toast('Grading sheet exported', 'success');
+      }
+    })();
   </script>
 </body>
 </html>
