@@ -37,12 +37,18 @@
         </select>
       </div>
       <div class="filter-group">
-        <label>LRN</label>
-        <input type="text" id="filter-lrn" placeholder="Filter by LRN…" />
+        <label>Student</label>
+        <select id="filter-student">
+          <option value="">— All Students —</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Search</label>
+        <input type="text" id="filter-lrn" placeholder="Name or LRN…" />
       </div>
       <div class="filter-actions">
-        <button id="btn-refresh" class="btn btn-primary">🔄 Refresh</button>
-        <button id="btn-clear" class="btn btn-danger">🗑 Clear Log</button>
+        <button id="btn-refresh" class="btn btn-primary">🔄 Sync Now</button>
+        <button id="btn-clear" class="btn btn-danger">🗑 Clear Local</button>
       </div>
     </div>
 
@@ -58,7 +64,7 @@
 
   </main>
 
-  <footer class="app-footer"><p>Activity Tracker · v1.0.0</p></footer>
+  <footer class="app-footer"><p>Activity Tracker · v1.1.0</p></footer>
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
@@ -69,21 +75,145 @@
     document.addEventListener('DOMContentLoaded', () => {
       App.requireTeacher();
 
+      let remoteEvents = [];   // fetched from Apps Script
+      let syncStatus = 'idle'; // 'idle' | 'syncing' | 'ok' | 'error'
+      let lastSyncMsg = '';
+
+      /* ---------- Profile helpers ---------- */
+
+      let profileCache = null;
+
+      function loadProfiles() {
+        if (profileCache) return profileCache;
+        const map = new Map();
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith('physci_profile_')) {
+            try {
+              const p = JSON.parse(localStorage.getItem(key));
+              if (p && p.lrn) map.set(String(p.lrn), p);
+            } catch (e) { /* ignore */ }
+          }
+        }
+        profileCache = map;
+        return map;
+      }
+
+      function invalidateProfileCache() { profileCache = null; }
+
+      // Resolve the display name for an event.
+      // Priority: name on the event itself > local profile lookup.
+      function resolveName(lrn, event) {
+        if (event && (event.firstName || event.lastName || event.LastName || event.FirstName)) {
+          const last = String(event.lastName || event.LastName || '').trim();
+          const first = String(event.firstName || event.FirstName || '').trim();
+          if (last && first) return `${last}, ${first}`;
+          if (last || first) return last || first;
+        }
+        if (!lrn) return '';
+        const p = loadProfiles().get(String(lrn));
+        if (!p) return '';
+        const last = (p.lastName || '').trim();
+        const first = (p.firstName || '').trim();
+        if (last && first) return `${last}, ${first}`;
+        return last || first || '';
+      }
+
+      function searchableText(lrn, event) {
+        return `${resolveName(lrn, event)} ${lrn || ''}`.toLowerCase();
+      }
+
+      /* ---------- Merge local + remote events ---------- */
+
+      function getAllEvents() {
+        const local = ActivityTracker.getEvents();
+
+        // Dedupe by (timestamp + lrn + action). Remote wins on conflict.
+        const seen = new Map();
+        [...local, ...remoteEvents].forEach(ev => {
+          const key = `${ev.timestamp}|${ev.lrn}|${ev.action}|${ev.week || ''}|${ev.day || ''}|${ev.assessmentId || ''}`;
+          // If remote has it, prefer remote (it may carry the name)
+          if (!seen.has(key)) {
+            seen.set(key, ev);
+          } else {
+            const existing = seen.get(key);
+            const merged = Object.assign({}, existing, ev);
+            // Prefer whichever has a non-empty firstName
+            if (!merged.firstName && existing.firstName) merged.firstName = existing.firstName;
+            if (!merged.lastName && existing.lastName) merged.lastName = existing.lastName;
+            seen.set(key, merged);
+          }
+        });
+
+        return [...seen.values()].sort((a, b) =>
+          String(a.timestamp).localeCompare(String(b.timestamp))
+        );
+      }
+
+      /* ---------- Populate the Student dropdown ---------- */
+
+      function populateStudentDropdown(events) {
+        const sel = document.getElementById('filter-student');
+        const current = sel.value;
+
+        const lrnsInEvents = new Set(events.map(e => String(e.lrn || '')).filter(Boolean));
+        const allLrns = new Set([...lrnsInEvents, ...loadProfiles().keys()]);
+
+        const items = [...allLrns].map(lrn => {
+          const nameFromEvent = events.find(e => String(e.lrn) === lrn && (e.firstName || e.lastName));
+          const name = resolveName(lrn, nameFromEvent);
+          return { lrn, name };
+        });
+
+        items.sort((a, b) => {
+          const an = a.name || '~';
+          const bn = b.name || '~';
+          if (an !== bn) return an.localeCompare(bn);
+          return a.lrn.localeCompare(b.lrn);
+        });
+
+        sel.innerHTML = '<option value="">— All Students —</option>' +
+          items.map(it => {
+            const label = it.name ? `${it.name} · ${it.lrn}` : `(unnamed) · ${it.lrn}`;
+            return `<option value="${it.lrn}">${UI.escapeHtml(label)}</option>`;
+          }).join('');
+
+        if (current && [...sel.options].some(o => o.value === current)) {
+          sel.value = current;
+        }
+      }
+
+      /* ---------- Render ---------- */
+
       function render() {
-        const actionFilter = document.getElementById('filter-action').value;
-        const lrnFilter = document.getElementById('filter-lrn').value.trim();
+        invalidateProfileCache();
 
-        let events = ActivityTracker.getEvents();
-        if (actionFilter) events = events.filter(e => e.action === actionFilter);
-        if (lrnFilter) events = events.filter(e => String(e.lrn || '').includes(lrnFilter));
+        const actionFilter  = document.getElementById('filter-action').value;
+        const studentFilter = document.getElementById('filter-student').value;
+        const searchFilter  = document.getElementById('filter-lrn').value.trim().toLowerCase();
 
-        events = events.slice().reverse(); // newest first
+        const allEvents = getAllEvents();
 
-        // Stats
-        const total = ActivityTracker.getEvents().length;
-        const logins = ActivityTracker.countByAction('student_login');
-        const submissions = ActivityTracker.countByAction('assessment_submit');
-        const uniqueLrns = new Set(ActivityTracker.getEvents().map(e => e.lrn).filter(Boolean)).size;
+        populateStudentDropdown(allEvents);
+
+        let events = allEvents.slice();
+        if (actionFilter)  events = events.filter(e => e.action === actionFilter);
+        if (studentFilter) events = events.filter(e => String(e.lrn || '') === studentFilter);
+        if (searchFilter)  events = events.filter(e => searchableText(e.lrn, e).includes(searchFilter));
+
+        // Newest first
+        events = events.slice().reverse();
+
+        // Stats computed on ALL events, not the filtered set
+        const total = allEvents.length;
+        const logins = allEvents.filter(e => e.action === 'student_login').length;
+        const submissions = allEvents.filter(e => e.action === 'assessment_submit').length;
+        const uniqueLrns = new Set(allEvents.map(e => e.lrn).filter(Boolean)).size;
+        const namedStudents = new Set(
+          allEvents
+            .map(e => String(e.lrn || ''))
+            .filter(lrn => lrn && resolveName(lrn, allEvents.find(x => String(x.lrn) === lrn)))
+        ).size;
 
         document.getElementById('stats').innerHTML = `
           <div class="cr-stat-card blue">
@@ -108,11 +238,16 @@
           </div>
         `;
 
-        document.getElementById('event-count').textContent = `${events.length} events`;
+        let countLine = `${events.length} event${events.length === 1 ? '' : 's'}`;
+        if (namedStudents) countLine += ` · ${namedStudents} named`;
+        if (syncStatus === 'syncing') countLine += ' · ⟳ syncing…';
+        if (syncStatus === 'ok')      countLine += ` · ✓ synced (${remoteEvents.length} remote)`;
+        if (syncStatus === 'error')   countLine += ` · ⚠ sync failed`;
+        document.getElementById('event-count').textContent = countLine;
 
         if (!events.length) {
           document.getElementById('events-table').innerHTML =
-            `<div class="empty-state">No activity yet.</div>`;
+            `<div class="empty-state">No activity matches your filters.</div>`;
           return;
         }
 
@@ -122,20 +257,26 @@
               <thead>
                 <tr>
                   <th>Time</th>
-                  <th>Action</th>
+                  <th>Student</th>
                   <th>LRN</th>
+                  <th>Action</th>
                   <th>Details</th>
                 </tr>
               </thead>
               <tbody>
-                ${events.slice(0, 100).map(e => `
-                  <tr>
-                    <td>${UI.formatDate(e.timestamp)}</td>
-                    <td>${UI.badge(e.action || '—', 'badge-info')}</td>
-                    <td>${UI.escapeHtml(e.lrn || '—')}</td>
-                    <td>${UI.escapeHtml(details(e))}</td>
-                  </tr>
-                `).join('')}
+                ${events.slice(0, 200).map(e => {
+                  const name = resolveName(e.lrn, e);
+                  const nameCell = name ? UI.escapeHtml(name) : '<span class="text-muted">—</span>';
+                  return `
+                    <tr>
+                      <td>${UI.formatDate(e.timestamp)}</td>
+                      <td><strong>${nameCell}</strong></td>
+                      <td><code style="font-size:0.8rem;">${UI.escapeHtml(e.lrn || '—')}</code></td>
+                      <td>${UI.badge(e.action || '—', 'badge-info')}</td>
+                      <td>${UI.escapeHtml(details(e))}</td>
+                    </tr>
+                  `;
+                }).join('')}
               </tbody>
             </table>
           </div>
@@ -143,24 +284,56 @@
       }
 
       function details(e) {
-        if (e.action === 'day_complete') return `Week ${e.week} Day ${e.day} (${e.code || ''})`;
-        if (e.action === 'lesson_view') return `Week ${e.week} Day ${e.day}`;
-        if (e.action === 'assessment_start') return e.assessmentId;
+        if (e.action === 'day_complete')      return `Week ${e.week} Day ${e.day} (${e.code || ''})`;
+        if (e.action === 'lesson_view')       return `Week ${e.week} Day ${e.day}`;
+        if (e.action === 'assessment_start')  return e.assessmentId;
         if (e.action === 'assessment_submit') return `${e.assessmentId} · ${e.score}/${e.total} (${e.percent}%)`;
+        if (e.action === 'student_login')     return 'Signed in';
         return '';
       }
 
+      /* ---------- Sync with Apps Script ---------- */
+
+      async function syncFromBackend() {
+        syncStatus = 'syncing';
+        render();
+
+        const token = (window.Store && typeof Store.getTeacherToken === 'function')
+          ? Store.getTeacherToken()
+          : (localStorage.getItem('physci_teacher_token') || sessionStorage.getItem('physci_teacher_token') || '');
+
+        try {
+          const events = await ActivityTracker.fetchRemoteEvents(token);
+          remoteEvents = events;
+          syncStatus = 'ok';
+        } catch (e) {
+          console.warn('Sync failed:', e);
+          syncStatus = 'error';
+        }
+        render();
+      }
+
+      /* ---------- Wire up ---------- */
+
       document.getElementById('filter-action').addEventListener('change', render);
+      document.getElementById('filter-student').addEventListener('change', render);
       document.getElementById('filter-lrn').addEventListener('input', render);
-      document.getElementById('btn-refresh').addEventListener('click', render);
+
+      document.getElementById('btn-refresh').addEventListener('click', () => {
+        syncFromBackend();
+      });
+
       document.getElementById('btn-clear').addEventListener('click', () => {
-        if (confirm('Clear all activity logs? This cannot be undone.')) {
+        if (confirm('Clear LOCAL activity logs on this device? Remote logs are not affected.')) {
           ActivityTracker.clear();
+          invalidateProfileCache();
           render();
         }
       });
 
+      // Initial render, then kick off a background sync
       render();
+      syncFromBackend();
     });
   </script>
 </body>
