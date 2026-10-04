@@ -1,0 +1,169 @@
+/* ============================================================
+   teacher-header.css — Shared teacher-side header styling
+   Physical Science · v1.0.0
+   ============================================================ */
+
+/* ---------- Enhanced Header Container ---------- */
+.gs-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #4a148c 50%, #6a1b9a 100%) !important;
+  box-shadow: 0 4px 20px rgba(74, 20, 140, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.gs-header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.gs-header::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: 15%;
+  width: 160px; height: 160px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.gs-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+
+/* ---------- Brand block ---------- */
+.gs-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gs-header-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  color: #ffffff;
+  flex-shrink: 0;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.gs-header-text h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gs-header-meta {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-top: 4px;
+}
+
+/* ---------- Nav buttons ---------- */
+.gs-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gs-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1.5px solid rgba(255, 255, 255, 0.20);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.gs-nav-btn svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.gs-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.gs-nav-btn:hover svg {
+  transform: translateX(-2px);
+}
+
+.gs-nav-btn:active {
+  transform: translateY(0);
+}
+
+/* Danger variant (Logout) */
+.gs-nav-btn-danger {
+  background: rgba(255, 255, 255, 0.95);
+  color: #4a148c;
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.gs-nav-btn-danger:hover {
+  background: #ffffff;
+  color: #b71c1c;
+  border-color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .gs-header-inner {
+    padding: 14px 0;
+  }
+  .gs-header-text h1 {
+    font-size: 1.1rem;
+  }
+  .gs-header-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .gs-nav-btn {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+  .gs-nav-btn span {
+    display: none;
+  }
+  .gs-nav-btn-danger span {
+    display: inline;
+  }
+}
