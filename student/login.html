@@ -9,7 +9,7 @@
 </head>
 <body class="login-page">
 
-  <!-- TOP BAR: Student Login label + Back button -->
+  <!-- TOP BAR -->
   <header class="login-topbar">
     <div class="login-topbar-inner">
       <div class="login-brand">
@@ -23,11 +23,9 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="login-main">
     <div class="login-wrapper">
-
-      <!-- CARD -->
       <div class="login-card">
 
         <!-- HERO -->
@@ -42,9 +40,9 @@
 
           <!-- TABS -->
           <div class="login-tabs" role="tablist">
-            <a href="login.html" class="login-tab active" role="tab" aria-selected="true">
+            <button type="button" id="tab-login" class="login-tab active" role="tab" aria-selected="true">
               🔑 Log In
-            </a>
+            </button>
             <a href="register.html" class="login-tab" role="tab">
               📝 New Student
             </a>
@@ -54,7 +52,7 @@
           </div>
 
           <!-- SAVED USERS PANEL (hidden by default) -->
-          <div id="saved-panel" class="saved-panel hidden">
+          <div id="saved-panel" class="saved-panel" hidden>
             <div id="saved-list"></div>
           </div>
 
@@ -109,18 +107,16 @@
             </a>
             <span class="divider">·</span>
             <a href="../teacher-login.html" class="login-secondary-link">
-              👩🏫 Teacher Login
+              👩‍🏫 Teacher Login
             </a>
           </div>
 
         </div>
-
       </div>
-
     </div>
   </main>
 
-  <!-- FOOTER: Developer credit -->
+  <!-- FOOTER CREDIT -->
   <footer class="login-footer-credit">
     <div class="credit-line title">Physical Science · v1.0.0</div>
     <div class="credit-line name">Jemuel C. Mari, MAN, RN, LPT</div>
@@ -148,8 +144,9 @@
       const savedPanel = document.getElementById('saved-panel');
       const savedList = document.getElementById('saved-list');
       const tabSaved = document.getElementById('tab-saved');
+      const tabLogin = document.getElementById('tab-login');
 
-      // Auto-format LRN with dashes: 1234-5678-9012
+      // Auto-format LRN with dashes
       lrnInput.addEventListener('input', (e) => {
         const v = e.target.value.replace(/\D/g, '').slice(0, 12);
         const parts = [];
@@ -159,13 +156,23 @@
 
       // Toggle "Saved Users" panel
       tabSaved.addEventListener('click', () => {
-        const isHidden = savedPanel.classList.contains('hidden');
-        if (isHidden) {
-          renderSavedUsers();
-          savedPanel.classList.remove('hidden');
+        const isOpen = !savedPanel.hidden;
+        if (isOpen) {
+          savedPanel.hidden = true;
+          tabSaved.classList.remove('active');
+          tabLogin.classList.add('active');
         } else {
-          savedPanel.classList.add('hidden');
+          renderSavedUsers();
+          savedPanel.hidden = false;
+          tabSaved.classList.add('active');
+          tabLogin.classList.remove('active');
         }
+      });
+
+      tabLogin.addEventListener('click', () => {
+        savedPanel.hidden = true;
+        tabLogin.classList.add('active');
+        tabSaved.classList.remove('active');
       });
 
       function renderSavedUsers() {
@@ -181,7 +188,7 @@
         }
 
         if (!profiles.length) {
-          savedList.innerHTML = `<div class="empty-state">No saved profiles on this device yet.</div>`;
+          savedList.innerHTML = `<div class="saved-empty">No saved profiles on this device yet.</div>`;
           return;
         }
 
@@ -191,18 +198,9 @@
               <button type="button" class="saved-user-item" data-lrn="${p.lrn}">
                 <div class="saved-avatar">${(p.firstName || '?').charAt(0)}${(p.lastName || '').charAt(0)}</div>
                 <div class="saved-info">
-                  <div class="saved-name">${p.lastName}, ${p.firstName}</div>
-                  <div class="saved-meta">
-                    <span class="saved-lrn">LRN ${p.lrn}</span>
-                    <span class="saved-dot">•</span>
-                    <span class="saved-grade">Grade ${p.gradeLevel || '?'}</span>
-                    ${p.section ? `<span class="saved-section">${p.section}</span>` : ''}
-                  </div>
+                  <div class="saved-name">${escapeHtml(p.lastName)}, ${escapeHtml(p.firstName)}</div>
+                  <div class="saved-meta">LRN ${escapeHtml(p.lrn)}</div>
                 </div>
-                <svg class="saved-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
               </button>
             `).join('')}
           </div>
@@ -212,7 +210,9 @@
           btn.addEventListener('click', () => {
             lrnInput.value = formatLrn(btn.dataset.lrn);
             pinInput.focus();
-            savedPanel.classList.add('hidden');
+            savedPanel.hidden = true;
+            tabSaved.classList.remove('active');
+            tabLogin.classList.add('active');
           });
         });
       }
@@ -224,6 +224,12 @@
         return parts.join('-');
       }
 
+      function escapeHtml(str) {
+        return String(str == null ? '' : str).replace(/[&<>"']/g, c =>
+          ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      }
+
+      // Submit
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         errEl.classList.add('hidden');
@@ -237,7 +243,6 @@
 
         const raw = localStorage.getItem('physci_profile_' + lrn);
         if (!raw) {
-          // Not registered → go to register
           sessionStorage.setItem('pending_lrn', lrn);
           window.location.href = 'register.html?lrn=' + lrn;
           return;
@@ -272,10 +277,8 @@
       function showError(msg) {
         errEl.textContent = msg;
         errEl.classList.remove('hidden');
-        errEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     });
   </script>
-
 </body>
 </html>
