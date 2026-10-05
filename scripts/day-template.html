@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physical Science · Lesson</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
+  <link rel="stylesheet" href="../../../assets/css/quiz.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1 id="header-title">📘 Physical Science</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" id="back-link" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Week</a>
+        <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;" data-action="logout-student">⏻ Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:820px;">
+    <div id="lesson-header"></div>
+    <div id="lesson-body"></div>
+    <div id="lesson-nav" style="margin-top:24px;"></div>
+  </main>
+
+  <footer class="app-footer">
+    <p>Physical Science · v1.0.0</p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPT LOAD ORDER — DO NOT REARRANGE
+       ============================================================ -->
+  <script src="../../../config.js"></script>
+  <script src="../../../assets/js/store.js"></script>
+  <script src="../../../assets/js/security.js"></script>
+  <script src="../../../assets/js/transmutation.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/ui-helpers.js"></script>
+  <script src="../../../assets/js/sync.js"></script>
+  <script src="../../../assets/js/activity-tracker.js"></script>
+  <script src="../../../assets/js/activity-gate.js"></script>
+  <script src="../../../assets/js/lesson-engine.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const student = App.requireStudent();
+      if (!student) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const day = parseInt(params.get('d') || '1', 10);
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      const weekFolder = pathParts.find(p => /^week\d+$/.test(p)) || 'week1';
+
+      const res = await fetch(`${weekFolder}.json`);
+      const data = await res.json();
+      const lesson = data.days.find(d => d.day === day);
+
+      if (!lesson) {
+        document.getElementById('lesson-body').innerHTML =
+          `<div class="alert alert-danger">Lesson not found for Day ${day}.</div>`;
+        return;
+      }
+
+      document.getElementById('header-title').textContent =
+        `📘 Week ${data.week} · Day ${day}`;
+
+      LessonEngine.init({
+        subject: 'physci',
+        week: data.week,
+        era: data.era,
+        period: data.period,
+        title: data.title,
+        contentStandard: data.contentStandard,
+        performanceStandard: data.performanceStandard,
+        day: lesson,
+        weekFolder: weekFolder
+      });
+    });
+  </script>
+</body>
+</html>
