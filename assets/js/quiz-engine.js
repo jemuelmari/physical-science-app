@@ -1,38 +1,26 @@
 /* ============================================================
-   quiz-engine.js — Physical Science · Quiz Engine
-   Version: 1.0.0
-   Purpose: Renders and manages all assessment types
-            (quiz1-3, st1-2, te, pt1) for Physical Science.
-   Depends on: store.js, security.js, transmutation.js
+   quiz-engine.js — Physical Science · Quiz Engine (v3.0.0)
+   Auto-syncs assessment submissions to the backend.
    ============================================================ */
 
 window.QuizEngine = (function () {
   'use strict';
 
-  // ------------------------------------------------------------
-  // Internal state
-  // ------------------------------------------------------------
   let cfg = {};
-  let answers = {};          // { itemId: optionIndex }
+  let answers = {};
   let currentIndex = 0;
   let timeRemaining = 0;
   let timerHandle = null;
   let startTime = null;
   let submitted = false;
 
-  // ------------------------------------------------------------
-  // Helpers
-  // ------------------------------------------------------------
   function $(id) { return document.getElementById(id); }
 
   function escapeHtml(str) {
     if (str == null) return '';
     return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
   function formatTime(seconds) {
@@ -43,19 +31,12 @@ window.QuizEngine = (function () {
 
   function getStudent() {
     try {
-      if (window.Store && typeof Store.getStudent === 'function') {
-        return Store.getStudent();
-      }
+      if (window.Store && typeof Store.getStudent === 'function') return Store.getStudent();
       const raw = localStorage.getItem('physci_student');
       return raw ? JSON.parse(raw) : null;
-    } catch (e) {
-      return null;
-    }
+    } catch (e) { return null; }
   }
 
-  // ------------------------------------------------------------
-  // Render: Start screen
-  // ------------------------------------------------------------
   function renderStartScreen() {
     const student = getStudent();
     const header = $('quiz-header');
@@ -120,10 +101,12 @@ window.QuizEngine = (function () {
     $('btn-start').addEventListener('click', startAssessment);
   }
 
-  // ------------------------------------------------------------
-  // Start assessment
-  // ------------------------------------------------------------
   function startAssessment() {
+    // ---- AUTO-SYNC: log assessment start ----
+    if (window.ActivityTracker) {
+      ActivityTracker.logAssessmentStart(cfg.assessmentId);
+    }
+
     startTime = Date.now();
     timeRemaining = cfg.timeLimit * 60;
     currentIndex = 0;
@@ -135,9 +118,6 @@ window.QuizEngine = (function () {
     startTimer();
   }
 
-  // ------------------------------------------------------------
-  // Quiz header (timer + meta)
-  // ------------------------------------------------------------
   function renderQuizHeader() {
     const header = $('quiz-header');
     if (!header) return;
@@ -163,9 +143,6 @@ window.QuizEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Progress bar
-  // ------------------------------------------------------------
   function renderProgress() {
     let el = $('quiz-progress');
     if (!el) {
@@ -191,9 +168,6 @@ window.QuizEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Render single question
-  // ------------------------------------------------------------
   function renderQuestion(index) {
     const body = $('quiz-body');
     if (!body) return;
@@ -227,7 +201,6 @@ window.QuizEngine = (function () {
       </div>
     `;
 
-    // Attach listeners
     body.querySelectorAll('.quiz-option').forEach(el => {
       el.addEventListener('click', () => {
         const idx = parseInt(el.dataset.index, 10);
@@ -235,31 +208,19 @@ window.QuizEngine = (function () {
       });
     });
 
-    // Show "Next" or "Submit" hint
     body.dataset.currentIndex = index;
     body.dataset.isLast = isLast ? '1' : '0';
   }
 
-  // ------------------------------------------------------------
-  // Select answer
-  // ------------------------------------------------------------
   function selectAnswer(itemId, optionIndex) {
     if (submitted) return;
     answers[itemId] = optionIndex;
-
-    // Update visual state
-    document.querySelectorAll('.quiz-option').forEach(el => {
-      el.classList.remove('selected');
-    });
+    document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
     const target = document.querySelector(`.quiz-option[data-index="${optionIndex}"]`);
     if (target) target.classList.add('selected');
-
     renderProgress();
   }
 
-  // ------------------------------------------------------------
-  // Quiz navigation (Prev / Next / Submit)
-  // ------------------------------------------------------------
   function renderQuizNav() {
     const nav = $('quiz-nav');
     if (!nav) return;
@@ -308,15 +269,11 @@ window.QuizEngine = (function () {
     }
   }
 
-  // ------------------------------------------------------------
-  // Timer
-  // ------------------------------------------------------------
   function startTimer() {
     stopTimer();
     timerHandle = setInterval(() => {
       timeRemaining--;
       updateTimerUI();
-
       if (timeRemaining <= 0) {
         stopTimer();
         autoSubmit();
@@ -325,39 +282,28 @@ window.QuizEngine = (function () {
   }
 
   function stopTimer() {
-    if (timerHandle) {
-      clearInterval(timerHandle);
-      timerHandle = null;
-    }
+    if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
   }
 
   function updateTimerUI() {
     const el = $('quiz-timer');
     if (!el) return;
     el.textContent = `⏱️ ${formatTime(Math.max(0, timeRemaining))}`;
-
     el.classList.remove('warning', 'danger');
     if (timeRemaining <= 60) el.classList.add('danger');
     else if (timeRemaining <= 180) el.classList.add('warning');
   }
 
-  // ------------------------------------------------------------
-  // Confirm / Submit
-  // ------------------------------------------------------------
   function confirmSubmit() {
     const answered = Object.keys(answers).length;
     const total = cfg.items.length;
     const unanswered = total - answered;
 
     let msg = `You answered ${answered} of ${total} items.`;
-    if (unanswered > 0) {
-      msg += `\n\n⚠️ You still have ${unanswered} unanswered item(s).`;
-    }
+    if (unanswered > 0) msg += `\n\n⚠️ You still have ${unanswered} unanswered item(s).`;
     msg += `\n\nSubmit your assessment now?`;
 
-    if (window.confirm(msg)) {
-      submitAssessment();
-    }
+    if (window.confirm(msg)) submitAssessment();
   }
 
   function autoSubmit() {
@@ -365,13 +311,9 @@ window.QuizEngine = (function () {
     submitAssessment();
   }
 
-  // ------------------------------------------------------------
-  // Score + Submit
-  // ------------------------------------------------------------
   function computeScore() {
     let correct = 0;
     const breakdown = [];
-
     cfg.items.forEach(item => {
       const studentAns = answers[item.id];
       const isCorrect = studentAns === item.answer;
@@ -385,7 +327,6 @@ window.QuizEngine = (function () {
         isCorrect
       });
     });
-
     const total = cfg.items.length;
     const raw = total === 0 ? 0 : Math.round((correct / total) * 100);
     return { correct, total, raw, breakdown };
@@ -400,13 +341,11 @@ window.QuizEngine = (function () {
     const { correct, total, raw, breakdown } = computeScore();
     const elapsed = Math.round((Date.now() - startTime) / 1000);
 
-    // Apply transmutation if available
     let finalGrade = raw;
     if (window.Transmutation && typeof Transmutation.apply === 'function') {
       try { finalGrade = Transmutation.apply(raw); } catch (e) { /* noop */ }
     }
 
-    // Build record
     const record = {
       subject: cfg.subject || 'physci',
       assessmentId: cfg.assessmentId,
@@ -439,25 +378,26 @@ window.QuizEngine = (function () {
         arr.push(record);
         localStorage.setItem(key, JSON.stringify(arr));
       }
-    } catch (e) {
-      console.error('Failed to save record:', e);
+    } catch (e) { console.error('Failed to save record:', e); }
+
+    // ---- AUTO-SYNC to backend ----
+    if (window.Sync && typeof Sync.push === 'function' && Sync.isEnabled()) {
+      Sync.push(record)
+        .then(result => {
+          if (result && result.ok) console.log('✅ Assessment synced');
+          else if (result && result.queued) console.log('⏳ Queued (offline)');
+        })
+        .catch(err => console.warn('Sync error:', err));
     }
 
-    // Optional sync to Google Apps Script
-    try {
-      if (window.Sync && typeof Sync.push === 'function') {
-        Sync.push(record);
-      }
-    } catch (e) {
-      console.warn('Sync push failed:', e);
+    // ---- Log activity ----
+    if (window.ActivityTracker) {
+      ActivityTracker.logAssessmentSubmit(cfg.assessmentId, correct, total);
     }
 
     renderResults(record);
   }
 
-  // ------------------------------------------------------------
-  // Render results
-  // ------------------------------------------------------------
   function renderResults(record) {
     const header = $('quiz-header');
     const body = $('quiz-body');
@@ -535,9 +475,6 @@ window.QuizEngine = (function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ------------------------------------------------------------
-  // Locked assessment (called externally)
-  // ------------------------------------------------------------
   function renderLocked(reason) {
     const body = $('quiz-body');
     const header = $('quiz-header');
@@ -556,23 +493,14 @@ window.QuizEngine = (function () {
     `;
   }
 
-  // ------------------------------------------------------------
-  // Activity gate check
-  // ------------------------------------------------------------
   function checkGate() {
     if (window.ActivityGate && typeof ActivityGate.isUnlocked === 'function') {
-      try {
-        return ActivityGate.isUnlocked(cfg.assessmentId);
-      } catch (e) {
-        return true;
-      }
+      try { return ActivityGate.isUnlocked(cfg.assessmentId); }
+      catch (e) { return true; }
     }
     return true;
   }
 
-  // ------------------------------------------------------------
-  // Public API
-  // ------------------------------------------------------------
   return {
     init(config) {
       cfg = Object.assign({
@@ -589,28 +517,14 @@ window.QuizEngine = (function () {
       currentIndex = 0;
       submitted = false;
 
-      // Gate check
       if (!checkGate()) {
         renderLocked('Please complete the required lesson before taking this assessment.');
         return;
       }
 
-      // Log activity
-      if (window.ActivityTracker && typeof ActivityTracker.log === 'function') {
-        try {
-          ActivityTracker.log({
-            subject: cfg.subject,
-            action: 'start_assessment',
-            assessmentId: cfg.assessmentId,
-            timestamp: new Date().toISOString()
-          });
-        } catch (e) { /* noop */ }
-      }
-
       renderStartScreen();
     },
 
-    // Exposed utilities
     getAnswers() { return Object.assign({}, answers); },
     getCurrentIndex() { return currentIndex; },
     getTimeRemaining() { return timeRemaining; },
