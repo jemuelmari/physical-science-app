@@ -2,7 +2,7 @@
  * ============================================================================
  * Google Apps Script Backend — Physical Science App
  * File: Code.gs
- * Version: 1.0.0
+ * Version: 1.0.1
  *
  * Purpose:
  *   Receives student assessment records from the Physical Science web app
@@ -33,14 +33,11 @@ const SHEET_NAME_RECORDS = 'Records';
 const SHEET_NAME_CODES   = 'Codes';
 const SHEET_NAME_LOG     = 'SyncLog';
 
-// Teacher token — same as in config.js (change this to a strong secret!)
-const TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
-
-// HMAC secret — used for signature verification of incoming payloads
-const HMAC_SECRET = 'PS-APP-2026-DEPED-SECRET-KEY-v1';
+// HMAC secret — must match gasToken in config.js
+const HMAC_SECRET = 'teacher2026';
 
 // ============================================================================
-// RECORD HEADERS (must match the order written by the client)
+// RECORD HEADERS
 // ============================================================================
 
 const RECORD_HEADERS = [
@@ -58,13 +55,6 @@ const CODE_HEADERS = [
 // WEB APP ENTRY POINTS
 // ============================================================================
 
-/**
- * GET handler — used for health checks and teacher dashboards.
- * Query params:
- *   action  — 'ping' | 'list' | 'codes' | 'verify'
- *   token   — teacher token (required for list, codes, verify)
- *   lrn     — filter by LRN (optional)
- */
 function doGet(e) {
   try {
     const params = e.parameter || {};
@@ -74,14 +64,9 @@ function doGet(e) {
       return jsonResponse({
         ok: true,
         service: 'Physical Science App Backend',
-        version: '1.0.0',
+        version: '1.0.1',
         timestamp: new Date().toISOString()
       });
-    }
-
-    // All other actions require teacher authentication
-    if (!isTeacher(params.token)) {
-      return jsonResponse({ ok: false, error: 'Unauthorized' }, 401);
     }
 
     if (action === 'list') {
@@ -92,25 +77,12 @@ function doGet(e) {
       return jsonResponse({ ok: true, codes: listCodes() });
     }
 
-    if (action === 'verify') {
-      return jsonResponse({ ok: true, valid: isTeacher(params.token) });
-    }
-
     return jsonResponse({ ok: false, error: 'Unknown action' }, 400);
   } catch (err) {
     return jsonResponse({ ok: false, error: String(err) }, 500);
   }
 }
 
-/**
- * POST handler — main entry for client sync.
- * Body (JSON):
- *   {
- *     action: 'saveRecord' | 'createCode' | 'markUsed',
- *     payload: { ... },
- *     signature: '...'   // optional, validated if present
- *   }
- */
 function doPost(e) {
   try {
     let body;
@@ -121,13 +93,6 @@ function doPost(e) {
     }
 
     const action = (body.action || '').toLowerCase();
-
-    // Signature verification (relaxed — accepts if signature missing or valid)
-    const signature = body.signature || '';
-    if (signature && !verifySignature(body.payload, signature)) {
-      // Log but do not reject (matches general-biology-app behavior)
-      logEvent('WARN', 'Invalid signature received', { action });
-    }
 
     if (action === 'saverecord' || action === 'save') {
       return jsonResponse(saveRecord(body.payload || body.record || {}));
@@ -156,10 +121,6 @@ function doPost(e) {
 // RECORD OPERATIONS
 // ============================================================================
 
-/**
- * Saves a student assessment record to the Records sheet.
- * If a record with the same (LRN, AssessmentId) exists, it is updated.
- */
 function saveRecord(payload) {
   if (!payload || typeof payload !== 'object') {
     return { ok: false, error: 'Missing payload' };
@@ -197,7 +158,6 @@ function saveRecord(payload) {
     LastUpdated: now
   };
 
-  // Look for existing row
   const data = sheet.getDataRange().getValues();
   const headers = data[0];
   const lrnCol = headers.indexOf('LRN');
@@ -206,7 +166,7 @@ function saveRecord(payload) {
   let existingRow = -1;
   for (let i = 1; i < data.length; i++) {
     if (String(data[i][lrnCol]) === lrn && String(data[i][aidCol]) === assessmentId) {
-      existingRow = i + 1; // 1-based row number
+      existingRow = i + 1;
       break;
     }
   }
@@ -224,9 +184,6 @@ function saveRecord(payload) {
   return { ok: true, saved: true, lrn, assessmentId };
 }
 
-/**
- * Returns all records (optionally filtered by LRN).
- */
 function listRecords(lrn) {
   const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
   const data = sheet.getDataRange().getValues();
@@ -245,12 +202,9 @@ function listRecords(lrn) {
 }
 
 // ============================================================================
-// CODE GENERATION (gated access)
+// CODE GENERATION
 // ============================================================================
 
-/**
- * Creates a one-time assessment code for a student.
- */
 function createCode(payload) {
   const sheet = getOrCreateSheet(SHEET_NAME_CODES, CODE_HEADERS);
   const lrn = String(payload.lrn || '').trim();
@@ -258,7 +212,7 @@ function createCode(payload) {
 
   const code = generateCode(8);
   const now = new Date();
-  const expiresAt = new Date(now.getTime() + 1000 * 60 * 60 * 24); // 24 hours
+  const expiresAt = new Date(now.getTime() + 1000 * 60 * 60 * 24);
 
   const row = [
     code,
@@ -275,9 +229,6 @@ function createCode(payload) {
   return { ok: true, code, lrn, expiresAt: expiresAt.toISOString() };
 }
 
-/**
- * Marks an assessment code as used.
- */
 function markCodeUsed(payload) {
   const code = String(payload.code || '').trim();
   if (!code) return { ok: false, error: 'Missing code' };
@@ -298,9 +249,6 @@ function markCodeUsed(payload) {
   return { ok: false, error: 'Code not found' };
 }
 
-/**
- * Lists all codes (for teacher dashboards).
- */
 function listCodes() {
   const sheet = getOrCreateSheet(SHEET_NAME_CODES, CODE_HEADERS);
   const data = sheet.getDataRange().getValues();
@@ -316,75 +264,9 @@ function listCodes() {
 }
 
 // ============================================================================
-// AUTH / SECURITY
-// ============================================================================
-
-/**
- * Validates the teacher token by comparing its SHA-256 hash.
- */
-function isTeacher(token) {
-  if (!token) return false;
-  const hash = sha256Hex(String(token));
-  return hash === TEACHER_TOKEN_HASH;
-}
-
-/**
- * Verifies the HMAC signature of a payload.
- */
-function verifySignature(payload, signature) {
-  if (!signature) return false;
-  const payloadStr = typeof payload === 'string' ? payload : JSON.stringify(payload);
-  const expected = hmacSha256Hex(payloadStr, HMAC_SECRET);
-  return expected === String(signature);
-}
-
-/**
- * SHA-256 hex digest.
- */
-function sha256Hex(str) {
-  const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, str, Utilities.Charset.UTF_8);
-  return bytesToHex(bytes);
-}
-
-/**
- * HMAC-SHA256 hex digest.
- */
-function hmacSha256Hex(message, secret) {
-  const sigBytes = Utilities.computeHmacSha256Signature(message, secret);
-  return bytesToHex(sigBytes);
-}
-
-/**
- * Converts a byte array to a lowercase hex string.
- */
-function bytesToHex(bytes) {
-  let out = '';
-  for (let i = 0; i < bytes.length; i++) {
-    const b = (bytes[i] < 0 ? bytes[i] + 256 : bytes[i]).toString(16);
-    out += (b.length === 1 ? '0' : '') + b;
-  }
-  return out;
-}
-
-/**
- * Generates a random alphanumeric code of given length.
- */
-function generateCode(length) {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < length; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
-}
-
-// ============================================================================
 // LOGGING
 // ============================================================================
 
-/**
- * Appends a log entry to the SyncLog sheet.
- */
 function logEvent(level, message, data) {
   try {
     const sheet = getOrCreateSheet(SHEET_NAME_LOG, ['Timestamp', 'Level', 'Message', 'Data']);
@@ -395,7 +277,7 @@ function logEvent(level, message, data) {
       JSON.stringify(data || {})
     ]);
   } catch (err) {
-    // Silent fail — never break the main request because logging failed
+    // Silent fail — never break the main request
   }
 }
 
@@ -403,9 +285,6 @@ function logEvent(level, message, data) {
 // SHEET HELPERS
 // ============================================================================
 
-/**
- * Gets a sheet by name, creating it (with headers) if it doesn't exist.
- */
 function getOrCreateSheet(name, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(name);
@@ -419,7 +298,6 @@ function getOrCreateSheet(name, headers) {
       .setBorder(true, true, true, true, true, true);
     sheet.setFrozenRows(1);
   } else {
-    // Ensure headers exist
     const firstRow = sheet.getRange(1, 1, 1, Math.max(headers.length, 1)).getValues()[0];
     if (!firstRow[0]) {
       sheet.appendRow(headers);
@@ -434,27 +312,26 @@ function getOrCreateSheet(name, headers) {
 // JSON RESPONSE HELPER
 // ============================================================================
 
-/**
- * Returns a JSON ContentService response with CORS-friendly headers.
- */
 function jsonResponse(obj, statusCode) {
   const output = ContentService.createTextOutput(JSON.stringify(obj));
   output.setMimeType(ContentService.MimeType.JSON);
-  // Note: Apps Script Web Apps automatically allow cross-origin reads
-  // when deployed as "Anyone". Custom status codes are not supported.
   return output;
 }
 
 // ============================================================================
-// UTILITY — manual test function (run from Apps Script editor)
+// UTILITY — test functions
 // ============================================================================
+
+function __test_ping() {
+  const res = doGet({ parameter: { action: 'ping' } });
+  Logger.log(res.getContent());
+}
 
 function __test_saveRecord() {
   const res = saveRecord({
     lrn: '123456789012',
     lastName: 'Dela Cruz',
     firstName: 'Juan',
-    middleName: 'Santos',
     gradeLevel: '11',
     section: 'STEM-A',
     subject: 'physci',
@@ -471,14 +348,4 @@ function __test_saveRecord() {
     breakdown: []
   });
   Logger.log(JSON.stringify(res));
-}
-
-function __test_createCode() {
-  const res = createCode({ lrn: '123456789012' });
-  Logger.log(JSON.stringify(res));
-}
-
-function __test_ping() {
-  const res = doGet({ parameter: { action: 'ping' } });
-  Logger.log(res.getContent());
 }
