@@ -958,4 +958,79 @@
   .login-form .form-row .form-group { min-width: 0; }
   .login-footer-credit { padding: 20px 16px 28px; }
   .login-footer-credit .credit-line.name { font-size: 0.9rem; }
+
+   /* ============================================================
+   LOGIN PAGE — BUG FIXES
+   ============================================================ */
+
+/* Fallback hidden class (in case main.css is missing it) */
+.login-page .hidden,
+.login-page [hidden] {
+  display: none !important;
+}
+
+/* Ensure no default markers on buttons */
+.login-tab::-webkit-details-marker,
+.login-tab::-webkit-details-marker,
+.saved-user-item::-webkit-details-marker {
+  display: none;
+}
+
+/* Fix any giant arrow artifacts */
+.saved-panel::before,
+.saved-panel::after,
+.login-body::before,
+.login-body::after,
+.saved-users-list::before,
+.saved-users-list::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Empty saved state */
+.saved-empty {
+  padding: 16px;
+  text-align: center;
+  color: #90a4ae;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Ensure saved-user-item is compact */
+.saved-user-item {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.saved-user-item .saved-avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.saved-user-item .saved-info {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.saved-user-item .saved-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-user-item .saved-meta {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Prevent any pseudo-element arrows */
+.saved-user-item::before,
+.saved-user-item::after {
+  content: none !important;
+  display: none !important;
 }
