@@ -26,19 +26,49 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1000px;">
 
+    <!-- WELCOME -->
     <div id="welcome-card" class="dashboard-welcome"></div>
+
+    <!-- SYNC CODE CARD -->
+    <div class="sync-code-card" id="sync-code-card">
+      <div class="sync-code-header">
+        <div class="sync-code-icon">🔄</div>
+        <div>
+          <div class="sync-code-title">Sync Code</div>
+          <div class="sync-code-sub">Share this code with your teacher</div>
+        </div>
+      </div>
+
+      <div class="sync-code-body">
+        <div id="sync-code-display" class="sync-code-display">
+          <div class="sync-code-empty">No code generated yet.</div>
+        </div>
+        <button id="btn-generate-sync" class="btn btn-primary btn-full">
+          ✨ Generate Sync Code
+        </button>
+        <div class="sync-code-hint">
+          Your progress is <strong>automatically synced</strong> to the cloud as you learn.
+          The code lets your teacher look up your records quickly.
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
     <div id="stats-grid" class="dashboard-stats"></div>
 
+    <!-- PROGRESS -->
     <div class="dashboard-section">
       <h2 class="section-title">📅 Weekly Progress</h2>
       <div id="weeks-grid" class="weeks-grid"></div>
     </div>
 
+    <!-- RECENT RECORDS -->
     <div class="dashboard-section">
       <h2 class="section-title">📊 Recent Scores</h2>
       <div id="recent-records"></div>
     </div>
 
+    <!-- QUICK ACTIONS -->
     <div class="dashboard-section">
       <h2 class="section-title">⚡ Quick Actions</h2>
       <div class="quick-actions">
@@ -64,16 +94,16 @@
 
   <footer class="app-footer">
     <p>Physical Science · Student Portal · v1.0.0</p>
-    <div id="dev-credit"></div>
   </footer>
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
-  <script src="../assets/js/ui-helpers.js"></script>
-  <script src="../assets/js/auth.js"></script>
-  <script src="../assets/js/gamify.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/sync.js"></script>
   <script src="../assets/js/activity-tracker.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const student = App.requireStudent();
@@ -103,20 +133,21 @@
       const weeks = App.getWeeks();
       const records = Store.getRecordsByStudent(student.lrn);
 
-      let daysCompleted = 0;
-      weeks.forEach(w => {
-        for (let d = 1; d <= 4; d++) {
-          if (Store.isDayComplete(w.n, d)) daysCompleted++;
-        }
-      });
+      const daysCompleted = (() => {
+        let n = 0;
+        weeks.forEach(w => {
+          for (let d = 1; d <= 4; d++) {
+            if (Store.isDayComplete(w.n, d)) n++;
+          }
+        });
+        return n;
+      })();
+
       const totalDays = weeks.length * 4;
       const progressPct = totalDays > 0 ? Math.round((daysCompleted / totalDays) * 100) : 0;
       const avgGrade = records.length
         ? Math.round(records.reduce((s, r) => s + (Number(r.finalGrade) || 0), 0) / records.length)
         : 0;
-
-      const xp = (window.Gamify) ? Gamify.getXP() : 0;
-      const streak = (window.Gamify) ? Gamify.getStreak().count : 0;
 
       document.getElementById('stats-grid').innerHTML = `
         <div class="stat-card">
@@ -130,21 +161,22 @@
           <div class="stat-label">Overall Progress</div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">⚡</div>
-          <div class="stat-value">${xp}</div>
-          <div class="stat-label">Total XP</div>
+          <div class="stat-icon">📝</div>
+          <div class="stat-value">${records.length}</div>
+          <div class="stat-label">Assessments Taken</div>
         </div>
-        <div class="stat-card ${streak >= 3 ? 'green' : ''}">
-          <div class="stat-icon">🔥</div>
-          <div class="stat-value">${streak}</div>
-          <div class="stat-label">Day Streak</div>
+        <div class="stat-card ${avgGrade >= 75 ? 'green' : 'red'}">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-value">${records.length ? avgGrade : '—'}</div>
+          <div class="stat-label">Average Grade</div>
         </div>
       `;
 
       // ---- WEEKS GRID ----
       document.getElementById('weeks-grid').innerHTML = weeks.map(w => {
         const p = Store.getWeekProgress(w.n, 4);
-        const color = p.percent >= 100 ? 'green' : p.percent > 0 ? 'amber' : '';
+        const pct = p.percent;
+        const color = pct >= 100 ? 'green' : pct > 0 ? 'amber' : '';
         return `
           <a class="week-progress-card" href="physci/week${w.n}/index.html">
             <div class="week-progress-icon">${w.icon}</div>
@@ -152,9 +184,9 @@
               <div class="week-progress-num">Week ${w.n}</div>
               <div class="week-progress-title">${UI.escapeHtml(w.title)}</div>
               <div class="week-progress-bar">
-                <div class="week-progress-fill ${color}" style="width:${p.percent}%;"></div>
+                <div class="week-progress-fill ${color}" style="width:${pct}%;"></div>
               </div>
-              <div class="week-progress-meta">${p.done} of ${p.total} days · ${p.percent}%</div>
+              <div class="week-progress-meta">${p.done} of ${p.total} days · ${pct}%</div>
             </div>
           </a>
         `;
@@ -173,13 +205,7 @@
           <div class="modern-table-wrap">
             <table class="modern-table">
               <thead>
-                <tr>
-                  <th>Assessment</th>
-                  <th>Score</th>
-                  <th>%</th>
-                  <th>Grade</th>
-                  <th>Date</th>
-                </tr>
+                <tr><th>Assessment</th><th>Score</th><th>%</th><th>Grade</th><th>Date</th></tr>
               </thead>
               <tbody>
                 ${recent.map(r => `
@@ -195,6 +221,54 @@
             </table>
           </div>
         `;
+      }
+
+      // ---- SYNC CODE BUTTON ----
+      const btn = document.getElementById('btn-generate-sync');
+      const display = document.getElementById('sync-code-display');
+
+      const existingCode = localStorage.getItem('physci_last_sync_code');
+      if (existingCode) {
+        try { showCode(JSON.parse(existingCode)); } catch (e) {}
+      }
+
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        btn.textContent = '⏳ Generating…';
+
+        try {
+          const res = await Sync.generateCode();
+          if (res && res.ok) {
+            const payload = { code: res.code, expiresAt: res.expiresAt, generatedAt: new Date().toISOString() };
+            localStorage.setItem('physci_last_sync_code', JSON.stringify(payload));
+            showCode(payload);
+            if (window.UI && UI.toast) UI.toast('Sync code generated!', 'success');
+          } else {
+            throw new Error(res && res.error ? res.error : 'Unknown error');
+          }
+        } catch (e) {
+          if (window.UI && UI.toast) UI.toast('Failed to generate code: ' + e.message, 'danger');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = '🔄 Generate New Code';
+        }
+      });
+
+      function showCode(payload) {
+        display.innerHTML = `
+          <div class="sync-code-value">${payload.code}</div>
+          <div class="sync-code-meta">Generated ${new Date(payload.generatedAt).toLocaleString()}</div>
+          <button class="btn btn-outline" id="btn-copy-code" style="margin-top:8px;">📋 Copy Code</button>
+        `;
+        const copyBtn = document.getElementById('btn-copy-code');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(payload.code).then(() => {
+              copyBtn.textContent = '✅ Copied!';
+              setTimeout(() => copyBtn.textContent = '📋 Copy Code', 2000);
+            });
+          });
+        }
       }
     });
   </script>
