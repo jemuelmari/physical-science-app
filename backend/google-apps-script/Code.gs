@@ -2,26 +2,20 @@
  * ============================================================================
  * Google Apps Script Backend — Physical Science App
  * File: Code.gs
- * Version: 1.0.1
+ * Version: 2.0.0
  *
- * Purpose:
- *   Receives student assessment records from the Physical Science web app
- *   and writes them to a Google Sheet. Also handles:
- *     - Assessment code generation (for gated access)
- *     - Record retrieval (for teacher dashboards)
- *     - Sync log
+ * Actions:
+ *   GET:
+ *     ?action=ping                     — health check
+ *     ?action=list&token=...           — list all assessment records
+ *     ?action=listActivities&token=... — list all activity logs
+ *     ?action=codes&token=...          — list codes
  *
- * Deployment:
- *   1. Create a new Google Sheet with 3 tabs:
- *        - Records
- *        - Codes
- *        - SyncLog
- *   2. Open Extensions → Apps Script
- *   3. Paste this file
- *   4. Deploy → New deployment → Web app
- *        - Execute as: Me
- *        - Who has access: Anyone
- *   5. Copy the deployment URL → paste into config.js as gasEndpoint
+ *   POST (JSON body):
+ *     { action: "saveRecord", payload: {...} }
+ *     { action: "saveActivity", payload: {...} }
+ *     { action: "generateCode", payload: { lrn } }
+ *     { action: "redeemCode", payload: { code } }
  * ============================================================================
  */
 
@@ -29,16 +23,13 @@
 // CONSTANTS
 // ============================================================================
 
-const SHEET_NAME_RECORDS = 'Records';
-const SHEET_NAME_CODES   = 'Codes';
-const SHEET_NAME_LOG     = 'SyncLog';
+const SHEET_NAME_RECORDS     = 'Records';
+const SHEET_NAME_CODES       = 'Codes';
+const SHEET_NAME_LOG         = 'SyncLog';
+const SHEET_NAME_ACTIVITIES  = 'Activities';
+const SHEET_NAME_STUDENTS    = 'Students';
 
-// HMAC secret — must match gasToken in config.js
-const HMAC_SECRET = 'teacher2026';
-
-// ============================================================================
-// RECORD HEADERS
-// ============================================================================
+const TEACHER_TOKEN = 'teacher2026'; // must match config.js gasToken
 
 const RECORD_HEADERS = [
   'LRN', 'LastName', 'FirstName', 'MiddleName', 'GradeLevel', 'Section',
@@ -48,40 +39,79 @@ const RECORD_HEADERS = [
 ];
 
 const CODE_HEADERS = [
-  'Code', 'LRN', 'PayloadJSON', 'Signature', 'CreatedAt', 'ExpiresAt', 'Used'
+  'Code', 'LRN', 'CreatedAt', 'ExpiresAt', 'Used'
+];
+
+const ACTIVITY_HEADERS = [
+  'Timestamp', 'LRN', 'LastName', 'FirstName', 'Action',
+  'Week', 'Day', 'Code', 'AssessmentId', 'Score', 'Total', 'Percent', 'PayloadJSON'
+];
+
+const STUDENT_HEADERS = [
+  'LRN', 'LastName', 'FirstName', 'MiddleName', 'GradeLevel', 'Section',
+  'Sex', 'PIN', 'CreatedAt', 'LastUpdated'
 ];
 
 // ============================================================================
-// WEB APP ENTRY POINTS
+// GET
 // ============================================================================
 
 function doGet(e) {
   try {
     const params = e.parameter || {};
     const action = (params.action || 'ping').toLowerCase();
+    const token  = params.token || '';
 
     if (action === 'ping') {
       return jsonResponse({
         ok: true,
         service: 'Physical Science App Backend',
-        version: '1.0.1',
+        version: '2.0.0',
         timestamp: new Date().toISOString()
       });
+    }
+
+    if (!isTeacher(token)) {
+      return jsonResponse({ ok: false, error: 'Unauthorized' });
     }
 
     if (action === 'list') {
       return jsonResponse({ ok: true, records: listRecords(params.lrn) });
     }
 
+    if (action === 'listactivities') {
+      return jsonResponse({ ok: true, activities: listActivities(params.lrn) });
+    }
+
+    if (action === 'liststudents') {
+      return jsonResponse({ ok: true, students: listStudents() });
+    }
+
     if (action === 'codes') {
       return jsonResponse({ ok: true, codes: listCodes() });
     }
 
-    return jsonResponse({ ok: false, error: 'Unknown action' }, 400);
+    if (action === 'stats') {
+      return jsonResponse({
+        ok: true,
+        stats: {
+          students: listStudents().length,
+          records: listRecords().length,
+          activities: listActivities().length,
+          codes: listCodes().length
+        }
+      });
+    }
+
+    return jsonResponse({ ok: false, error: 'Unknown action' });
   } catch (err) {
-    return jsonResponse({ ok: false, error: String(err) }, 500);
+    return jsonResponse({ ok: false, error: String(err) });
   }
 }
+
+// ============================================================================
+// POST
+// ============================================================================
 
 function doPost(e) {
   try {
@@ -89,36 +119,40 @@ function doPost(e) {
     try {
       body = JSON.parse(e.postData.contents);
     } catch (parseErr) {
-      return jsonResponse({ ok: false, error: 'Invalid JSON body' }, 400);
+      return jsonResponse({ ok: false, error: 'Invalid JSON' });
     }
 
     const action = (body.action || '').toLowerCase();
+    const payload = body.payload || body.record || body;
 
     if (action === 'saverecord' || action === 'save') {
-      return jsonResponse(saveRecord(body.payload || body.record || {}));
+      return jsonResponse(saveRecord(payload));
     }
-
-    if (action === 'createcode') {
-      return jsonResponse(createCode(body.payload || {}));
+    if (action === 'saveactivity') {
+      return jsonResponse(saveActivity(payload));
     }
-
-    if (action === 'markused') {
-      return jsonResponse(markCodeUsed(body.payload || {}));
+    if (action === 'savestudent') {
+      return jsonResponse(saveStudent(payload));
     }
-
+    if (action === 'generatecode') {
+      return jsonResponse(generateCode(payload));
+    }
+    if (action === 'redeemcode') {
+      return jsonResponse(redeemCode(payload));
+    }
     if (action === 'log') {
-      logEvent('INFO', body.message || 'client event', body.payload || {});
+      logEvent('INFO', body.message || 'client event', payload);
       return jsonResponse({ ok: true });
     }
 
-    return jsonResponse({ ok: false, error: 'Unknown action: ' + action }, 400);
+    return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
   } catch (err) {
-    return jsonResponse({ ok: false, error: String(err) }, 500);
+    return jsonResponse({ ok: false, error: String(err) });
   }
 }
 
 // ============================================================================
-// RECORD OPERATIONS
+// RECORDS
 // ============================================================================
 
 function saveRecord(payload) {
@@ -172,14 +206,11 @@ function saveRecord(payload) {
   }
 
   const row = RECORD_HEADERS.map(h => record[h]);
-
   if (existingRow > 0) {
     sheet.getRange(existingRow, 1, 1, RECORD_HEADERS.length).setValues([row]);
   } else {
     sheet.appendRow(row);
   }
-
-  logEvent('INFO', 'Record saved', { lrn, assessmentId, score: record.Score, total: record.Total });
 
   return { ok: true, saved: true, lrn, assessmentId };
 }
@@ -202,51 +233,150 @@ function listRecords(lrn) {
 }
 
 // ============================================================================
-// CODE GENERATION
+// ACTIVITIES (day / week / lesson events)
 // ============================================================================
 
-function createCode(payload) {
-  const sheet = getOrCreateSheet(SHEET_NAME_CODES, CODE_HEADERS);
+function saveActivity(payload) {
+  const sheet = getOrCreateSheet(SHEET_NAME_ACTIVITIES, ACTIVITY_HEADERS);
   const lrn = String(payload.lrn || '').trim();
   if (!lrn) return { ok: false, error: 'Missing lrn' };
 
-  const code = generateCode(8);
-  const now = new Date();
-  const expiresAt = new Date(now.getTime() + 1000 * 60 * 60 * 24);
-
   const row = [
-    code,
+    payload.timestamp || new Date().toISOString(),
     lrn,
-    JSON.stringify(payload || {}),
-    payload.signature || '',
-    now.toISOString(),
-    expiresAt.toISOString(),
-    'FALSE'
+    payload.lastName || '',
+    payload.firstName || '',
+    payload.action || '',
+    payload.week || '',
+    payload.day || '',
+    payload.code || '',
+    payload.assessmentId || '',
+    payload.score != null ? payload.score : '',
+    payload.total != null ? payload.total : '',
+    payload.percent != null ? payload.percent : '',
+    JSON.stringify(payload)
   ];
   sheet.appendRow(row);
 
-  logEvent('INFO', 'Code created', { lrn, code });
+  return { ok: true, saved: true, action: payload.action };
+}
+
+function listActivities(lrn) {
+  const sheet = getOrCreateSheet(SHEET_NAME_ACTIVITIES, ACTIVITY_HEADERS);
+  const data = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
+
+  const headers = data[0];
+  const out = [];
+  for (let i = 1; i < data.length; i++) {
+    const row = {};
+    headers.forEach((h, j) => { row[h] = data[i][j]; });
+    if (!lrn || String(row.LRN) === String(lrn)) {
+      out.push(row);
+    }
+  }
+  return out;
+}
+
+// ============================================================================
+// STUDENTS
+// ============================================================================
+
+function saveStudent(payload) {
+  const sheet = getOrCreateSheet(SHEET_NAME_STUDENTS, STUDENT_HEADERS);
+  const lrn = String(payload.lrn || '').trim();
+  if (!lrn) return { ok: false, error: 'Missing lrn' };
+
+  const now = new Date().toISOString();
+  const row = [
+    lrn,
+    payload.lastName || '',
+    payload.firstName || '',
+    payload.middleName || '',
+    payload.gradeLevel || '',
+    payload.section || '',
+    payload.sex || '',
+    payload.pin || '',
+    payload.createdAt || now,
+    now
+  ];
+
+  const data = sheet.getDataRange().getValues();
+  const lrnCol = data[0].indexOf('LRN');
+  let existingRow = -1;
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][lrnCol]) === lrn) { existingRow = i + 1; break; }
+  }
+
+  if (existingRow > 0) {
+    sheet.getRange(existingRow, 1, 1, STUDENT_HEADERS.length).setValues([row]);
+  } else {
+    sheet.appendRow(row);
+  }
+
+  return { ok: true, saved: true, lrn };
+}
+
+function listStudents() {
+  const sheet = getOrCreateSheet(SHEET_NAME_STUDENTS, STUDENT_HEADERS);
+  const data = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
+
+  const headers = data[0];
+  const out = [];
+  for (let i = 1; i < data.length; i++) {
+    const row = {};
+    headers.forEach((h, j) => { row[h] = data[i][j]; });
+    out.push(row);
+  }
+  return out;
+}
+
+// ============================================================================
+// SYNC CODES
+// ============================================================================
+
+function generateCode(payload) {
+  const lrn = String(payload.lrn || '').trim();
+  if (!lrn) return { ok: false, error: 'Missing lrn' };
+
+  const code = makeCode(6); // e.g. JX3K9P
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
+
+  const sheet = getOrCreateSheet(SHEET_NAME_CODES, CODE_HEADERS);
+  sheet.appendRow([code, lrn, now.toISOString(), expiresAt.toISOString(), 'FALSE']);
+
   return { ok: true, code, lrn, expiresAt: expiresAt.toISOString() };
 }
 
-function markCodeUsed(payload) {
-  const code = String(payload.code || '').trim();
+function redeemCode(payload) {
+  const code = String(payload.code || '').trim().toUpperCase();
   if (!code) return { ok: false, error: 'Missing code' };
 
   const sheet = getOrCreateSheet(SHEET_NAME_CODES, CODE_HEADERS);
   const data = sheet.getDataRange().getValues();
-  const headers = data[0];
-  const codeCol = headers.indexOf('Code');
-  const usedCol = headers.indexOf('Used');
 
+  let found = null;
   for (let i = 1; i < data.length; i++) {
-    if (String(data[i][codeCol]) === code) {
-      sheet.getRange(i + 1, usedCol + 1).setValue('TRUE');
-      logEvent('INFO', 'Code marked used', { code });
-      return { ok: true, code, used: true };
-    }
+    if (String(data[i][0]).toUpperCase() === code) { found = data[i]; break; }
   }
-  return { ok: false, error: 'Code not found' };
+
+  if (!found) return { ok: false, error: 'Code not found' };
+
+  const lrn = found[1];
+  const student = listStudents().find(s => String(s.LRN) === String(lrn));
+  const records = listRecords(lrn);
+  const activities = listActivities(lrn);
+
+  return {
+    ok: true,
+    code,
+    lrn,
+    student: student || null,
+    records,
+    activities
+  };
 }
 
 function listCodes() {
@@ -264,38 +394,38 @@ function listCodes() {
 }
 
 // ============================================================================
-// LOGGING
+// HELPERS
 // ============================================================================
+
+function makeCode(len) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let out = '';
+  for (let i = 0; i < len; i++) {
+    out += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return out;
+}
+
+function isTeacher(token) {
+  return String(token || '').trim() === TEACHER_TOKEN;
+}
 
 function logEvent(level, message, data) {
   try {
     const sheet = getOrCreateSheet(SHEET_NAME_LOG, ['Timestamp', 'Level', 'Message', 'Data']);
-    sheet.appendRow([
-      new Date().toISOString(),
-      level || 'INFO',
-      message || '',
-      JSON.stringify(data || {})
-    ]);
-  } catch (err) {
-    // Silent fail — never break the main request
-  }
+    sheet.appendRow([new Date().toISOString(), level || 'INFO', message || '', JSON.stringify(data || {})]);
+  } catch (e) {}
 }
-
-// ============================================================================
-// SHEET HELPERS
-// ============================================================================
 
 function getOrCreateSheet(name, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(name);
-
   if (!sheet) {
     sheet = ss.insertSheet(name);
     sheet.appendRow(headers);
     sheet.getRange(1, 1, 1, headers.length)
       .setFontWeight('bold')
-      .setBackground('#e6f4ea')
-      .setBorder(true, true, true, true, true, true);
+      .setBackground('#e6f4ea');
     sheet.setFrozenRows(1);
   } else {
     const firstRow = sheet.getRange(1, 1, 1, Math.max(headers.length, 1)).getValues()[0];
@@ -304,48 +434,11 @@ function getOrCreateSheet(name, headers) {
       sheet.setFrozenRows(1);
     }
   }
-
   return sheet;
 }
 
-// ============================================================================
-// JSON RESPONSE HELPER
-// ============================================================================
-
-function jsonResponse(obj, statusCode) {
+function jsonResponse(obj) {
   const output = ContentService.createTextOutput(JSON.stringify(obj));
   output.setMimeType(ContentService.MimeType.JSON);
   return output;
-}
-
-// ============================================================================
-// UTILITY — test functions
-// ============================================================================
-
-function __test_ping() {
-  const res = doGet({ parameter: { action: 'ping' } });
-  Logger.log(res.getContent());
-}
-
-function __test_saveRecord() {
-  const res = saveRecord({
-    lrn: '123456789012',
-    lastName: 'Dela Cruz',
-    firstName: 'Juan',
-    gradeLevel: '11',
-    section: 'STEM-A',
-    subject: 'physci',
-    type: 'quiz',
-    assessmentId: 'physci-quiz1',
-    score: 12,
-    total: 15,
-    percent: 80,
-    finalGrade: 88,
-    passed: true,
-    timeSpent: 720,
-    timestamp: new Date().toISOString(),
-    answers: { 1: 0, 2: 1, 3: 2 },
-    breakdown: []
-  });
-  Logger.log(JSON.stringify(res));
 }
