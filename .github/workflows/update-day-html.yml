@@ -1,0 +1,113 @@
+name: Update all day.html files
+
+# ─────────────────────────────────────────────────────────────
+# Runs when:
+#   1. You push changes to scripts/day-template.html
+#   2. You trigger it manually from the Actions tab
+#   3. Every time you push to main (optional — commented out)
+# ─────────────────────────────────────────────────────────────
+on:
+  push:
+    paths:
+      - 'scripts/day-template.html'
+      - '.github/workflows/update-day-html.yml'
+  workflow_dispatch:  # Enables "Run workflow" button in Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-day-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ─────────────────────────────────────────────────────────
+      # 1. Checkout the repo
+      # ─────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ─────────────────────────────────────────────────────────
+      # 2. Verify template exists
+      # ─────────────────────────────────────────────────────────
+      - name: Verify template exists
+        run: |
+          if [ ! -f scripts/day-template.html ]; then
+            echo "❌ ERROR: scripts/day-template.html not found"
+            exit 1
+          fi
+          echo "✅ Template found at scripts/day-template.html"
+          echo "   Size: $(wc -c < scripts/day-template.html) bytes"
+
+      # ─────────────────────────────────────────────────────────
+      # 3. Copy template to all 10 week folders
+      # ─────────────────────────────────────────────────────────
+      - name: Distribute day.html to all weeks
+        run: |
+          set -e
+          for week in 1 2 3 4 5 6 7 8 9 10; do
+            TARGET_DIR="student/physci/week${week}"
+            if [ -d "$TARGET_DIR" ]; then
+              cp scripts/day-template.html "${TARGET_DIR}/day.html"
+              echo "✅ Updated ${TARGET_DIR}/day.html"
+            else
+              echo "⚠️  Skipped ${TARGET_DIR} (folder does not exist)"
+            fi
+          done
+
+      # ─────────────────────────────────────────────────────────
+      # 4. Also update the week index.html files (same fix)
+      # ─────────────────────────────────────────────────────────
+      - name: Distribute week index.html to all weeks
+        run: |
+          if [ -f scripts/week-index-template.html ]; then
+            set -e
+            for week in 1 2 3 4 5 6 7 8 9 10; do
+              TARGET_DIR="student/physci/week${week}"
+              if [ -d "$TARGET_DIR" ]; then
+                cp scripts/week-index-template.html "${TARGET_DIR}/index.html"
+                echo "✅ Updated ${TARGET_DIR}/index.html"
+              fi
+            done
+          else
+            echo "ℹ️  Skipping week index.html (no template)"
+          fi
+
+      # ─────────────────────────────────────────────────────────
+      # 5. Check if anything changed
+      # ─────────────────────────────────────────────────────────
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  No changes detected"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "📝 Changes detected:"
+            git diff --stat
+          fi
+
+      # ─────────────────────────────────────────────────────────
+      # 6. Commit and push if there are changes
+      # ─────────────────────────────────────────────────────────
+      - name: Commit and push changes
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add student/physci/week*/day.html
+          git add student/physci/week*/index.html 2>/dev/null || true
+          git commit -m "chore: sync day.html + index.html to all 10 weeks [skip ci]"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## ✅ Sync Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Updated day.html in all week folders." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Changed files:**" >> $GITHUB_STEP_SUMMARY
+          git diff --stat HEAD~1 HEAD 2>/dev/null || echo "No prior commit to compare"
