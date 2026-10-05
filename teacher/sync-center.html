@@ -6,6 +6,7 @@
   <title>Sync Center · Teacher</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
 </head>
 <body>
 
@@ -22,45 +23,48 @@
     </div>
   </header>
 
-  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1000px;">
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:1100px;">
 
-    <div class="cr-stats-grid" id="sync-stats"></div>
+    <!-- CODE REDEEMER -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-header">
+        <div class="card-title">🔑 Redeem Student Sync Code</div>
+      </div>
+      <p class="text-muted text-small">
+        Ask your student for their 6-character sync code. Enter it below to instantly
+        load their complete record.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+        <input type="text" id="redeem-code-input" class="form-control"
+               placeholder="JX3K9P" maxlength="8"
+               style="max-width:200px;text-transform:uppercase;font-family:monospace;font-size:1.2rem;font-weight:800;letter-spacing:4px;text-align:center;" />
+        <button id="btn-redeem" class="btn btn-primary">🔍 Load Student</button>
+        <button id="btn-live-refresh" class="btn btn-outline">🔄 Live Refresh (30s)</button>
+      </div>
+      <div id="redeem-result" style="margin-top:16px;"></div>
+    </div>
 
+    <!-- LIVE STATUS -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-header">
+        <div class="card-title">📡 Live Sync Status</div>
+        <span id="live-status" class="text-muted text-small">Not started</span>
+      </div>
+      <div id="live-stats"></div>
+    </div>
+
+    <!-- MANUAL SYNC -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title">🔌 Backend Status</div>
+        <div class="card-title">⚡ Manual Sync</div>
         <button id="btn-ping" class="btn btn-outline">Ping Backend</button>
       </div>
       <div id="backend-status"><div class="empty-state">Click "Ping Backend" to check status.</div></div>
     </div>
 
-    <div class="card" style="margin-top:16px;">
-      <div class="card-header">
-        <div class="card-title">⚡ Manual Sync</div>
-      </div>
-      <p class="text-muted text-small">
-        Push all local records to Google Sheets. New records are added; existing
-        ones are updated by (LRN, AssessmentId).
-      </p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
-        <button id="btn-flush" class="btn btn-primary">📤 Flush Queue Now</button>
-        <button id="btn-push-all" class="btn btn-primary">⬆ Push All Local Records</button>
-        <button id="btn-clear-queue" class="btn btn-danger">🗑 Clear Queue</button>
-      </div>
-      <div id="sync-output" style="margin-top:16px;"></div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <div class="card-header">
-        <div class="card-title">📦 Pending Queue</div>
-        <span id="queue-count" class="text-muted text-small">—</span>
-      </div>
-      <div id="queue-list"></div>
-    </div>
-
   </main>
 
-  <footer class="app-footer"><p>Sync Center · v1.0.0</p></footer>
+  <footer class="app-footer"><p>Sync Center · v2.0.0</p></footer>
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
@@ -71,132 +75,145 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       App.requireTeacher();
-      renderStats();
-      renderQueue();
 
-      function renderStats() {
-        const records = Store.getRecords();
-        const queue = Sync.readQueue();
-        const lastSync = Store.getLastSync();
+      const input = document.getElementById('redeem-code-input');
+      const btnRedeem = document.getElementById('btn-redeem');
+      const btnRefresh = document.getElementById('btn-live-refresh');
+      const resultEl = document.getElementById('redeem-result');
+      const statusEl = document.getElementById('live-status');
+      const statsEl = document.getElementById('live-stats');
+      const backendStatus = document.getElementById('backend-status');
 
-        document.getElementById('sync-stats').innerHTML = `
-          <div class="cr-stat-card blue">
-            <div class="cs-icon">📊</div>
-            <div class="cs-value">${records.length}</div>
-            <div class="cs-label">Local Records</div>
-          </div>
-          <div class="cr-stat-card ${queue.length ? 'amber' : 'green'}">
-            <div class="cs-icon">📦</div>
-            <div class="cs-value">${queue.length}</div>
-            <div class="cs-label">Pending Queue</div>
-          </div>
-          <div class="cr-stat-card">
-            <div class="cs-icon">🕒</div>
-            <div class="cs-value" style="font-size:1rem;">${lastSync ? UI.formatDate(lastSync) : 'Never'}</div>
-            <div class="cs-label">Last Sync</div>
-          </div>
-          <div class="cr-stat-card ${Sync.isEnabled() ? 'green' : 'red'}">
-            <div class="cs-icon">${Sync.isEnabled() ? '✅' : '⚠️'}</div>
-            <div class="cs-value" style="font-size:1rem;">${Sync.isEnabled() ? 'Enabled' : 'Disabled'}</div>
-            <div class="cs-label">Cloud Sync</div>
-          </div>
-        `;
-      }
+      // ---- Redeem code ----
+      btnRedeem.addEventListener('click', async () => {
+        const code = input.value.trim().toUpperCase();
+        if (code.length < 4) { alert('Please enter a valid code.'); return; }
 
-      function renderQueue() {
-        const queue = Sync.readQueue();
-        document.getElementById('queue-count').textContent = `${queue.length} item(s)`;
+        btnRedeem.disabled = true;
+        btnRedeem.textContent = '⏳ Looking up…';
+        resultEl.innerHTML = '<div class="alert alert-info">Searching…</div>';
 
-        if (!queue.length) {
-          document.getElementById('queue-list').innerHTML =
-            `<div class="empty-state">No pending records. Everything is synced. ✨</div>`;
-          return;
+        try {
+          const res = await Sync.redeemCode(code);
+          if (!res || !res.ok) throw new Error(res && res.error ? res.error : 'Not found');
+          renderStudentResult(res);
+        } catch (e) {
+          resultEl.innerHTML = `<div class="alert alert-danger">❌ ${e.message}</div>`;
+        } finally {
+          btnRedeem.disabled = false;
+          btnRedeem.textContent = '🔍 Load Student';
         }
+      });
 
-        document.getElementById('queue-list').innerHTML = `
-          <div class="modern-table-wrap">
+      function renderStudentResult(res) {
+        const s = res.student || {};
+        const records = res.records || [];
+        const activities = res.activities || [];
+
+        const avg = records.length
+          ? Math.round(records.reduce((sum, r) => sum + (Number(r.FinalGrade) || 0), 0) / records.length)
+          : 0;
+
+        resultEl.innerHTML = `
+          <div class="alert alert-success">
+            ✅ Loaded: <strong>${escapeHtml(s.LastName || '?')}, ${escapeHtml(s.FirstName || '?')}</strong>
+            · LRN ${escapeHtml(s.LRN || res.lrn)}
+            · Grade ${escapeHtml(s.GradeLevel || '?')} · ${escapeHtml(s.Section || '?')}
+          </div>
+          <div class="cr-stats-grid" style="margin-top:12px;">
+            <div class="cr-stat-card blue"><div class="cs-icon">📝</div><div class="cs-value">${records.length}</div><div class="cs-label">Assessments</div></div>
+            <div class="cr-stat-card"><div class="cs-icon">📊</div><div class="cs-value">${activities.length}</div><div class="cs-label">Activities</div></div>
+            <div class="cr-stat-card ${avg >= 75 ? 'green' : 'red'}"><div class="cs-icon">🎯</div><div class="cs-value">${avg || '—'}</div><div class="cs-label">Avg Grade</div></div>
+          </div>
+          <div class="modern-table-wrap" style="margin-top:12px;max-height:300px;overflow:auto;">
             <table class="modern-table">
-              <thead>
-                <tr>
-                  <th>LRN</th>
-                  <th>Assessment</th>
-                  <th>Attempts</th>
-                  <th>Enqueued</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Assessment</th><th>Score</th><th>%</th><th>Grade</th><th>Date</th></tr></thead>
               <tbody>
-                ${queue.map(q => `
+                ${records.map(r => `
                   <tr>
-                    <td>${UI.escapeHtml(q.record.lrn)}</td>
-                    <td>${UI.escapeHtml(q.record.assessmentId)}</td>
-                    <td>${q.attempts}</td>
-                    <td>${UI.formatDate(q.enqueuedAt)}</td>
+                    <td>${escapeHtml(r.AssessmentId)}</td>
+                    <td>${r.Score} / ${r.Total}</td>
+                    <td>${r.Percent}%</td>
+                    <td>${r.FinalGrade}</td>
+                    <td>${new Date(r.Timestamp).toLocaleString()}</td>
                   </tr>
-                `).join('')}
+                `).join('') || '<tr><td colspan="5" class="text-muted" style="padding:16px;text-align:center;">No records yet.</td></tr>'}
               </tbody>
             </table>
           </div>
         `;
       }
 
+      function escapeHtml(str) {
+        return String(str == null ? '' : str).replace(/[&<>"']/g, c =>
+          ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      }
+
+      // ---- Live refresh ----
+      let refreshTimer = null;
+
+      function startLiveRefresh() {
+        if (refreshTimer) return;
+        refresh();
+        refreshTimer = setInterval(refresh, 30000);
+        btnRefresh.textContent = '⏹ Stop Live Refresh';
+        statusEl.textContent = '● Live (30s)';
+        statusEl.style.color = '#2e7d32';
+        statusEl.style.fontWeight = '700';
+      }
+
+      function stopLiveRefresh() {
+        if (refreshTimer) { clearInterval(refreshTimer); refreshTimer = null; }
+        btnRefresh.textContent = '🔄 Live Refresh (30s)';
+        statusEl.textContent = 'Stopped';
+        statusEl.style.color = '#90a4ae';
+        statusEl.style.fontWeight = '400';
+      }
+
+      btnRefresh.addEventListener('click', () => {
+        if (refreshTimer) stopLiveRefresh();
+        else startLiveRefresh();
+      });
+
+      async function refresh() {
+        try {
+          const data = await Sync.fetchAll();
+          const students = data.students || [];
+          const records = data.records || [];
+          const activities = data.activities || [];
+
+          statsEl.innerHTML = `
+            <div class="cr-stats-grid">
+              <div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">${students.length}</div><div class="cs-label">Students</div></div>
+              <div class="cr-stat-card"><div class="cs-icon">📝</div><div class="cs-value">${records.length}</div><div class="cs-label">Records</div></div>
+              <div class="cr-stat-card"><div class="cs-icon">📊</div><div class="cs-value">${activities.length}</div><div class="cs-label">Activities</div></div>
+              <div class="cr-stat-card green"><div class="cs-icon">🕒</div><div class="cs-value" style="font-size:0.9rem;">${new Date().toLocaleTimeString()}</div><div class="cs-label">Last Updated</div></div>
+            </div>
+          `;
+        } catch (e) {
+          statusEl.textContent = '⚠ Error: ' + e.message;
+          statusEl.style.color = '#c62828';
+        }
+      }
+
+      // ---- Ping ----
       document.getElementById('btn-ping').addEventListener('click', async () => {
-        const out = document.getElementById('backend-status');
-        out.innerHTML = `<div class="alert alert-info">Pinging…</div>`;
+        backendStatus.innerHTML = `<div class="alert alert-info">Pinging…</div>`;
         const res = await Sync.ping();
         if (res && res.ok) {
-          out.innerHTML = `<div class="alert alert-success">
-            ✅ Backend online · <strong>${UI.escapeHtml(res.service || 'Unknown')}</strong> ·
-            v${UI.escapeHtml(res.version || '?')} ·
-            ${UI.formatDate(res.timestamp)}
+          backendStatus.innerHTML = `<div class="alert alert-success">
+            ✅ Backend online · <strong>${escapeHtml(res.service || 'Unknown')}</strong> ·
+            v${escapeHtml(res.version || '?')} · ${new Date(res.timestamp).toLocaleString()}
           </div>`;
         } else {
-          out.innerHTML = `<div class="alert alert-danger">
-            ❌ Backend not reachable: ${UI.escapeHtml((res && res.error) || 'Unknown error')}
+          backendStatus.innerHTML = `<div class="alert alert-danger">
+            ❌ Backend not reachable: ${escapeHtml((res && res.error) || 'Unknown error')}
           </div>`;
         }
       });
 
-      document.getElementById('btn-flush').addEventListener('click', async () => {
-        const out = document.getElementById('sync-output');
-        out.innerHTML = `<div class="alert alert-info">Flushing queue…</div>`;
-        const res = await Sync.flush();
-        out.innerHTML = `<div class="alert alert-success">
-          ✅ Sent ${res.sent} record(s). Remaining in queue: ${res.remaining || 0}.
-        </div>`;
-        renderStats();
-        renderQueue();
-      });
-
-      document.getElementById('btn-push-all').addEventListener('click', async () => {
-        const out = document.getElementById('sync-output');
-        const records = Store.getRecords();
-        if (!records.length) {
-          out.innerHTML = `<div class="alert alert-warning">No records to push.</div>`;
-          return;
-        }
-        if (!confirm(`Push ${records.length} record(s) to Google Sheets?`)) return;
-
-        out.innerHTML = `<div class="alert alert-info">Pushing ${records.length} records…</div>`;
-        let ok = 0, fail = 0;
-
-        for (const rec of records) {
-          const res = await Sync.push(rec);
-          if (res && res.ok) ok++; else fail++;
-        }
-
-        out.innerHTML = `<div class="alert ${fail ? 'warning' : 'success'}">
-          ✅ ${ok} succeeded · ${fail} queued for retry.
-        </div>`;
-        renderStats();
-        renderQueue();
-      });
-
-      document.getElementById('btn-clear-queue').addEventListener('click', () => {
-        if (!confirm('Clear the pending sync queue? Unsynced records will be lost.')) return;
-        Sync.clearQueue();
-        renderStats();
-        renderQueue();
-      });
+      // Auto-start live refresh
+      startLiveRefresh();
     });
   </script>
 </body>
