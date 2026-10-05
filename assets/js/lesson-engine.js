@@ -1,8 +1,8 @@
 /* ============================================================
-   lesson-engine.js — Physical Science · Lesson Engine (v3.0.0)
+   lesson-engine.js — Physical Science · Lesson Engine (v4.0.0)
    Loads lessons from data/physci-lessons.json
    Loads quizzes from data/physci-quizzes.json
-   Beautiful gamified UI with XP / Level / Streak / Celebration.
+   Auto-syncs all activity to backend via ActivityTracker
    ============================================================ */
 
 window.LessonEngine = (function () {
@@ -181,11 +181,28 @@ window.LessonEngine = (function () {
     `;
   }
 
+  function renderVocabulary(vocab) {
+    if (!vocab || !vocab.length) return '';
+    return `
+      <div class="lesson-section">
+        <h3><span class="sec-icon">📖</span> Key Vocabulary</h3>
+        <div class="vocab-list">
+          ${vocab.map(v => `
+            <div class="vocab-item">
+              <div class="vocab-term">${escapeHtml(v.term)}</div>
+              <div class="vocab-def">${escapeHtml(v.definition)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
   function renderIntro(intro) {
     if (!intro) return '';
     return `
       <div class="lesson-section">
-        <h3><span class="sec-icon">📖</span> Introduction</h3>
+        <h3><span class="sec-icon">💡</span> Introduction</h3>
         <div class="lesson-text">${escapeHtml(intro)}</div>
       </div>
     `;
@@ -214,6 +231,28 @@ window.LessonEngine = (function () {
     `;
   }
 
+  function renderPractice(practice) {
+    if (!practice || !practice.length) return '';
+    return `
+      <div class="lesson-section">
+        <h3><span class="sec-icon">📝</span> Practice Problems</h3>
+        <div class="practice-list">
+          ${practice.map((p, i) => `
+            <details class="practice-item">
+              <summary>
+                <span class="practice-num">${i + 1}</span>
+                ${escapeHtml(p.question)}
+              </summary>
+              <div class="practice-answer">
+                <strong>Answer:</strong> ${escapeHtml(p.answer)}
+              </div>
+            </details>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
   function renderCheck(check) {
     if (!check) return '';
     return `
@@ -223,6 +262,18 @@ window.LessonEngine = (function () {
           <div class="check-icon">💭</div>
           <p>${escapeHtml(check)}</p>
         </div>
+      </div>
+    `;
+  }
+
+  function renderSummary(summary) {
+    if (!summary || !summary.length) return '';
+    return `
+      <div class="lesson-section">
+        <h3><span class="sec-icon">🎓</span> Summary</h3>
+        <ul class="summary-list">
+          ${summary.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
+        </ul>
       </div>
     `;
   }
@@ -294,7 +345,7 @@ window.LessonEngine = (function () {
   }
 
   // ---------- Bind quiz ----------
-  function bindQuiz(quiz) {
+  function bindQuiz(quiz, week, day) {
     const form = $('quiz-form');
     if (!form) return;
     form.addEventListener('submit', (e) => {
@@ -337,28 +388,48 @@ window.LessonEngine = (function () {
       const statsBar = $('lesson-stats');
       if (statsBar) statsBar.innerHTML = renderStatsBar();
       fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // ---- Auto-sync quiz submission ----
       if (window.ActivityTracker) {
-        ActivityTracker.log({ action: 'quiz_submit', week: cfg.week, day: cfg.day.day, score: correct, total, xpEarned });
+        ActivityTracker.logQuizSubmit(week, day, correct, total, xpEarned);
       }
     });
   }
 
+  // ---------- Bind complete (with auto-sync) ----------
   function bindComplete(week, day) {
     const btn = $('btn-complete');
     if (!btn) return;
+
     btn.addEventListener('click', () => {
       if (btn.disabled) return;
+
+      // Mark day locally
       markDayComplete(week, day);
+      if (window.Store && Store.markDayComplete) Store.markDayComplete(week, day);
+
       updateStreak();
       const result = addXp(XP.COMPLETE_DAY);
       showCelebration(XP.COMPLETE_DAY, result.leveledUp);
+
       btn.disabled = true;
       btn.classList.add('completed');
       btn.textContent = '✅ Day Completed!';
+
       const statsBar = $('lesson-stats');
       if (statsBar) statsBar.innerHTML = renderStatsBar();
-      if (window.Store && Store.markDayComplete) Store.markDayComplete(week, day);
-      if (window.ActivityTracker) ActivityTracker.log({ action: 'day_complete', week, day, code: cfg.day.code });
+
+      // ---- AUTO-SYNC: day complete ----
+      if (window.ActivityTracker) {
+        ActivityTracker.logDayComplete(week, day, cfg.day.code);
+      }
+
+      // ---- AUTO-SYNC: week complete (if all 4 days done) ----
+      if (window.Store && Store.isWeekComplete && Store.isWeekComplete(week, 4)) {
+        if (window.ActivityTracker) {
+          ActivityTracker.logWeekComplete(week);
+        }
+      }
     });
   }
 
@@ -408,25 +479,36 @@ window.LessonEngine = (function () {
     const content = lesson || {
       intro: 'Lesson content coming soon.',
       objectives: ['Understand the day\'s competency.'],
+      vocabulary: [],
       body: [],
       activity: 'Complete the activities.',
-      check: ''
+      practice: [],
+      check: '',
+      summary: []
     };
+
+    // ---- AUTO-SYNC: log lesson view ----
+    if (window.ActivityTracker) {
+      ActivityTracker.logLessonView(data.week, day.day, day.code);
+    }
 
     $('lesson-header').innerHTML = renderHeader(day, data);
     $('lesson-body').innerHTML = `
       <div id="lesson-stats">${renderStatsBar()}</div>
       ${renderIntro(content.intro)}
       ${renderObjectives(content.objectives)}
+      ${renderVocabulary(content.vocabulary)}
       ${renderContent(content.body)}
       ${renderActivity(content.activity)}
+      ${renderPractice(content.practice)}
       ${renderCheck(content.check)}
       ${renderQuiz(quiz)}
+      ${renderSummary(content.summary)}
       ${renderCompleteButton(data.week, day.day)}
     `;
     $('lesson-nav').innerHTML = renderNav(data.week, day.day, data.days.length);
 
-    bindQuiz(quiz);
+    bindQuiz(quiz, data.week, day.day);
     bindComplete(data.week, day.day);
   }
 
