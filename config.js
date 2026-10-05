@@ -55,7 +55,7 @@ window.PHYSCI_CONFIG = {
   transmutation: [],
 
   // ---- Cloud Sync (Google Apps Script) ----
-  gasEndpoint: 'https://script.google.com/macros/s/AKfycbyx1dYln5Fn1R5kfC1Y2771eFzb2pmRQnntQTXyWeqxa47rfMLBzs6Ksw-Sz8IjE1BNE/exec',
+  gasEndpoint: 'https://script.google.com/macros/s/AKfycbx1dYln5Fn1R5kfC1Y277ieFzb2pmRCNntOXTyWeqxa47rfMLBzs6Ksw-Sz8IjElBNE/exec',
   gasToken: 'teacher2026',
   syncEnabled: true,
   syncOnSave: true,
