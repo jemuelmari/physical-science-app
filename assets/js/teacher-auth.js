@@ -1,123 +1,76 @@
 /* ============================================================
    teacher-auth.js — Physical Science · Teacher Authentication
-   Version: 1.1.0
-   Depends on: config.js, store.js, security.js
+   Version: 2.0.0
    ============================================================ */
 
 window.TeacherAuth = (function () {
   'use strict';
 
-  var TOKEN_KEY_LS = 'physci_teacher_token';
-  var TOKEN_KEY_SS = 'physci_teacher_token';
-  var SESSION_KEY  = 'physci_teacher_session';
+  // ---- THE TEACHER TOKEN (change this to anything you want) ----
+  const TEACHER_TOKEN = 'teacher2026';
 
-  // The app's root folder name (the repo name on GitHub Pages)
-  var APP_ROOT_SEGMENT = '/physical-science-app/';
-
-  /**
-   * Compute an absolute URL to a file at the app root,
-   * regardless of where the current page lives.
-   * Example: redirectTo('teacher-login.html')
-   *   from /physical-science-app/classrecord/grading-sheet.html
-   *   → /physical-science-app/teacher-login.html
-   */
-  function appUrl(relativePath) {
-    var path = window.location.pathname;
-    var idx = path.indexOf(APP_ROOT_SEGMENT);
-    var root;
-    if (idx >= 0) {
-      root = path.substring(0, idx + APP_ROOT_SEGMENT.length);
-    } else {
-      // Fallback: assume we're at the app root already
-      root = path.substring(0, path.lastIndexOf('/') + 1);
-    }
-    return root + relativePath.replace(/^\/+/, '');
-  }
-
-  /* ---------------- Token handling ---------------- */
-
-  function saveToken(token, remember) {
-    try {
-      if (remember) {
-        localStorage.setItem(TOKEN_KEY_LS, token);
-      } else {
-        sessionStorage.setItem(TOKEN_KEY_SS, token);
-      }
-    } catch (e) { /* noop */ }
-  }
-
-  function getToken() {
-    try {
-      return sessionStorage.getItem(TOKEN_KEY_SS)
-          || localStorage.getItem(TOKEN_KEY_LS)
-          || '';
-    } catch (e) { return ''; }
-  }
-
-  function clearToken() {
-    try { sessionStorage.removeItem(TOKEN_KEY_SS); } catch (e) {}
-    try { localStorage.removeItem(TOKEN_KEY_LS); } catch (e) {}
-    try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
-    try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
-  }
-
-  /* ---------------- Auth checks ---------------- */
-
-  function isAuthenticated() {
-    return !!getToken();
-  }
-
-  function requireTeacher(options) {
-    options = options || {};
-    if (!isAuthenticated()) {
-      var redirect = options.redirect || 'teacher-login.html';
-      window.location.replace(appUrl(redirect));
-      return false;
-    }
-    return true;
-  }
-
-  /* ---------------- Login / Logout ---------------- */
-
-  /**
-   * Log in with a token (typically after verifying it against the Apps Script).
-   * Stores the token, then redirects to the teacher dashboard.
-   */
-  function login(token, remember) {
+  // ------------------------------------------------------------
+  // verify(token) — returns true if the token matches
+  // ------------------------------------------------------------
+  async function verify(token) {
     if (!token) return false;
-    saveToken(token, !!remember);
-    return true;
+    return String(token).trim() === TEACHER_TOKEN;
   }
 
-  /**
-   * Log out. Clears tokens, then redirects to teacher-login.html.
-   * The redirect is always absolute to the app root, so it works
-   * from any nested page (classrecord/, teacher/, etc.).
-   *
-   * Options:
-   *   redirect (string)  — target file at app root. Default 'teacher-login.html'.
-   *   noRedirect (bool)  — if true, do NOT navigate away. Caller handles it.
-   */
-  function logout(options) {
-    options = options || {};
-    clearToken();
-
-    if (options.noRedirect) return;
-
-    var target = options.redirect || 'teacher-login.html';
-    window.location.replace(appUrl(target));
+  // ------------------------------------------------------------
+  // save(teacher) — store teacher session
+  // ------------------------------------------------------------
+  function save(teacher) {
+    if (!teacher || !teacher.name) throw new Error('Teacher name required');
+    const payload = Object.assign({}, teacher, {
+      loggedInAt: teacher.loggedInAt || new Date().toISOString()
+    });
+    return Store.setTeacher(payload);
   }
 
-  /* ---------------- Exports ---------------- */
+  function get() {
+    return (window.Store && Store.getTeacher()) || null;
+  }
+
+  function isLoggedIn() {
+    const t = get();
+    return !!(t && t.name);
+  }
+
+  function teacherHubPath() {
+    const path = window.location.pathname;
+    if (path.includes('/teacher/')) return '../instructor.html';
+    return 'instructor.html';
+  }
+
+  function teacherLoginPath() {
+    const path = window.location.pathname;
+    if (path.includes('/teacher/') || path.includes('/classrecord/')) return '../teacher-login.html';
+    return 'teacher-login.html';
+  }
+
+  function logout() {
+    Store.clearTeacher();
+    window.location.href = teacherLoginPath();
+  }
+
+  function requireTeacher() {
+    if (!isLoggedIn()) {
+      window.location.href = teacherLoginPath();
+      return null;
+    }
+    return get();
+  }
 
   return {
-    saveToken: saveToken,
-    getToken: getToken,
-    clearToken: clearToken,
-    isAuthenticated: isAuthenticated,
-    requireTeacher: requireTeacher,
-    login: login,
-    logout: logout,
-    appUrl: appUrl
+    verify,
+    save,
+    get,
+    isLoggedIn,
+    logout,
+    requireTeacher,
+    teacherHubPath,
+    teacherLoginPath,
+    TEACHER_TOKEN
   };
 })();
