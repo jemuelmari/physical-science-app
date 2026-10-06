@@ -127,7 +127,10 @@
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/activity-tracker.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Auto-redirect if already logged in
@@ -256,7 +259,8 @@
           return showError('⚠️ Incorrect PIN. Please try again.');
         }
 
-        Store.setStudent({
+        // Save session
+        const studentSession = {
           lrn: profile.lrn,
           lastName: profile.lastName,
           firstName: profile.firstName,
@@ -265,13 +269,27 @@
           section: profile.section,
           sex: profile.sex || '',
           loggedInAt: new Date().toISOString()
-        });
+        };
+        Store.setStudent(studentSession);
 
-        if (window.ActivityTracker) {
-          ActivityTracker.log({ action: 'student_login', lrn: profile.lrn });
+        // ---- SYNC STUDENT PROFILE TO BACKEND ----
+        if (window.Sync && typeof Sync.saveStudent === 'function') {
+          Sync.saveStudent(profile).then(res => {
+            console.log('✅ Student profile synced on login:', res);
+          }).catch(err => {
+            console.warn('⚠️ Student profile sync failed:', err);
+          });
         }
 
-        window.location.href = 'dashboard.html';
+        // ---- Log activity ----
+        if (window.ActivityTracker) {
+          ActivityTracker.logStudentLogin();
+        }
+
+        // Small delay to let sync fire, then redirect
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 800);
       });
 
       function showError(msg) {
