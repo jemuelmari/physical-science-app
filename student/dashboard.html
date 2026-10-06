@@ -114,7 +114,33 @@
       if (!student) return;
 
       await App.loadRegistry();
+      // ---- AUTO-SYNC STUDENT PROFILE ON DASHBOARD LOAD ----
+(async () => {
+  try {
+    const storedProfile = JSON.parse(localStorage.getItem('physci_profile_' + student.lrn) || '{}');
+    const syncPayload = Object.assign({}, storedProfile, {
+      lrn: student.lrn,
+      lastName: student.lastName,
+      firstName: student.firstName,
+      middleName: student.middleName || storedProfile.middleName || '',
+      gradeLevel: student.gradeLevel,
+      section: student.section,
+      sex: student.sex || storedProfile.sex || '',
+      pin: storedProfile.pin || ''
+    });
 
+    if (window.Sync && typeof Sync.saveStudent === 'function') {
+      const res = await Sync.saveStudent(syncPayload);
+      if (res && res.ok) {
+        console.log('✅ Profile auto-synced on dashboard load');
+      } else {
+        console.warn('⚠️ Profile auto-sync response:', res);
+      }
+    }
+  } catch (e) {
+    console.warn('⚠️ Profile auto-sync failed:', e);
+  }
+})();
       // ---- WELCOME ----
       const hour = new Date().getHours();
       const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
