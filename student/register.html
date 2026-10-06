@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Student · Physical Science</title>
+  <title>Create Profile · Physical Science</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/student.css" />
 </head>
 <body class="login-page">
 
+  <!-- TOP BAR -->
   <header class="login-topbar">
     <div class="login-topbar-inner">
       <div class="login-brand">
-        <span class="brand-icon">📝</span>
+        <span class="brand-icon">🎓</span>
         <div class="brand-text">
-          <div class="brand-title">New Student</div>
+          <div class="brand-title">Student Registration</div>
           <div class="brand-version">v1.0.0</div>
         </div>
       </div>
@@ -24,73 +25,63 @@
 
   <main class="login-main">
     <div class="login-wrapper login-wrapper-wide">
+
       <div class="login-card">
 
         <div class="login-hero register-hero">
-          <div class="login-icon">🎓</div>
+          <div class="login-icon">📝</div>
           <h1>Create Your Profile</h1>
-          <p class="login-subtitle">Fill in your details to begin learning</p>
+          <p class="login-subtitle">Fill in your details once. You'll log in with your LRN next time.</p>
         </div>
 
         <div class="login-body">
 
+          <div class="login-tabs" role="tablist">
+            <a href="login.html" class="login-tab" role="tab">🔑 Log In</a>
+            <a href="register.html" class="login-tab active" role="tab" aria-selected="true">📝 New Student</a>
+            <a href="login.html" class="login-tab" role="tab">👥 Saved Users</a>
+          </div>
+
           <form id="register-form" class="login-form" autocomplete="off" novalidate>
 
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="lastName">Last Name <span class="req">*</span></label>
+                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="DELA CRUZ" required />
+                <div class="form-hint">Will be saved in ALL CAPS.</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="firstName">First Name <span class="req">*</span></label>
+                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Juan" required />
+                <div class="form-hint">Will be saved in Title Case.</div>
+              </div>
+            </div>
+
             <div class="form-group">
-              <label class="form-label" for="lrn">
-                <span class="label-icon">🆔</span> LRN (12 digits) <span class="req">*</span>
-              </label>
-              <input
-                type="text"
-                id="lrn"
-                name="lrn"
-                class="form-control"
-                inputmode="numeric"
-                maxlength="14"
-                placeholder="1234-5678-9012"
-                required />
-              <div class="form-hint">Your Learner Reference Number.</div>
+              <label class="form-label" for="middleName">Middle Name</label>
+              <input type="text" id="middleName" name="middleName" class="form-control" placeholder="Santos" />
+              <div class="form-hint">Optional · Title Case</div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="lastName">
-                  <span class="label-icon">👤</span> Last Name <span class="req">*</span>
-                </label>
-                <input type="text" id="lastName" name="lastName" class="form-control" required />
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="firstName">
-                  <span class="label-icon">👤</span> First Name <span class="req">*</span>
-                </label>
-                <input type="text" id="firstName" name="firstName" class="form-control" required />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="middleName">
-                  <span class="label-icon">👤</span> Middle Name
-                </label>
-                <input type="text" id="middleName" name="middleName" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="sex">
-                  <span class="label-icon">⚧</span> Sex <span class="req">*</span>
-                </label>
+                <label class="form-label" for="sex">Sex <span class="req">*</span></label>
                 <select id="sex" name="sex" class="form-control" required>
                   <option value="">— Select —</option>
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="lrn">LRN (12 digits) <span class="req">*</span></label>
+                <input type="text" id="lrn" name="lrn" class="form-control" inputmode="numeric" maxlength="14" placeholder="1234-5678-9012" required />
+                <div class="form-hint">Exactly 12 digits, numeric only.</div>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="gradeLevel">
-                  <span class="label-icon">📚</span> Grade Level <span class="req">*</span>
-                </label>
+                <label class="form-label" for="gradeLevel">Grade Level <span class="req">*</span></label>
                 <select id="gradeLevel" name="gradeLevel" class="form-control" required>
                   <option value="">— Select —</option>
                   <option value="11">Grade 11</option>
@@ -98,62 +89,36 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label" for="section">
-                  <span class="label-icon">🏫</span> Section <span class="req">*</span>
-                </label>
-                <select id="section" name="section" class="form-control" required>
-                  <option value="">— Select Section —</option>
-                  <option value="HUMSS">HUMSS</option>
-                  <option value="GAS">GAS</option>
-                </select>
-                <div class="form-hint">Choose your strand section.</div>
+                <label class="form-label" for="section">Section <span class="req">*</span></label>
+                <input type="text" id="section" name="section" class="form-control" placeholder="e.g. STEM-A" required />
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="pin">
-                <span class="label-icon">🔑</span> PIN (optional)
-              </label>
-              <input
-                type="password"
-                id="pin"
-                name="pin"
-                class="form-control"
-                inputmode="numeric"
-                maxlength="6"
-                placeholder="Set a 4–6 digit PIN"
-                autocomplete="off" />
-              <div class="form-hint">You'll use this PIN each time you log in.</div>
+              <label class="form-label" for="pin">Set PIN <span class="text-muted" style="font-weight:400;">(optional)</span></label>
+              <input type="password" id="pin" name="pin" class="form-control" inputmode="numeric" maxlength="6" placeholder="4–6 digits" />
+              <div class="form-hint">Add a PIN so only you can log in with your LRN on shared devices.</div>
             </div>
 
             <div class="form-group">
               <label class="consent-label">
                 <input type="checkbox" id="consent" required />
-                <span>I consent to have my name, LRN, and progress recorded for
-                educational purposes in accordance with the Data Privacy Act of 2012.</span>
+                <span>I agree that my progress may be saved locally on this device and shared with my teacher via sync code or backup file.</span>
               </label>
             </div>
 
             <div id="register-error" class="alert alert-danger hidden" role="alert"></div>
 
             <button type="submit" class="btn btn-primary btn-full btn-lg">
-              ✓ Create Profile
+              Create Profile →
             </button>
 
           </form>
 
-          <div class="login-secondary">
-            <a href="login.html" class="login-secondary-link">
-              🔑 Already registered? Log in
-            </a>
-            <span class="divider">·</span>
-            <a href="../teacher-login.html" class="login-secondary-link">
-              👩‍🏫 Teacher Login
-            </a>
-          </div>
-
         </div>
+
       </div>
+
     </div>
   </main>
 
@@ -167,99 +132,113 @@
 
   <script src="../config.js"></script>
   <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/activity-tracker.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('register-form');
       const errEl = document.getElementById('register-error');
       const lrnInput = document.getElementById('lrn');
 
-      // Pre-fill LRN if coming from login redirect
-      const pending = sessionStorage.getItem('pending_lrn');
-      if (pending) {
-        lrnInput.value = formatLrn(pending);
-        sessionStorage.removeItem('pending_lrn');
-      }
+      // Pre-fill LRN from query string (?lrn=...)
+      const params = new URLSearchParams(window.location.search);
+      const preLrn = params.get('lrn') || sessionStorage.getItem('pending_lrn');
+      if (preLrn) lrnInput.value = formatLrn(preLrn);
 
-      // Auto-format LRN with dashes
+      // Auto-format LRN
       lrnInput.addEventListener('input', (e) => {
-        const v = e.target.value.replace(/\D/g, '').slice(0, 12);
-        const parts = [];
-        for (let i = 0; i < v.length; i += 4) parts.push(v.slice(i, i + 4));
-        e.target.value = parts.join('-');
+        e.target.value = formatLrn(e.target.value);
       });
 
       function formatLrn(v) {
-        const clean = String(v).replace(/\D/g, '').slice(0, 12);
+        const clean = String(v || '').replace(/\D/g, '').slice(0, 12);
         const parts = [];
         for (let i = 0; i < clean.length; i += 4) parts.push(clean.slice(i, i + 4));
         return parts.join('-');
       }
 
-      form.addEventListener('submit', (e) => {
+      function titleCase(str) {
+        return String(str || '').trim().replace(/\s+/g, ' ')
+          .toLowerCase().split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+      }
+
+      function upper(str) {
+        return String(str || '').trim().replace(/\s+/g, ' ').toUpperCase();
+      }
+
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errEl.classList.add('hidden');
 
-        const lrn = lrnInput.value.replace(/\D/g, '');
-        const lastName = document.getElementById('lastName').value.trim();
-        const firstName = document.getElementById('firstName').value.trim();
-        const middleName = document.getElementById('middleName').value.trim();
-        const sex = document.getElementById('sex').value;
-        const gradeLevel = document.getElementById('gradeLevel').value;
-        const section = document.getElementById('section').value;
-        const pin = document.getElementById('pin').value.trim();
-        const consent = document.getElementById('consent').checked;
+        const data = {
+          lastName: upper(document.getElementById('lastName').value),
+          firstName: titleCase(document.getElementById('firstName').value),
+          middleName: titleCase(document.getElementById('middleName').value),
+          sex: document.getElementById('sex').value,
+          lrn: lrnInput.value.replace(/\D/g, ''),
+          gradeLevel: document.getElementById('gradeLevel').value,
+          section: upper(document.getElementById('section').value),
+          pin: document.getElementById('pin').value.trim(),
+          createdAt: new Date().toISOString()
+        };
 
-        if (!/^\d{12}$/.test(lrn)) return showError('⚠️ LRN must be exactly 12 digits.');
-        if (!lastName) return showError('⚠️ Last name is required.');
-        if (!firstName) return showError('⚠️ First name is required.');
-        if (!sex) return showError('⚠️ Please select your sex.');
-        if (!gradeLevel) return showError('⚠️ Please select your grade level.');
-        if (!section) return showError('⚠️ Please select your section (HUMSS or GAS).');
-        if (pin && !/^\d{4,6}$/.test(pin)) return showError('⚠️ PIN must be 4–6 digits.');
-        if (!consent) return showError('⚠️ Please accept the data privacy consent.');
+        // Validate
+        if (!data.lastName || !data.firstName) return showError('⚠️ Please enter your full name.');
+        if (!data.sex) return showError('⚠️ Please select your sex.');
+        if (!/^\d{12}$/.test(data.lrn)) return showError('⚠️ LRN must be exactly 12 digits.');
+        if (!data.gradeLevel) return showError('⚠️ Please select your grade level.');
+        if (!data.section) return showError('⚠️ Please enter your section.');
+        if (data.pin && !/^\d{4,6}$/.test(data.pin)) return showError('⚠️ PIN must be 4–6 digits.');
+        if (!document.getElementById('consent').checked) return showError('⚠️ Please check the consent box.');
 
-        // Check if LRN already exists
-        const existing = localStorage.getItem('physci_profile_' + lrn);
+        // Check if LRN already registered
+        const existing = localStorage.getItem('physci_profile_' + data.lrn);
         if (existing) {
           return showError('⚠️ This LRN is already registered. Please log in instead.');
         }
 
-        const profile = {
-          lrn,
-          lastName,
-          firstName,
-          middleName,
-          sex,
-          gradeLevel,
-          section,
-          pin: pin || '',
-          createdAt: new Date().toISOString()
-        };
+        // Save profile locally
+        localStorage.setItem('physci_profile_' + data.lrn, JSON.stringify(data));
 
-        try {
-          localStorage.setItem('physci_profile_' + lrn, JSON.stringify(profile));
-        } catch (err) {
-          return showError('⚠️ Could not save your profile. Please try again.');
-        }
-
-        // Auto-log-in after registration
-        Store.setStudent({
-          lrn: profile.lrn,
-          lastName: profile.lastName,
-          firstName: profile.firstName,
-          middleName: profile.middleName,
-          gradeLevel: profile.gradeLevel,
-          section: profile.section,
-          sex: profile.sex,
+        // Save session
+        const studentSession = {
+          lrn: data.lrn,
+          lastName: data.lastName,
+          firstName: data.firstName,
+          middleName: data.middleName,
+          gradeLevel: data.gradeLevel,
+          section: data.section,
+          sex: data.sex,
           loggedInAt: new Date().toISOString()
-        });
+        };
+        Store.setStudent(studentSession);
 
-        if (window.ActivityTracker) {
-          ActivityTracker.log({ action: 'student_login', lrn: profile.lrn });
+        sessionStorage.removeItem('pending_lrn');
+
+        // ---- SYNC STUDENT PROFILE TO BACKEND ----
+        if (window.Sync && typeof Sync.saveStudent === 'function') {
+          Sync.saveStudent(Object.assign({}, data, {
+            pin: data.pin || ''
+          })).then(res => {
+            console.log('✅ Student profile synced:', res);
+          }).catch(err => {
+            console.warn('⚠️ Student profile sync failed:', err);
+          });
         }
 
-        window.location.href = 'dashboard.html';
+        // ---- Log activity ----
+        if (window.ActivityTracker) {
+          ActivityTracker.logStudentRegister();
+        }
+
+        // Small delay to let sync fire, then redirect
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 800);
       });
 
       function showError(msg) {
